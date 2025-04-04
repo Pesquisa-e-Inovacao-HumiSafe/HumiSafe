@@ -17,20 +17,19 @@ void loop() {           //inicia definições das ações que ficarão em loopin
 
   } else { 
     //se validação for false, emite os textos a seguir: 
-    /*Serial.print("UmidadeMax:"); 
-    Serial.println(60); 
-    Serial.println(" "); */
+    Serial.print("UmidadeMax:"); 
+    Serial.print(60); 
+    Serial.print("%");
+    Serial.print(" ");
 
-    Serial.print("Umidade: "); 
+    Serial.print("Umidade:"); 
     Serial.print(umidade); 
     Serial.print("%");
-    Serial.println();
+    Serial.print(" ");
 
-    /*Serial.print("UmidadeMin:"); 
-    Serial.println(40); 
-
-
-    // Serial.print("%"); */
+    Serial.print("UmidadeMin:"); 
+    Serial.print(40); 
+    Serial.println("%");
 
   } 
   delay(1000);  //define intervalo em milesegundos (ms), entre um looping e outro 
