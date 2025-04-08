@@ -18,8 +18,6 @@ void loop() {           //inicia definições das ações que ficarão em loopin
   } else { 
     //se validação for false, emite os textos a seguir:  
     Serial.print(umidade);
-    Serial.print(" ");
   } 
   delay(1000);  //define intervalo em milesegundos (ms), entre um looping e outro 
-
 } 
