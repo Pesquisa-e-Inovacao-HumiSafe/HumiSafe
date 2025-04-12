@@ -9,7 +9,7 @@ idCliente INT PRIMARY KEY AUTO_INCREMENT,
 razaoSocial VARCHAR(45) NOT NULL,
 nomeFantasia VARCHAR(45) NOT NULL,
 cnpj CHAR(14) NOT NULL,
-dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+dtCadastro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 email VARCHAR(45) NOT NULL, -- Confirmando se o email possui @, mas sem verificar o domínio pois cada empresa pode ter seu próprio domínio
 CONSTRAINT checkEmail CHECK(email LIKE '%@%'),
 senha VARCHAR(45) NOT NULL,
@@ -24,19 +24,19 @@ bairro VARCHAR(45) NOT NULL,
 cidade VARCHAR(45) NOT NULL,
 uf CHAR(2) NOT NULL,
 cep CHAR(8) NOT NULL,
-fkcliente_endereco INT,
+fkcliente_endereco INT UNIQUE,
 CONSTRAINT fkcliente_endereco FOREIGN KEY (fkcliente_endereco)
 REFERENCES cliente (idCliente)
 );
 
 CREATE TABLE setor(
 idSetor INT PRIMARY KEY AUTO_INCREMENT,
-nomeSetor VARCHAR(45),
-numSetor CHAR(4),
-qtdPacienteSetor INT,
-qtdFuncionarioSetor INT,
+nomeSetor VARCHAR(45) NOT NULL,
+numSetor CHAR(4) NOT NULL,
+qtdPacienteSetor INT NOT NULL,
+qtdFuncionarioSetor INT NOT NULL,
 CONSTRAINT chkSetor CHECK(nomeSetor IN ('UTI', 'Centro Cirurgico', 'Pronto socorro', 'Unidades de Queimados', 'NeoNatal', 'Oncologia')),
-dtInstalacao  DATETIME,
+dtInstalacao  DATETIME NOT NULL,
 fkcliente_setor INT,
 CONSTRAINT fkcliente_setor FOREIGN KEY (fkcliente_setor)
 REFERENCES cliente (idCliente)
@@ -45,22 +45,22 @@ REFERENCES cliente (idCliente)
 CREATE TABLE sensorDHT11(
 idSensor INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 numSerie VARCHAR(100) UNIQUE NOT NULL,
-dtFabricacao  DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+dtFabricacao  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 dtCompra DATETIME NOT NULL,
-statusManutencao VARCHAR(10) DEFAULT "Inativo" NOT NULL,
+statusManutencao VARCHAR(10) NOT NULL DEFAULT "Inativo",
 CONSTRAINT checkManutencao CHECK(statusManutencao IN("Ativo","Inativo","Manutencao")),
-dtManutencao DATETIME NOT NULL,
-fkcliente_sensor INT,
-CONSTRAINT fkcliente_sensor FOREIGN KEY (fkcliente_sensor)
-REFERENCES cliente (idCliente)
+dtManutencao DATETIME,
+fksetor_sensorDHT11 INT,
+CONSTRAINT fksetor_sensorDHT11 FOREIGN KEY (fksetor_sensorDHT11)
+REFERENCES setor (idSetor)
 );
 
 CREATE TABLE umidade(
 idUmidade INT PRIMARY KEY AUTO_INCREMENT,
 umidade FLOAT(4,2) NOT NULL,
-dtRegistro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-fksensorDHT11_idsensor INT,
-CONSTRAINT fksensorDHT11_idsensor FOREIGN KEY (fksensorDHT11_idsensor)
+dtRegistro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+fksensorDHT11_idumidade INT,
+CONSTRAINT fksensorDHT11_idumidade FOREIGN KEY (fksensorDHT11_idumidade)
 REFERENCES sensorDHT11 (idSensor)
 );
 
@@ -100,7 +100,7 @@ INSERT INTO setor (nomeSetor, numSetor, qtdPacienteSetor, qtdFuncionarioSetor, d
 ('NeoNatal', '0009', 9, 14, '2024-02-27 10:45:00', 9),
 ('Pronto socorro', '0010', 18, 21, '2024-03-05 09:00:00', 10);
 
-INSERT INTO sensorDHT11 (numSerie, dtFabricacao, dtCompra, statusManutencao, dtManutencao, fkcliente_sensor) VALUES
+INSERT INTO sensorDHT11 (numSerie, dtFabricacao, dtCompra, statusManutencao, dtManutencao, fksetor_sensorDHT11) VALUES
 ('DHT11-SN-0001', '2023-01-10 10:00:00', '2023-03-15 09:00:00', 'Ativo', '2024-12-01 08:30:00', 1),
 ('DHT11-SN-0002', '2023-02-12 11:00:00', '2023-04-20 10:00:00', 'Inativo', '2025-01-05 10:00:00', 2),
 ('DHT11-SN-0003', '2022-12-01 08:00:00', '2023-01-25 14:00:00', 'Manutencao', '2025-02-20 09:30:00', 3),
@@ -112,7 +112,7 @@ INSERT INTO sensorDHT11 (numSerie, dtFabricacao, dtCompra, statusManutencao, dtM
 ('DHT11-SN-0009', '2023-05-01 09:00:00', '2023-09-01 09:45:00', 'Inativo', '2025-01-10 11:00:00', 9),
 ('DHT11-SN-0010', '2023-06-15 11:45:00', '2023-10-10 13:15:00', 'Ativo', '2025-04-01 08:00:00', 10);
 
-INSERT INTO umidade (umidade, dtRegistro, fksensorDHT11_idsensor) VALUES
+INSERT INTO umidade (umidade, dtRegistro, fksensorDHT11_idumidade) VALUES
 (45.75, '2025-04-09 08:00:00', 1),  -- dentro da faixa ideal
 (37.40, '2025-04-09 08:05:00', 2),  -- abaixo
 (62.10, '2025-04-09 08:10:00', 3),  -- acima
@@ -164,9 +164,12 @@ SELECT * FROM umidade WHERE umidade > 60 OR umidade < 40;
 
 UPDATE sensorDHT11 SET statusManutencao = "Ativo" WHERE idSensor = 9;
 
-SELECT c.idCliente, c.nomeFantasia, c.email,
-	e.rua, e.numEndereco, e.bairro, e.cidade, e.uf,
-    u.umidade, u.dtRegistro
-FROM cliente c JOIN endereco e ON c.idCliente = e.fkcliente_endereco
-JOIN sensorDHT11 s ON c.idCliente = s.fkcliente_sensor
-JOIN umidade u ON s.idSensor = u.fksensorDHT11_idsensor WHERE u.umidade < 40 OR u.umidade > 60;
+SELECT c.nomeFantasia AS nomeCliente, c.email,
+e.rua, e.numEndereco, e.bairro, e.cidade, e.uf,
+s.nomeSetor, s.numSetor,
+u.umidade, u.dtRegistro FROM cliente c
+JOIN endereco e ON c.idCliente = e.fkcliente_endereco
+JOIN setor s ON c.idCliente = s.fkcliente_setor
+JOIN sensorDHT11 sd ON s.idSetor = sd.fksetor_sensorDHT11
+JOIN umidade u ON sd.idSensor = u.fksensorDHT11_idumidade
+WHERE u.umidade < 40 OR u.umidade > 60;
