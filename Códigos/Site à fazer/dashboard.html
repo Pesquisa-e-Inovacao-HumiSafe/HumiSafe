@@ -3,8 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Dashboard do site</title>
 </head>
+    
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    h1 {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .texto {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    table {
+        border: 1px solid;
+        width: 30%;
+    }
+</style>
+    
 <body>
     <div class="header">
         <div class="container">
@@ -28,5 +56,101 @@
           </ul>
         </div>
       </div>
+
+    <h1>Dashboard do site HumiSafe</h1>
+
+    <div id="sensor" style="display: flex;">
+        <div style="width: 50%;">
+            <canvas id="sensorAnalogico"></canvas>
+        </div>
+
+        <div id="texto">
+            <h2>Representação dos valores</h2>
+            <p>Os níveis de umidade em hospitais são divididos em:</p>
+            <ul>
+                <li style="color: red;">Abaixo de 40%: Nível de alerta</li>
+                <li style="color: green;">Entre 40% e 60%: Nível ideal</li>
+                <li style="color: red;">Acima de 60%: Nível de alerta</li>
+            </ul>
+            <br>
+
+            <h3>Dados do Gráfico</h3>
+            <table>
+                
+                <tr>
+                    <td><b>Média:</b></td>
+                    <td>60.83</td>
+                </tr>
+
+                <tr>
+                    <td><b>Mediana:</b></td>
+                    <td>61</td>
+                </tr>
+
+                <tr>
+                    <td><b>Moda:</b></td>
+                    <td>61</td>
+                </tr>
+
+                <tr>
+                    <td><b>Variância:</b></td>
+                    <td>15,36</td>
+                </tr>
+
+                <tr>
+                    <td><b>Desvio Padrão:</b></td>
+                    <td>3,92</td>
+                </tr>
+
+                <tr>
+                    <td><b>Maior valor:</b></td>
+                    <td>67</td>
+                </tr>
+
+                <tr>
+                    <td><b>Menor valor:</b></td>
+                    <td>55</td>
+                </tr>
+
+            </table>
+            <p>
+                Neste cenário podemos observar pelo gráfico que os níveis de umidade<br> no ambiente hospitalar variam
+                entre 55 e 67.
+
+                Esse não é um cenário adequado, <br>já que com um alto índice de umidade, aumentam as chances de
+                profileração<br> de fungos e bactérias no local.
+            </p>
+        </div>
+    </div>
+
 </body>
 </html>
+
+<script>
+
+    var data = [55, 67, 59, 61, 61, 62]
+    var sensorAnalogico = new Chart(document.getElementById('sensorAnalogico').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: ['10/04/2025 - 15:54', '10/04/2025 - 16:27', '10/04/2025 - 17:35', '10/04/2025 - 18:57', '10/04/2025 - 19:18', '10/04/2025 - 20:07'],
+            datasets: [{
+                label: 'Umidade',
+                data: data,
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: '(%)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
