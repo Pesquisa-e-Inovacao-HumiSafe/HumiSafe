@@ -1,52 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar</title>
 </head>
+
 <body>
-    <div class="header">
-        <div class="container">
-          <h1 class="titulo">HumiSafe</h1>
-          <ul class="navbar">
-            <li>
-              <a href="site_institucional.html">site institucional local</a>
-            </li>
-            <li>
-              <a href="simulador.html">Simulador financeiro</a>
-            </li>
-            <li>
-              <a href="#">Login</a>
-            </li>
-            <li>
-              <a href="dashboard.html">dashboard</a>
-            </li>
-            <li class="agora">
-              <a href="cadastro.html">Cadastro</a>
-            </li>
-          </ul>
+  <div class="header">
+    <div class="container">
+      <h1 class="titulo">HumiSafe</h1>
+      <ul class="navbar">
+        <li>
+          <a href="site_institucional.html">site institucional local</a>
+        </li>
+        <li>
+          <a href="simulador.html">Simulador financeiro</a>
+        </li>
+        <li>
+          <a href="#">Login</a>
+        </li>
+        <li class="agora">
+          <a href="cadastro.html">Cadastro</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="login">
+
+    <div class="container">
+      <div class="card card-login">
+        <h2>Login</h2>
+        <div class="formulario">
+          <div class="campo">
+            <span>E-mail:</span>
+            <input id="email_input" type="text" placeholder="Login">
+          </div>
+          <div class="campo">
+            <span>Senha:</span>
+            <input id="senha_input" type="password" placeholder="******">
+          </div>
+          <a href="recSenha.html">Esqueci a senha</a>
+          <br>
+          <button onclick="Entrar()" class="botao">Entrar</button>
         </div>
       </div>
-        <div class="login">
-  
-            <div class="container">
-                <div class="card card-login">
-                    <h2>Bem vindo novamente</h2>
-                    <div class="formulario">
-                        <div class="campo">
-                            <span>E-mail:</span>
-                            <input id="email_input" type="text" placeholder="Login">
-                        </div>
-                        <div class="campo">
-                            <span>Senha:</span>
-                            <input id="senha_input" type="password" placeholder="******">
-                        </div>
-                        <button class="botao">Entrar</button>
-                    </div>
-    
-                </div>
-            </div>
-        </div>
+    </div>
+  </div>
 </body>
+
 </html>
+<script>
+  var tentativas = 2;
+  function Entrar() {
+    var email = email_input.value
+    var senha = senha_input.value
+
+    if ((senha != "adm123" || email != "adm123") && tentativas > 0) {
+      alert(`O email ou a senha estão incorretos você ainda tem ${tentativas} tentativas`)
+      tentativas--;
+    }
+    else if (tentativas <= 0) { alert('as tentativas acabaram! acione o suporte') }
+    else {
+      alert('Login concluído')
+      window.location.href = "dashboard.html"
+    }
+  }
+
+</script>
