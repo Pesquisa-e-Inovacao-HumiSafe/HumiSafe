@@ -22,25 +22,30 @@ body{
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-top: 2%;
     margin-right: 0;
 }
 .header img{
+    margin-left: 8%;
     width: 110px;
     height: 110px;
+}
+.header .container{
+    display: flex;
+    justify-content: flex-end;
 }
 .header .navbar{
     margin: 0;
     display: flex;
     flex-direction: row;
-    color: white;
+    color: var(--azulEscuro);
     align-self: center;
     align-items: center;
-    background-color: var(--azulEscuro);
+    background-color: white;
     width: 800px;
     height: 60px;
-    border-radius: 50px;
+    border-radius: 50px 0 0 50px ;
     justify-content: space-between;
     font-weight: bold;
 }
@@ -52,17 +57,19 @@ body{
     width: 120px;
     display: flex;
     justify-content: space-around;
-    background-color: white;
     border-radius: 20px;
     align-items: center;
     font-weight: bold;    
+    margin-right: 10px;
+    color: var(--azulEscuro);
+    border: 2px solid var(--azulEscuro);
 }
 .navbar img{
     width: 30px;
     height: 30px;
 }
 .header .navbar a{
-    color: white;
+    color: var(--azulEscuro);
     text-decoration: none;
 }
 .navbar{
@@ -198,6 +205,9 @@ body{
     align-items: center;
     padding: 25px;
     justify-content: space-around;
+    background-image: url(../imagens/riscoFundo.png);
+    background-position: right;
+    background-repeat: no-repeat;
 }
 .simulador img{
     width: 300px;
@@ -236,7 +246,7 @@ body{
     height: 10px;
     margin: 0;
     margin-bottom: 10px;
-    border-bottom: 5px solid white;
+    
 }
 .rodape .p2{
     display: flex;
@@ -245,21 +255,39 @@ body{
     align-items: center;
     
 }
-.rodape .p2 .p1{
+.rodape .container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.rodape .container .divborda1{
+    width: 20%;
+    border: 2px solid white;
+}
+.rodape .container .divborda2{
+    width: 65%;
+    border: 2px solid white;
+}
+.rodape .p2 .parte1{
     display: flex;
     flex-direction: row;
     height: 100%;
     justify-content: space-between;
     align-items: center;
 }
-.rodape .p2 .p1 img{
+.rodape .p2 .parte1 img{
     width: 120px;
     width: 120px;
     margin: 10px;
 }
-.rodape .p2 .p2{
+.rodape .p2 .parte2{
+    margin: 3% 0 3% 0;
+    width: 450px;
     display: flex;
     flex-direction: row;
     align-self: center;
     justify-content: space-between;
+}
+.rodape .p2 .parte1 h1{
+    font-size: 40px;
 }

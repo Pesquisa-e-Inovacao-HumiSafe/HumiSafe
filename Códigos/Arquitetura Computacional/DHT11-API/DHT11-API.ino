@@ -16,8 +16,9 @@ void loop() {           //inicia definições das ações que ficarão em loopin
     Serial.println("Erro ao ler os dados do sensor");  //emite mensagem de erro para caso a validação seja true 
 
   } else { 
-    //se validação for false, emite os textos a seguir:  
-    Serial.print(umidade);
+    //se validação for false, emite os textos a seguir: 
+    umidade += 30; 
+    Serial.println(umidade);
   } 
   delay(1000);  //define intervalo em milesegundos (ms), entre um looping e outro 
 } 
