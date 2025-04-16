@@ -1,58 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/style_dashboard.css">
     <title>Dashboard do site</title>
 </head>
-    
-<style>
-    body {
-        font-family: Arial, Helvetica, sans-serif;
-    }
 
-    h1 {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .texto {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
-
-    table {
-        border: 1px solid;
-        width: 30%;
-    }
-</style>
-    
 <body>
     <div class="header">
         <div class="container">
-          <h1 class="titulo">HumiSafe</h1>
-          <ul class="navbar">
-            <li>
-              <a href="site_institucional.html">Sair</a>
-            </li>
-          </ul>
+            <h1 class="titulo">HumiSafe</h1>
+            <ul class="navbar">
+                <li>
+                    <a href="site_institucional.html">Sair</a>
+                </li>
+            </ul>
         </div>
-      </div>
+    </div>
 
     <h1>Dashboard do site HumiSafe</h1>
 
-    <div id="sensor" style="display: flex;">
+    <div id="graficos">
         <div style="width: 50%;">
-            <canvas id="sensorAnalogico"></canvas>
+            <canvas id="graficoLinha"></canvas>
         </div>
 
-        <div id="texto">
+
+        <div style="width: 50%;">
+            <canvas id="graficoBarra"></canvas>
+        </div>
+    </div>
+
+
+    <div id="conteudo_dashboard">
+        <div id="nivel_umidade">
             <h2>Representação dos valores</h2>
             <p>Os níveis de umidade em hospitais são divididos em:</p>
             <ul>
@@ -62,9 +46,31 @@
             </ul>
             <br>
 
-            <h3>Dados do Gráfico</h3>
+        </div>
+
+        <div id="kpi1">
+            <p>
+                Neste cenário podemos observar pelo gráfico que os níveis de umidade<br> no ambiente hospitalar variam
+                entre 55 e 67.
+
+                Esse não é um cenário adequado, <br>já que com um alto índice de umidade, aumentam as chances de
+                profileração<br> de fungos e bactérias no local.
+            </p>
+        </div>
+
+        <div id="kpi2">
+            <p>
+                Com o presente gráfico é mostrado que a umidade estava acima do nível <br>recomendado na sala de Radio-X
+                durante a madrugada.
+            </p>
+        </div>
+
+
+
+        <div id="dados_estatisticos">
+            <h3>Dados do Gráfico - UTI</h3>
+
             <table>
-                
                 <tr>
                     <td><b>Média:</b></td>
                     <td>60.83</td>
@@ -99,32 +105,67 @@
                     <td><b>Menor valor:</b></td>
                     <td>55</td>
                 </tr>
-
             </table>
-            <p>
-                Neste cenário podemos observar pelo gráfico que os níveis de umidade<br> no ambiente hospitalar variam
-                entre 55 e 67.
-
-                Esse não é um cenário adequado, <br>já que com um alto índice de umidade, aumentam as chances de
-                profileração<br> de fungos e bactérias no local.
-            </p>
         </div>
     </div>
 
 </body>
+
 </html>
 
 <script>
 
     var data = [55, 67, 59, 61, 61, 62]
-    var sensorAnalogico = new Chart(document.getElementById('sensorAnalogico').getContext('2d'), {
+    var graficoLinha = new Chart(document.getElementById('graficoLinha').getContext('2d'), {
         type: 'line',
         data: {
             labels: ['10/04/2025 - 15:54', '10/04/2025 - 16:27', '10/04/2025 - 17:35', '10/04/2025 - 18:57', '10/04/2025 - 19:18', '10/04/2025 - 20:07'],
             datasets: [{
-                label: 'Umidade',
+                label: 'Umidade na UTI',
                 data: data,
                 borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 3,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: '(%)'
+                    },
+                    beginAtZero: true
+                },
+
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Captura por Data e Hora'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var dataUTI = [40, 41, 40, 41, 39, 40]
+    var dataRaioX = [65, 67, 69, 66, 61, 60]
+    var graficoBarra = new Chart(document.getElementById('graficoBarra').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['12/04/2025 - 00:23', '12/04/2025 - 01:45', '12/04/2025 - 02:19', '12/04/2025 - 03:57', '12/04/2025 - 04:48', '12/04/2025 - 05:14'],
+            datasets: [{
+                label: 'Umidade UTI',
+                data: dataUTI,
+                borderColor: 'red',
+                borderWidth: 2,
+                fill: false
+            },
+            {
+                label: 'Umidade Radio-X',
+                data: dataRaioX,
+                borderColor: 'green',
                 borderWidth: 2,
                 fill: false
             }]
@@ -135,6 +176,14 @@
                     title: {
                         display: true,
                         text: '(%)'
+                    },
+                    beginAtZero: true
+                },
+
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Captura por Data e Hora'
                     },
                     beginAtZero: true
                 }
