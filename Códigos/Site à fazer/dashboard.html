@@ -36,77 +36,60 @@
 
 
     <div id="conteudo_dashboard">
+        <div id="dados_grafico_barras">
+            <h3>Dados do Gráfico - Barras</h3>
+            <p>
+                O gráfico de barras compara em um período de <strong>6 dias</strong> a taxa da umidade na UTI e na Sala de Cirurgia
+                (ambientes críticos do hospital e que requerem maior atenção).A sala de cirurgia mostra uma situação preocupante,
+                no qual as taxas passam significamente do ideal. Esse é um cenário onde medidas precisam ser tomadas
+                para garantir um ambiente mais seguro no local.
+            </p>
+        </div>
+
+        <div id="custo">
+            <div id="custo_paciente">
+                <p>Custo médio por paciente: <strong>R$1.300 <span>⬆</span></strong></p>
+            </div>
+
+            <div id="custo_operacional">
+                <p>Percentual de aumento no custo operacional do paciente com IRAS: <strong><span>400%</span></strong>
+                </p>
+            </div>
+        </div>
+
+
+
+
         <div id="nivel_umidade">
-            <h2>Representação dos valores</h2>
+            <h2>Níveis de umidade</h2>
             <p>Os níveis de umidade em hospitais são divididos em:</p>
             <ul>
-                <li style="color: red;">Abaixo de 40%: Nível de alerta</li>
-                <li style="color: green;">Entre 40% e 60%: Nível ideal</li>
-                <li style="color: red;">Acima de 60%: Nível de alerta</li>
+                <li style="color: red;">Abaixo de <strong>40%</strong>: Nível de alerta</li>
+                <li style="color: green;">Entre <strong>40% e 60%</strong>: Nível ideal</li>
+                <li style="color: red;">Acima de <strong>60%</strong>: Nível de alerta</li>
             </ul>
-            <br>
-
         </div>
 
-        <div id="kpi1">
-            <p>
-                Neste cenário podemos observar pelo gráfico que os níveis de umidade<br> no ambiente hospitalar variam
-                entre 55 e 67.
+        <div id="taxa_umidade">
+            <div id="regiao_umidade">
+                <p>Região com maior umidade: <strong><span>Enfermaria</span></strong></p>
+            </div>
 
-                Esse não é um cenário adequado, <br>já que com um alto índice de umidade, aumentam as chances de
-                profileração<br> de fungos e bactérias no local.
+            <div id="desvios_criticos">
+                <p>Percentual de medições que sairam da faixa adequada : <strong><span>5%</span></strong></p>
+            </div>
+        </div>
+        <div id="dados_grafico_linhas">
+            <h3>Dados do Gráfico - Linhas</h3>
+            <p>
+                Podemos observar pelo gráfico de linhas que os níveis de umidade no ambiente hospitalar variam
+                entre <strong>39</strong> e <strong>71</strong>.
+
+                Esse não é um cenário adequado, já que com um alto índice de umidade, aumentam as chances de
+                profileração de fungos e bactérias no local.
             </p>
         </div>
 
-        <div id="kpi2">
-            <p>
-                Com o presente gráfico é mostrado que a umidade estava acima do nível <br>recomendado na sala de Radio-X
-                durante a madrugada.
-            </p>
-        </div>
-
-
-
-        <div id="dados_estatisticos">
-            <h3>Dados do Gráfico - UTI</h3>
-
-            <table>
-                <tr>
-                    <td><b>Média:</b></td>
-                    <td>60.83</td>
-                </tr>
-
-                <tr>
-                    <td><b>Mediana:</b></td>
-                    <td>61</td>
-                </tr>
-
-                <tr>
-                    <td><b>Moda:</b></td>
-                    <td>61</td>
-                </tr>
-
-                <tr>
-                    <td><b>Variância:</b></td>
-                    <td>15,36</td>
-                </tr>
-
-                <tr>
-                    <td><b>Desvio Padrão:</b></td>
-                    <td>3,92</td>
-                </tr>
-
-                <tr>
-                    <td><b>Maior valor:</b></td>
-                    <td>67</td>
-                </tr>
-
-                <tr>
-                    <td><b>Menor valor:</b></td>
-                    <td>55</td>
-                </tr>
-            </table>
-        </div>
     </div>
 
 </body>
@@ -115,20 +98,99 @@
 
 <script>
 
-    var data = [55, 67, 59, 61, 61, 62]
+    var uti = [55, 67, 59, 61, 61, 62]
+    var pediatria = [39, 40, 41, 42, 39, 40]
+    var raioX = [55, 61, 64, 63, 69, 59]
+    var enfermaria = [70, 71, 70, 65, 70, 71]
+
     var graficoLinha = new Chart(document.getElementById('graficoLinha').getContext('2d'), {
         type: 'line',
         data: {
             labels: ['10/04/2025 - 15:54', '10/04/2025 - 16:27', '10/04/2025 - 17:35', '10/04/2025 - 18:57', '10/04/2025 - 19:18', '10/04/2025 - 20:07'],
             datasets: [{
-                label: 'Umidade na UTI',
-                data: data,
-                borderColor: 'rgba(54, 162, 235, 1)',
+                label: 'UTI',
+                data: uti,
+                borderColor: 'red',
                 borderWidth: 3,
                 fill: false
+            },
+            {
+                label: 'Pediatria',
+                data: pediatria,
+                borderColor: 'blue',
+                borderWidth: 3,
+                fill: false
+            },
+            {
+                label: 'Raio-X',
+                data: raioX,
+                borderColor: 'green',
+                borderWidth: 3,
+                fill: false
+            },
+            {
+                label: 'Enfermaria',
+                data: enfermaria,
+                borderColor: 'orange',
+                borderWidth: 3,
+                fill: false
+            }
+            ]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Nível de Umidade nos ambientes do hospital',
+                }
+            },
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: '(%)'
+                    },
+                },
+
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Captura por Data e Hora'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var dataUTI = [40, 41, 40, 41, 39, 40]
+    var dataRaioX = [65, 67, 69, 66, 61, 60]
+    var graficoBarra = new Chart(document.getElementById('graficoBarra').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['12/04/2025 - 00:23', '13/04/2025 - 01:45', '14/04/2025 - 02:19', '15/04/2025 - 03:57', '16/04/2025 - 04:48', '17/04/2025 - 05:14'],
+            datasets: [{
+                label: 'UTI',
+                data: dataUTI,
+                borderColor: 'red',
+                borderWidth: 2,
+                fill: false
+            },
+            {
+                label: 'Sala de Cirurgia',
+                data: dataRaioX,
+                borderColor: 'green',
+                borderWidth: 2,
+                fill: false,
             }]
         },
         options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Comparação de Umidade em ambientes críticos',
+                }
+            },
             scales: {
                 y: {
                     title: {
@@ -151,7 +213,7 @@
 
     var dataUTI = [40, 41, 40, 41, 39, 40]
     var dataRaioX = [65, 67, 69, 66, 61, 60]
-    var graficoBarra = new Chart(document.getElementById('graficoBarra').getContext('2d'), {
+    var grafico3 = new Chart(document.getElementById('grafico3').getContext('2d'), {
         type: 'bar',
         data: {
             labels: ['12/04/2025 - 00:23', '12/04/2025 - 01:45', '12/04/2025 - 02:19', '12/04/2025 - 03:57', '12/04/2025 - 04:48', '12/04/2025 - 05:14'],
@@ -161,30 +223,15 @@
                 borderColor: 'red',
                 borderWidth: 2,
                 fill: false
-            },
-            {
-                label: 'Umidade Radio-X',
-                data: dataRaioX,
-                borderColor: 'green',
-                borderWidth: 2,
-                fill: false
-            }]
+            },]
         },
         options: {
             scales: {
                 y: {
-                    title: {
-                        display: true,
-                        text: '(%)'
-                    },
                     beginAtZero: true
                 },
 
                 x: {
-                    title: {
-                        display: true,
-                        text: 'Captura por Data e Hora'
-                    },
                     beginAtZero: true
                 }
             }
