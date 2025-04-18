@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Simulador financeiro </title>
+    <link rel="stylesheet" href="css/style.calculadora.css" />
+</head>
+
+<body>
+    <div class="fundo">
+        <div class="título">
+            <h1> Simulador Financeiro </h1>
+        </div>
+
+        <div class="content">
+
+            <!-- Lado esquerdo: -->
+            <div class="formulario">
+                <div class="containerf">
+                <div class="calculadora1">
+                    Quantos pacientes em média são internados por mês:
+                    <input type="number" id="input_qtdpacientes">
+
+                </div><br>
+
+                <div class="calculadora2">
+                    Informe quanto você gasta em média por paciente internado:
+                    <input type="number" id="input_precoporpaciente">
+
+                </div><br>
+
+                <div class="calculadora3">
+                    Região onde localiza hospital:
+                    <select id="localização">
+
+                        <option> </option>
+                        <option>Norte</option>
+                        <option>Nordeste</option>
+                        <option>Sul</option>
+                        <option>Sudeste</option>
+                        <option>Centro-oeste</option>
+                    </select>
+                </div>
+                </div><br>
+
+                <div class="button"><center>
+
+                    <button onclick="Simular()">Simular</button>
+              
+                </center>
+                </div>
+            </div>
+
+            <!-- mensagem (Resultado) -->
+            <div id="containerm" class="containerf">
+            <div id="mensagem" class="mensagem">
+
+            </div>
+            </div>
+        </div>
+
+</body>
+
+</html>
+
+<script>
+    function Simular() {
+        var precoporpaciente = Number(input_precoporpaciente.value);
+        var qtdpacientes = Number(input_qtdpacientes.value);
+        var região = localização.value;
+        var umidades = {
+            "Norte": 85,
+            "Nordeste": 80,
+            "Sul": 75,
+            "Sudeste": 70,
+            "Centro-oeste": 78,
+        }
+
+        var risco = 0.005
+        var risco_total = 0
+        var umidade = umidades[região];
+        var porcentagem_acima_60 = umidade - 60;
+        var pacientes_infectados = 0
+
+        if (!precoporpaciente || !qtdpacientes || região === "") {
+            mensagem.innerHTML = "<p style='color:darkred'>⚠️ Preencha todos os campos corretamente.</p>";
+            return;
+        }
+
+        for (var contador = 1; porcentagem_acima_60 > contador; contador++) {
+
+            risco_total += risco * contador;
+
+
+
+
+            // 0.5% por ponto acima de 60%
+        }
+        pacientes_infectados = (qtdpacientes * risco_total / 100);
+
+        var custo_irregular = precoporpaciente * 4;
+
+        var custo_total_irregular = pacientes_infectados * custo_irregular;
+
+        var custo_total_ideal = pacientes_infectados * precoporpaciente;
+
+        var prejuizo = custo_total_irregular - custo_total_ideal;
+
+        mensagem.innerHTML = `
+            
+                <h3> Simulação para a região <b style="color:darkblue">${região}</b></h3>
+
+                <p> Umidade média da região: <b>${umidade}%</b></p>
+
+                <p> Risco estimado de infecção (IRAS): <b>${risco_total.toFixed(2)}%</b></p>
+
+                <p> Pacientes internados por mês: <b>${qtdpacientes}</b></p>
+
+                <p> Número estimado de pacientes com IRAS: <b>${pacientes_infectados.toFixed(2)}</b></p>
+
+                <p> Custo por paciente (sem infecção): <b>R$${precoporpaciente.toFixed(2)}</b></p>
+
+                <p> Custo por paciente com IRAS (internação prolongada): <b style="color:darkred">R$${custo_irregular.toFixed(2)}</b></p>
+
+                <p> Gasto total com IRAS: <b style="color:darkred">R$${custo_total_irregular.toFixed(2)}</b></p>
+
+                <p> Gasto ideal com IRAS (se umidade fosse controlada): <b style="color:darkred" >R$${custo_total_ideal.toFixed(2)}</b></p>
+                <hr>
+                <p><b> Prejuízo causado pela umidade desregulada: <span style="color:darkred">R$${prejuizo.toFixed(2)}</span></b></p>
+            `;
+    }
+</script>
