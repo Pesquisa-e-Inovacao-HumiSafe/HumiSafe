@@ -16,23 +16,25 @@
 
         <div class="content">
 
-            <!-- Lado esquerdo: -->
-            <div class="formulario">
-                <div class="containerf">
+                <div class="containerInput">
                 <div class="calculadora1">
                     Quantos pacientes em média são internados por mês:
+                    <br><br>
                     <input type="number" id="input_qtdpacientes">
 
                 </div><br>
 
                 <div class="calculadora2">
                     Informe quanto você gasta em média por paciente internado:
+                    <br>
+                    <br>
                     <input type="number" id="input_precoporpaciente">
 
                 </div><br>
 
                 <div class="calculadora3">
                     Região onde localiza hospital:
+                    <br><br>
                     <select id="localização">
 
                         <option> </option>
@@ -43,21 +45,15 @@
                         <option>Centro-oeste</option>
                     </select>
                 </div>
-                </div><br>
-
-                <div class="button"><center>
-
-                    <button onclick="Simular()">Simular</button>
-              
-                </center>
                 </div>
-            </div>
+
+                <div>
+                    <button onclick="Simular()">Simular</button>
+                </div>
 
             <!-- mensagem (Resultado) -->
-            <div id="containerm" class="containerf">
-            <div id="mensagem" class="mensagem">
-
-            </div>
+            <div id="mensagemBefore" class="containerMensagemBefore">
+                <div id="mensagem" class="class_mensagemBefore"></div>
             </div>
         </div>
 
@@ -67,6 +63,8 @@
 
 <script>
     function Simular() {
+        var mensagemBefore = document.getElementById('mensagemBefore')
+        var mensagem = document.getElementById('mensagem')
         var precoporpaciente = Number(input_precoporpaciente.value);
         var qtdpacientes = Number(input_qtdpacientes.value);
         var região = localização.value;
@@ -85,7 +83,7 @@
         var pacientes_infectados = 0
 
         if (!precoporpaciente || !qtdpacientes || região === "") {
-            mensagem.innerHTML = "<p style='color:darkred'>⚠️ Preencha todos os campos corretamente.</p>";
+            mensagem.innerHTML = "<div class ='containerMensagem'><div class = 'class_mensagem '><p style='color:darkred'>⚠️ Preencha todos os campos corretamente.</p>";
             return;
         }
 
@@ -110,7 +108,7 @@
 
         mensagem.innerHTML = `
             
-                <h3> Simulação para a região <b style="color:darkblue">${região}</b></h3>
+                <div class='containerMensagem'><div class = 'class_mensagem'><h3> Simulação para a região <b style="color:darkblue">${região}</b></h3>
 
                 <p> Umidade média da região: <b>${umidade}%</b></p>
 
@@ -129,6 +127,6 @@
                 <p> Gasto ideal com IRAS (se umidade fosse controlada): <b style="color:darkred" >R$${custo_total_ideal.toFixed(2)}</b></p>
                 <hr>
                 <p><b> Prejuízo causado pela umidade desregulada: <span style="color:darkred">R$${prejuizo.toFixed(2)}</span></b></p>
-            `;
+            </div>`;
     }
 </script>
