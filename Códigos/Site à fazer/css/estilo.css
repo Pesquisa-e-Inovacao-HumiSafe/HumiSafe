@@ -1,0 +1,144 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fonte e corpo */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('../imagens/fundo.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #fff;
+}
+
+/* Cabeçalho */
+.header {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px 0;
+}
+
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header .titulo {
+  font-size: 32px;
+  font-weight: bold;
+  color: #00bcd4;
+}
+
+.navbar {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar li a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.navbar li a:hover,
+.navbar .agora a {
+  background-color: #00bcd4;
+  color: #000;
+}
+
+/* Área de login/cadastro */
+.login, .cadastro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 40px 20px;
+}
+
+.card {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #00bcd4;
+}
+
+/* Formulários */
+.formulario .campo {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario .campo span {
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.formulario .campo input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+/* Botões */
+.botao {
+  width: 100%;
+  padding: 12px;
+  background-color: #00bcd4;
+  border: none;
+  border-radius: 5px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.botao:hover {
+  background-color: #00acc1;
+}
+
+/* Link de "Esqueci a senha" */
+.formulario a {
+  color: #ccc;
+  font-size: 14px;
+  text-decoration: underline;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+#div_mensagem {
+  text-align: center;
+  margin-top: 20px;
+  color: white;
+}
+
+.logo-titulo {
+  display: flex; /* Exibe logo e título lado a lado */
+  align-items: center; /* Alinha verticalmente */
+  gap: 10px; /* Espaço entre logo e texto */
+}
+
+.logo {
+  height: 40px; /* Altura da logo */
+  width: auto; /* Largura automática proporcional */
+}
