@@ -317,3 +317,13 @@ body{
 .rodape .p2 .parte1 h1{
     font-size: 40px;
 }
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+    
+}
+
+a:visited {
+    color: white;
+}
