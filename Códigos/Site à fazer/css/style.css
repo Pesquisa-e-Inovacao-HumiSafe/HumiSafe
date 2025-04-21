@@ -327,3 +327,17 @@ a {
 a:visited {
     color: white;
 }
+
+.botao-simule {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00aaff;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .botao-simule:hover {
+    background-color: #0088cc;
+  }
