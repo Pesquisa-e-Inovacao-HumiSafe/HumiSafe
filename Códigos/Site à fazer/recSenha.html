@@ -1,29 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recupere a senha</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar Senha - HumiSafe</title>
+  <link rel="stylesheet" href="css/estilo.css">
 </head>
+
 <body>
-    <div class="header">
-        <div class="container">
-          <h1 class="titulo">HumiSafe</h1>
-          <ul class="navbar">
-            <li>
-              <a href="site_institucional.html">site institucional local</a>
-            </li>
-            <li>
-              <a href="simulador.html">Simulador financeiro</a>
-            </li>
-            <li>
-              <a href="login.html">Login</a>
-            </li>
-            <li class="agora">
-              <a href="cadastro.html">Cadastro</a>
-            </li>
-          </ul>
+  <div class="header">
+    <div class="container">
+      <h1 class="titulo">HumiSafe</h1>
+      <ul class="navbar">
+        <li><a href="site_institucional.html">Site Institucional</a></li>
+        <li><a href="Simulador_financeiro.html">Simulador Financeiro</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="cadastro.html">Cadastro</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="login">
+    <div class="container">
+      <div class="card card-login">
+        <h2>Recuperar Senha</h2>
+        <div class="formulario">
+          <div class="campo">
+            <span>Digite seu e-mail cadastrado:</span>
+            <input id="email_recuperacao" type="email" placeholder="Ex: exemplo@email.com">
+          </div>
+          <br>
+          <button onclick="recuperarSenha()" class="botao">Enviar Instruções</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="div_mensagem"></div>
 </body>
+
 </html>
+
+<script>
+  function recuperarSenha() {
+    const email = document.getElementById('email_recuperacao').value;
+
+    if (email === "") {
+      alert("Por favor, preencha o campo de e-mail.");
+    } else if (!email.includes("@") || !email.includes(".")) {
+      alert("Digite um e-mail válido.");
+    } else {
+      alert("Instruções para redefinição de senha foram enviadas para o e-mail informado.");
+      // Aqui você poderia redirecionar ou enviar um e-mail real
+      window.location.href = "login.html";
+    }
+  }
+</script>

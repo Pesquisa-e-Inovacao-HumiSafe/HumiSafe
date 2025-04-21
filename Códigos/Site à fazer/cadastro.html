@@ -1,32 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastre-se</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro - HumiSafe</title>
+  <link rel="stylesheet" href="css/estilo.css">
 </head>
+
 <body>
-    <div class="header">
-        <div class="container">
-          <h1 class="titulo">HumiSafe</h1>
-          <ul class="navbar">
-            <li>
-              <a href="site_institucional.html">site institucional local</a>
-            </li>
-            <li>
-              <a href="simulador.html">Simulador financeiro</a>
-            </li>
-            <li>
-              <a href="login.html">Login</a>
-            </li>
-            <li>
-              <a href="dashboard.html">dashboard</a>
-            </li>
-            <li class="agora">
-              <a href="#">Cadastro</a>
-            </li>
-          </ul>
+  <div class="header">
+    <div class="container">
+      <h1 class="titulo">HumiSafe</h1>
+      <ul class="navbar">
+        <li><a href="site_institucional.html">Site Institucional</a></li>
+        <li><a href="Simulador_financeiro.html">Simulador Financeiro</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li class="agora"><a href="#">Cadastro</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cadastro">
+    <div class="container">
+      <div class="card card-cadastro">
+        <h2>Cadastro da Empresa</h2>
+        <div class="formulario">
+          <div class="campo">
+            <span>Nome da Empresa:</span>
+            <input id="empresa_input" type="text" placeholder="Digite o nome da empresa">
+          </div>
+          <div class="campo">
+            <span>CNPJ:</span>
+            <input id="cnpj_input" type="number" placeholder="Digite o CNPJ">
+          </div>
+          <div class="campo">
+            <span>Responsável:</span>
+            <input id="responsavel_input" type="text" placeholder="Nome do responsável">
+          </div>
+          <div class="campo">
+            <span>E-mail:</span>
+            <input id="email_input" type="email" placeholder="Digite o e-mail">
+          </div>
+          <div class="campo">
+            <span>Telefone:</span>
+            <input id="telefone_input" type="number" placeholder="Digite o telefone">
+          </div>
+          <div class="campo">
+            <span>Senha:</span>
+            <input id="senha_input" type="password" placeholder="Crie uma senha">
+          </div>
+          <div class="campo">
+            <span>Confirmar Senha:</span>
+            <input id="confirmar_senha_input" type="password" placeholder="Confirme a senha">
+          </div>
+          <br>
+          <button onclick="Cadastrar()" class="botao">Cadastrar Empresa</button>
         </div>
       </div>
+    </div>
+  </div>
+  <div id="div_mensagem"></div>
+
 </body>
+
 </html>
+<script>
+  function Cadastrar() {
+    var empresa = empresa_input.value;
+    var cnpj = Number(cnpj_input.value);
+    var responsavel = responsavel_input.value;
+    var email = email_input.value;
+    var telefone = Number(telefone_input.value);
+    var senha = senha_input.value;
+    var confirmarSenha = confirmar_senha_input.value;
+
+    if (empresa == '' || cnpj == '' || responsavel == '' || email == '' || telefone == '' || senha == '' || confirmarSenha == '') {
+      alert("Por favor, preencha todos os campos.");
+    } else if (senha != confirmarSenha) {
+      alert("As senhas não coincidem.");
+    }
+    else if (senha.includes('!') == false && senha.includes("@") == false && senha.includes("#") == false && senha.includes("$") == false) {
+      alert("A senha precisa incluir algum caracter especial (!@#$)")
+    }
+    else {
+      alert("Cadastro da empresa realizado com sucesso!");
+      window.location.href = "login.html";
+    }
+  }
+</script>
