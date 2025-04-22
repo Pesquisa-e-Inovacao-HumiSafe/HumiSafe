@@ -23,17 +23,6 @@
 
     <h1>Dashboard da empresa:</h1>
 
-    <div id="graficos">
-        <div style="width: 50%;">
-            <canvas id="graficoLinha"></canvas>
-        </div>
-
-
-        <div style="width: 50%;">
-            <canvas id="graficoBarra"></canvas>
-        </div>
-    </div>
-
 
     <div id="conteudo_dashboard">
         <div id="dados_grafico_barras">
@@ -90,6 +79,17 @@
             </p>
         </div>
 
+    </div>
+
+    <div id="graficos">
+        <div style="width: 50%;">
+            <canvas id="graficoLinha"></canvas>
+        </div>
+
+
+        <div style="width: 50%;">
+            <canvas id="graficoBarra"></canvas>
+        </div>
     </div>
 
 </body>
@@ -205,33 +205,6 @@
                         display: true,
                         text: 'Captura por Data e Hora'
                     },
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    var dataUTI = [40, 41, 40, 41, 39, 40]
-    var dataRaioX = [65, 67, 69, 66, 61, 60]
-    var grafico3 = new Chart(document.getElementById('grafico3').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: ['12/04/2025 - 00:23', '12/04/2025 - 01:45', '12/04/2025 - 02:19', '12/04/2025 - 03:57', '12/04/2025 - 04:48', '12/04/2025 - 05:14'],
-            datasets: [{
-                label: 'Umidade UTI',
-                data: dataUTI,
-                borderColor: 'red',
-                borderWidth: 2,
-                fill: false
-            },]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-
-                x: {
                     beginAtZero: true
                 }
             }
