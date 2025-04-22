@@ -35,7 +35,7 @@
           </div>
           <div class="campo">
             <span>CNPJ:</span>
-            <input id="cnpj_input" type="number" placeholder="Digite o CNPJ">
+            <input id="cnpj_input" type="text" placeholder="Digite o CNPJ" maxlength="18" oninput="formatarCNPJ()">
           </div>
           <div class="campo">
             <span>Responsável:</span>
@@ -43,11 +43,11 @@
           </div>
           <div class="campo">
             <span>E-mail:</span>
-            <input id="email_input" type="email" placeholder="Digite o e-mail">
+            <input id="email_input" type="email" placeholder="Ex: exemplo@email.com">
           </div>
           <div class="campo">
             <span>Telefone:</span>
-            <input id="telefone_input" type="number" placeholder="Digite o telefone">
+            <input id="telefone_input" type="text" placeholder="Digite o telefone" maxlength="15" oninput="formatarTelefone()">
           </div>
           <div class="campo">
             <span>Senha:</span>
@@ -84,11 +84,75 @@
       alert("As senhas não coincidem.");
     }
     else if (senha.includes('!') == false && senha.includes("@") == false && senha.includes("#") == false && senha.includes("$") == false) {
-      alert("A senha precisa incluir algum caracter especial (!@#$)")
+      alert("A senha precisa incluir algum caracter especial (!@#$)")}
+
+    else if (email.includes("@") == false || senha.includes(".") == false) {
+      alert('O email precisa incluir "@" e "."')
     }
     else {
       alert("Cadastro da empresa realizado com sucesso!");
       window.location.href = "login.html";
     }
+  }
+
+  function formatarCNPJ() {
+    var campo = document.getElementById("cnpj_input");
+    var cnpj = campo.value;
+
+    // Remove tudo que não for número
+    var cnpjNumerico = "";
+    for (var i = 0; i < cnpj.length; i++) {
+      var caractere = cnpj[i];
+      if (caractere >= "0" && caractere <= "9") {
+        cnpjNumerico += caractere;
+      }
+    }
+
+    // Adiciona a formatação manualmente
+    var formatado = "";
+    for (var i = 0; i < cnpjNumerico.length && i < 14; i++) {
+      if (i == 2 || i == 5) {
+        formatado += ".";
+      } else if (i == 8) {
+        formatado += "/";
+      } else if (i == 12) {
+        formatado += "-";
+      }
+      formatado += cnpjNumerico[i];
+    }
+
+    campo.value = formatado;
+  }
+
+  function formatarTelefone() {
+    var campo = document.getElementById("telefone_input");
+    var telefone = campo.value;
+
+    // Remove tudo que não for número
+    var numeros = "";
+    for (var i = 0; i < telefone.length; i++) {
+      var caractere = telefone[i];
+      if (caractere >= "0" && caractere <= "9") {
+        numeros += caractere;
+      }
+    }
+    // Limita a 11 dígitos (com DDD)
+    if (numeros.length > 11) {
+      numeros = numeros.slice(0, 11);
+    }
+    // Aplica formatação: (XX) XXXXX-XXXX
+    var formatado = "";
+    for (var i = 0; i < numeros.length; i++) {
+      if (i == 0) {
+        formatado += "(";
+      } else if (i == 2) {
+        formatado += ") ";
+      } else if (i == 7) {
+        formatado += "-";
+      }
+      formatado += numeros[i];
+    }
+
+    campo.value = formatado;
   }
 </script>
