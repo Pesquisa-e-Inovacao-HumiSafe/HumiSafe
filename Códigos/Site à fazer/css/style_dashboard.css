@@ -47,6 +47,10 @@ body {
 }
 
 #nivel_umidade{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border-radius: 10px;
     padding: 15px;
     flex: 1;
@@ -55,6 +59,10 @@ body {
 }
 
 #dados_grafico_linhas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 16px;
 }
 
@@ -120,6 +128,10 @@ a {
 }
 
 #regiao_umidade span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
     color: orange;
     font-size: 20px;
 }
@@ -135,7 +147,12 @@ a {
 }
 
 #desvios_criticos span{
+    display: flex;
     font-size: 20px;
+    padding-top: 10px;
+    font-style: strong;
+    align-items: center;
+    justify-content: center;
 }
 
 a {
