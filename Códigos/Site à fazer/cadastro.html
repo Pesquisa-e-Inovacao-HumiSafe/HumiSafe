@@ -16,8 +16,8 @@
         <h1 class="titulo">HumiSafe</h1>
       </div>
       <ul class="navbar">
-        <li><a href="site_institucional.html">Site Institucional</a></li>
-        <li><a href="Simulador_financeiro.html">Simulador Financeiro</a></li>
+        <li><a href="site_institucional.html">início</a></li>
+        <li><a href="Simulador_financeiro.html">Simulador</a></li>
         <li><a href="login.html">Login</a></li>
         <li class="agora"><a href="#">Cadastro</a></li>
       </ul>
@@ -86,7 +86,7 @@
     else if (senha.includes('!') == false && senha.includes("@") == false && senha.includes("#") == false && senha.includes("$") == false) {
       alert("A senha precisa incluir algum caracter especial (!@#$)")}
 
-    else if (email.includes("@") == false || senha.includes(".") == false) {
+    else if (email.includes("@") == false || email.includes(".") == false) {
       alert('O email precisa incluir "@" e "."')
     }
     else {
@@ -96,10 +96,9 @@
   }
 
   function formatarCNPJ() {
-    var campo = document.getElementById("cnpj_input");
-    var cnpj = campo.value;
+    
+    var cnpj = cnpj_input.value;
 
-    // Remove tudo que não for número
     var cnpjNumerico = "";
     for (var i = 0; i < cnpj.length; i++) {
       var caractere = cnpj[i];
@@ -108,7 +107,6 @@
       }
     }
 
-    // Adiciona a formatação manualmente
     var formatado = "";
     for (var i = 0; i < cnpjNumerico.length && i < 14; i++) {
       if (i == 2 || i == 5) {
@@ -121,14 +119,14 @@
       formatado += cnpjNumerico[i];
     }
 
-    campo.value = formatado;
+    cnpj_input.value = formatado;
   }
 
   function formatarTelefone() {
-    var campo = document.getElementById("telefone_input");
-    var telefone = campo.value;
+    
+    var telefone = telefone_input.value;
 
-    // Remove tudo que não for número
+   
     var numeros = "";
     for (var i = 0; i < telefone.length; i++) {
       var caractere = telefone[i];
@@ -136,11 +134,11 @@
         numeros += caractere;
       }
     }
-    // Limita a 11 dígitos (com DDD)
+    
     if (numeros.length > 11) {
       numeros = numeros.slice(0, 11);
     }
-    // Aplica formatação: (XX) XXXXX-XXXX
+    
     var formatado = "";
     for (var i = 0; i < numeros.length; i++) {
       if (i == 0) {
@@ -153,6 +151,6 @@
       formatado += numeros[i];
     }
 
-    campo.value = formatado;
+    telefone_input.value = formatado;
   }
 </script>
