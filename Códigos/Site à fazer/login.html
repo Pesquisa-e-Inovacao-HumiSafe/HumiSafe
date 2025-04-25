@@ -70,10 +70,10 @@
     var senha = senha_input.value
 
     if ((email != "humisafe@sptech.school" || senha != "adm123@") && tentativas > 0) {
-      alert(`O email ou a senha estão incorretos você ainda tem ${tentativas} tentativas`)
+      alert(`O email ou a senha estão incorretos. Você ainda tem ${tentativas} tentativas.`)
       tentativas--;
     }
-    else if (tentativas <= 0) { alert('as tentativas acabaram! acione o suporte') }
+    else if (tentativas <= 0) { alert('As tentativas acabaram! Acione o suporte.') }
     else {
       alert('Login concluído')
       window.location.href = "dashboard.html"

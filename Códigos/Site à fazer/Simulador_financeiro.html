@@ -123,10 +123,6 @@
         for (var contador = 1; porcentagem_acima_60 > contador; contador++) {
 
             risco_total += risco * contador;
-
-
-
-
             // 0.5% por ponto acima de 60%
         }
         pacientes_infectados = (qtdpacientes * risco_total / 100);
@@ -139,6 +135,8 @@
 
         var prejuizo = custo_total_irregular - custo_total_ideal;
 
+        var pacientes_infectador_arredondado = Math.ceil(pacientes_infectados) 
+
         mensagem.innerHTML = `
             
                 <div class='containerMensagem'><div class = 'class_mensagem'><h3> Simulação para a região <b style="color:darkblue">${região}</b></h3>
@@ -149,7 +147,7 @@
 
                 <p> Pacientes internados por mês: <b>${qtdpacientes}</b></p>
 
-                <p> Número estimado de pacientes com IRAS: <b>${pacientes_infectados.toFixed(2)}</b></p>
+                <p> Número estimado de pacientes com IRAS: <b>${pacientes_infectador_arredondado}</b></p>
 
                 <p> Custo por paciente (sem infecção): <b>R$${precoporpaciente.toFixed(2)}</b></p>
 
