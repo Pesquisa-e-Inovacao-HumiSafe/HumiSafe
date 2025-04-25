@@ -8,7 +8,7 @@ const SERIAL_BAUD_RATE = 9600;
 const SERVIDOR_PORTA = 3300;
 
 // habilita ou desabilita a inserção de dados no banco de dados
-const HABILITAR_OPERACAO_INSERIR = true;
+const HABILITAR_OPERACAO_INSERIR = false;
 
 // função para comunicação serial
 const serial = async (
@@ -20,8 +20,8 @@ const serial = async (
     let poolBancoDados = mysql.createPool(
         {
             host: 'localhost',
-            user: 'inserirDados',
-            password: 'SPTech#2024',
+            user: 'humisafe',
+            password: 'Humisafe@2025',
             database: 'humisafe',
             port: 3307
         }

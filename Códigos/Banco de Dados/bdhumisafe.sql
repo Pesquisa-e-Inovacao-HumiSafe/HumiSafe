@@ -1,5 +1,3 @@
--- GRUPO 3 - HUMISAFE - BEATRIZ RIBEIRO, ISMAEL WECSLEY, KEVIN SILVA, MARCOS HIDEYUKI, PAULO CESAR E PAULO JÚNIOR.
-
 create database humisafe;
 
 use humisafe;
@@ -133,7 +131,7 @@ cnpj AS "CNPJ",
 dtCadastro AS "Data de Cadastro",
 email AS "E-Mail",
 senha AS "Senha",
-CONCAT("+", telefone) AS "Telefone (XXYYZZZZZZZZZ)" FROM Cliente;
+CONCAT("+", telefone) AS "Telefone (XXYYZZZZZZZZZ)" FROM cliente;
 
 SELECT * FROM umidade WHERE umidade >40 AND umidade <60;
 

@@ -4,7 +4,6 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
     background-color: var(--azulEscuro);
 }
 
@@ -95,7 +94,8 @@ body {
 }
 
 
-h1 {
+.titulo-dashboard {
+    margin-top: 150px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -118,9 +118,7 @@ tr {
     border-collapse: collapse;
 }
 
-a {
-    color: white;
-}
+
 
 #custo_paciente span {
     color: red;
@@ -155,9 +153,4 @@ a {
     justify-content: center;
 }
 
-a {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    text-decoration: none;
-}
+

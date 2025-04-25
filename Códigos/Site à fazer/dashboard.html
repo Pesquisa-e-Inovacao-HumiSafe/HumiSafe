@@ -5,49 +5,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="css/style_dashboard.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/dashboard.css">
     <title>Dashboard do site</title>
 </head>
 
 <body>
     <div class="header">
+        <div class="logo-titulo">
+            <img src="imagens/logo.png" alt="">
+            <h1>HUMISAFE</h1>
+        </div>
         <div class="container">
-            <h1 class="titulo">HumiSafe</h1>
             <ul class="navbar">
                 <li>
-                    <a href="site_institucional.html">SAIR</a>
+                    <a href="site_institucional.html#inicio">Início</a>
+                </li>
+                <li>
+                    <a href="site_institucional.html#sobrenos">Sobre Nós</a>
+                </li>
+                <li>
+                    <a href="site_institucional.html#sistema">Sistema</a>
+                </li>
+                <li>
+                    <a href="Simulador_financeiro.html">Simulador</a>
+                </li>
+                <li>
+                    <a href="cadastro.html">Cadastrar</a>
+                </li>
+                <li>
+                    <a class="button" href="login.html">Entrar <div class="id_img_login"></div></a>
                 </li>
             </ul>
         </div>
     </div>
 
-    <h1>Dashboard da empresa:</h1>
+    <h1 class="titulo-dashboard">Dashboard da empresa:</h1>
+
+    <div id="graficos">
+        <div style="width: 50%;">
+            <canvas id="graficoLinha"></canvas>
+        </div>
+
+
+        <div style="width: 50%;">
+            <canvas id="graficoBarra"></canvas>
+        </div>
+    </div>
 
 
     <div id="conteudo_dashboard">
         <div id="dados_grafico_barras">
             <h3>Dados do Gráfico - Barras</h3>
             <p>
-                O gráfico de barras compara em um período de <strong>6 dias</strong> a taxa da umidade na UTI e na Sala de Cirurgia
-                (ambientes críticos do hospital e que requerem maior atenção).A sala de cirurgia mostra uma situação preocupante,
-                no qual as taxas passam significamente do ideal. Esse é um cenário onde medidas precisam ser tomadas
+                O gráfico de barras compara em um período de <strong>6 dias</strong> a taxa da umidade na UTI e na
+                Sala de Cirurgia
+                (ambientes críticos do hospital e que requerem maior atenção). A sala de cirurgia mostra uma
+                situação preocupante,
+                na qual as taxas passam significativamente do ideal. Esse é um cenário onde medidas precisam ser
+                tomadas
                 para garantir um ambiente mais seguro no local.
             </p>
         </div>
 
         <div id="custo">
             <div id="custo_paciente">
-                <p>Custo médio por paciente: <strong>R$1.300 <span>⬆</span></strong></p>
+                <p>Custo médio por paciente: <strong>R$ 4.014,26 <span>⬆</span></strong></p>
             </div>
 
             <div id="custo_operacional">
-                <p>Percentual de aumento no custo operacional do paciente com IRAS: <strong><span>400%</span></strong>
+                <p>Percentual de aumento no custo operacional do paciente com IRAS:
+                    <strong><span>400%</span></strong>
                 </p>
             </div>
         </div>
-
-
-
 
         <div id="nivel_umidade">
             <h2>Níveis de umidade</h2>
@@ -72,24 +103,13 @@
             <h3>Dados do Gráfico - Linhas</h3>
             <p>
                 Podemos observar pelo gráfico de linhas que os níveis de umidade no ambiente hospitalar variam
-                entre <strong>39</strong> e <strong>71</strong>.
+                entre <strong>39%</strong> e <strong>71%</strong>.
 
                 Esse não é um cenário adequado, já que com um alto índice de umidade, aumentam as chances de
-                profileração de fungos e bactérias no local.
+                proliferação de fungos e bactérias no local.
             </p>
         </div>
 
-    </div>
-
-    <div id="graficos">
-        <div style="width: 50%;">
-            <canvas id="graficoLinha"></canvas>
-        </div>
-
-
-        <div style="width: 50%;">
-            <canvas id="graficoBarra"></canvas>
-        </div>
     </div>
 
 </body>

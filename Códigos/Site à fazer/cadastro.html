@@ -6,60 +6,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro - HumiSafe</title>
   <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/navbar.css">
 </head>
 
 <body>
-  <div class="header">
-    <div class="container">
+  <div class="fundo" id="inicio">
+    <div class="header">
       <div class="logo-titulo">
-        <img src="imagens/logo.png" alt="Logo HumiSafe" class="logo">
-        <h1 class="titulo">HumiSafe</h1>
+        <img src="imagens/logo.png" alt="">
+        <h1>HUMISAFE</h1>
       </div>
-      <ul class="navbar">
-        <li><a href="site_institucional.html">início</a></li>
-        <li><a href="Simulador_financeiro.html">Simulador</a></li>
-        <li><a href="login.html">Login</a></li>
-        <li class="agora"><a href="#">Cadastro</a></li>
-      </ul>
+      <div class="container">
+        <ul class="navbar">
+          <li>
+            <a href="site_institucional.html#inicio">Início</a>
+          </li>
+          <li>
+            <a href="site_institucional.html#sobrenos">Sobre Nós</a>
+          </li>
+          <li>
+            <a href="site_institucional.html#sistema">Sistema</a>
+          </li>
+          <li>
+            <a href="Simulador_financeiro.html">Simulador</a>
+          </li>
+          <li>
+            <a class="agora" href="cadastro.html">Cadastrar</a>
+          </li>
+          <li>
+            <a class="button" href="login.html">Entrar <div class="id_img_login"></div></a>
+          </li>
+        </ul>
+      </div>
+
     </div>
   </div>
 
   <div class="cadastro">
-    <div class="container">
-      <div class="card card-cadastro">
-        <h2>Cadastro da Empresa</h2>
-        <div class="formulario">
-          <div class="campo">
-            <span>Nome da Empresa:</span>
-            <input id="empresa_input" type="text" placeholder="Digite o nome da empresa">
-          </div>
-          <div class="campo">
-            <span>CNPJ:</span>
-            <input id="cnpj_input" type="text" placeholder="Digite o CNPJ" maxlength="18" oninput="formatarCNPJ()">
-          </div>
-          <div class="campo">
-            <span>Responsável:</span>
-            <input id="responsavel_input" type="text" placeholder="Nome do responsável">
-          </div>
-          <div class="campo">
-            <span>E-mail:</span>
-            <input id="email_input" type="email" placeholder="Ex: exemplo@email.com">
-          </div>
-          <div class="campo">
-            <span>Telefone:</span>
-            <input id="telefone_input" type="text" placeholder="Digite o telefone" maxlength="15" oninput="formatarTelefone()">
-          </div>
-          <div class="campo">
-            <span>Senha:</span>
-            <input id="senha_input" type="password" placeholder="Crie uma senha">
-          </div>
-          <div class="campo">
-            <span>Confirmar Senha:</span>
-            <input id="confirmar_senha_input" type="password" placeholder="Confirme a senha">
-          </div>
-          <br>
-          <button onclick="Cadastrar()" class="botao">Cadastrar Empresa</button>
+    <div class="card card-cadastro">
+      <h2>Cadastro da Empresa</h2>
+      <div class="formulario">
+        <div class="campo">
+          <span>Nome da Empresa:</span>
+          <input id="empresa_input" type="text" placeholder="Digite o nome da empresa">
         </div>
+        <div class="campo">
+          <span>CNPJ:</span>
+          <input id="cnpj_input" type="text" placeholder="Digite o CNPJ" maxlength="18" oninput="formatarCNPJ()">
+        </div>
+        <div class="campo">
+          <span>Responsável:</span>
+          <input id="responsavel_input" type="text" placeholder="Nome do responsável">
+        </div>
+        <div class="campo">
+          <span>E-mail:</span>
+          <input id="email_input" type="email" placeholder="Ex: exemplo@email.com">
+        </div>
+        <div class="campo">
+          <span>Telefone:</span>
+          <input id="telefone_input" type="text" placeholder="Digite o telefone" maxlength="15"
+            oninput="formatarTelefone()">
+        </div>
+        <div class="campo">
+          <span>Senha:</span>
+          <input id="senha_input" type="password" placeholder="Crie uma senha">
+        </div>
+        <div class="campo">
+          <span>Confirmar Senha:</span>
+          <input id="confirmar_senha_input" type="password" placeholder="Confirme a senha">
+        </div>
+        <br>
+        <button onclick="Cadastrar()" class="botao">Cadastrar Empresa</button>
       </div>
     </div>
   </div>
@@ -84,7 +101,8 @@
       alert("As senhas não coincidem.");
     }
     else if (senha.includes('!') == false && senha.includes("@") == false && senha.includes("#") == false && senha.includes("$") == false) {
-      alert("A senha precisa incluir algum caracter especial (!@#$)")}
+      alert("A senha precisa incluir algum caracter especial (!@#$)")
+    }
 
     else if (email.includes("@") == false || email.includes(".") == false) {
       alert('O email precisa incluir "@" e "."')
@@ -96,7 +114,7 @@
   }
 
   function formatarCNPJ() {
-    
+
     var cnpj = cnpj_input.value;
 
     var cnpjNumerico = "";
@@ -123,10 +141,10 @@
   }
 
   function formatarTelefone() {
-    
+
     var telefone = telefone_input.value;
 
-   
+
     var numeros = "";
     for (var i = 0; i < telefone.length; i++) {
       var caractere = telefone[i];
@@ -134,11 +152,11 @@
         numeros += caractere;
       }
     }
-    
+
     if (numeros.length > 11) {
       numeros = numeros.slice(0, 11);
     }
-    
+
     var formatado = "";
     for (var i = 0; i < numeros.length; i++) {
       if (i == 0) {
