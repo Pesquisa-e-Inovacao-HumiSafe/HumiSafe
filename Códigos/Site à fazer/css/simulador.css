@@ -1,4 +1,9 @@
-
+body{
+    padding: 0;
+    margin: 0;
+    background-image: url(../imagens/home.png);
+    background-size: cover;
+}
 
 .título{
     margin-top: 150px;
@@ -51,11 +56,6 @@
     border-radius: 10px; 
     text-align: center;
     width: 550px;
-}
-
-.containerMensagemBefore {
-    width: 0;
-    height: 0;
 }
 
 .containerMensagem {
