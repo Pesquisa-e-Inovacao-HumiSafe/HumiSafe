@@ -31,13 +31,15 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    align-items: center;
     padding: 20px;
 }
 
 #conteudo_dashboard div {
+    min-height: 330px;
     flex: 1;
-    min-width: 200px;
+    max-width: 270px;
     border: 3px solid var(--azulClaro);
     border-radius: 10px;
     padding: 15px;
@@ -45,54 +47,12 @@ body {
     background-color: white;
 }
 
-#nivel_umidade{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    padding: 15px;
-    flex: 1;
-    min-width: 300px;
-    box-sizing: border-box;
-}
-
-#dados_grafico_linhas {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-}
-
-#taxa_umidade {
+#regiao_umidade, #desvios_criticos, #regiao_umidade, #alertas_hospital, #alertas_sensores {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-
-#taxa_umidade #regiao_umidade, #desvios_criticos{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#custo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#custo #custo_paciente, #custo_operacional{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
 
 .titulo-dashboard {
     margin-top: 150px;
@@ -103,54 +63,51 @@ body {
     color: white;
 }
 
-h3 {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-table,
-td,
-tr {
-    border: 1px solid black;
-    width: 100%;
-    border-collapse: collapse;
-}
-
-
-
-#custo_paciente span {
-    color: red;
-    font-size: 40px;
-}
 
 #regiao_umidade span {
     display: flex;
     align-items: center;
     justify-content: center;
     padding-top: 20px;
-    color: orange;
-    font-size: 20px;
-}
-
-#custo_operacional span {
-    display: flex;
-    color: red;
-    font-size: 20px;
-    padding-top: 10px;
-    font-style: strong;
-    align-items: center;
-    justify-content: center;
+    color: green;
+    font-size: 25px;
 }
 
 #desvios_criticos span{
     display: flex;
-    font-size: 20px;
+    font-size: 30px;
     padding-top: 10px;
     font-style: strong;
     align-items: center;
     justify-content: center;
 }
 
+#alertas_hospital span {
+    font-size: 30px;
+}
 
+#umidade_setores{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+li {
+    padding: 8px;
+}
+
+.span_alerta {
+    color: red;
+}
+
+h3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#alertas_hospital p {
+    text-align: center;
+}
