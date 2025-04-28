@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -41,33 +41,30 @@
 
         </div>
     </div>
-
-    <div class="título">
-        <h1>SIMULADOR</h1>
-        <h2>FAÇA JÁ SUA SIMULAÇÃO!</h2>
-    </div>
-
+    
     <div class="content">
-
+        
         <div class="containerInput">
-            <div class="calculadora1">
+            
+                <div class="título">
+                    <h1>SIMULADOR</h1>
+                    <h2>FAÇA JÁ SUA SIMULAÇÃO!</h2>
+                </div>
+            <div>
                 Quantos pacientes em média são internados por mês:
-                <br><br>
+                <br>
                 <input type="number" id="input_qtdpacientes">
+            </div>
 
-            </div><br>
-
-            <div class="calculadora2">
+            <div>
                 Informe quanto você gasta em média por paciente internado:
                 <br>
-                <br>
                 <input type="number" id="input_precoporpaciente">
+            </div>
 
-            </div><br>
-
-            <div class="calculadora3">
+            <div>
                 Região onde localiza hospital:
-                <br><br>
+                <br>
                 <select id="localização">
 
                     <option> </option>
@@ -78,16 +75,16 @@
                     <option>Centro-oeste</option>
                 </select>
             </div>
+            <div>
+                <button class="button-simular" onclick="Simular()">Simular</button>
+            </div>
         </div>
 
-        <div>
-            <button class="button-simular" onclick="Simular()">Simular</button>
-        </div>
 
         <!-- mensagem (Resultado) -->
-        <div id="mensagemBefore" class="containerMensagemBefore">
+
             <div id="mensagem" class="class_mensagemBefore"></div>
-        </div>
+
     </div>
 
 </body>
@@ -139,7 +136,7 @@
 
         mensagem.innerHTML = `
             
-                <div class='containerMensagem'><div class = 'class_mensagem'><h3> Simulação para a região <b style="color:darkblue">${região}</b></h3>
+            <div class='containerMensagem'><div class = 'class_mensagem'><h3> Simulação para a região <b style="color:black">${região}</b></h3>
 
                 <p> Umidade média da região: <b>${umidade}%</b></p>
 
@@ -151,13 +148,13 @@
 
                 <p> Custo por paciente (sem infecção): <b>R$${precoporpaciente.toFixed(2)}</b></p>
 
-                <p> Custo por paciente com IRAS (internação prolongada): <b style="color:darkred">R$${custo_irregular.toFixed(2)}</b></p>
+                <p> Custo por paciente com IRAS (internação prolongada): <b style="color:black">R$${custo_irregular.toFixed(2)}</b></p>
 
-                <p> Gasto total com IRAS: <b style="color:darkred">R$${custo_total_irregular.toFixed(2)}</b></p>
+                <p> Gasto total com IRAS: <b style="color:black">R$${custo_total_irregular.toFixed(2)}</b></p>
 
-                <p> Gasto ideal com IRAS (se umidade fosse controlada): <b style="color:darkred" >R$${custo_total_ideal.toFixed(2)}</b></p>
+                <p> Gasto ideal com IRAS (se umidade fosse controlada): <b style="color:black" >R$${custo_total_ideal.toFixed(2)}</b></p>
                 <hr>
-                <p><b> Prejuízo causado pela umidade desregulada: <span style="color:darkred">R$${prejuizo.toFixed(2)}</span></b></p>
+                <p><b> Prejuízo causado pela umidade desregulada: <span style="color:black">R$${prejuizo.toFixed(2)}</span></b></p>
             </div>`;
     }
 </script>

@@ -1,15 +1,19 @@
-body{
+body {
     padding: 0;
     margin: 0;
     background-image: url(../imagens/home.png);
     background-size: cover;
+    background-repeat: no-repeat;
 }
 
-.título{
-    margin-top: 150px;
-    size: 600;
+.título {
     text-align: center;
-    color:rgb(218, 214, 214);
+    color: #00bcd4
+}
+
+h1 {
+    padding: 0;
+    margin: 0;
 }
 
 .content {
@@ -21,17 +25,45 @@ body{
 }
 
 .containerInput {
-    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    margin-top: 100px;
+    color: white;
+    /* background-color: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
     padding: 23px;
     max-width: 600px;
     min-width: 300px;
     color: #333;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
 }
 
 
-.calculadora1{
+.containerInput select {
+    margin: 15px;
+    width: 450px;
+    height: 41px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-left: 0;
+}
+
+.containerInput input {
+    margin: 15px;
+    width: 450px;
+    height: 37px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-left: 0;
+}
+
+/* .calculadora1{
     background-color: #245aac;
     color: #e6e6e6;
     padding: 15px;
@@ -56,39 +88,31 @@ body{
     border-radius: 10px; 
     text-align: center;
     width: 550px;
-}
+} */
 
-.containerMensagem {
-    justify-self: center;
-    background-color: rgba(255, 255, 255, 0.9);
+.class_mensagemBefore {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    margin-top: 100px;
+    color: white;
     border-radius: 15px;
-    padding: 23px;
-    max-width: 600px;
-    min-width: fit-content;
-    color: #333;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 150px 0;
+    width: 533px;
 }
 
-.class_mensagemBefore{
-    width: 0;
-    height: 0;
-}
-
-.class_mensagem {
-    background-color: #245aac;
-    border-radius: 15px;
-    padding: 20px;
-    min-width: 500px;
-    color: #e6e6e6;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
 
 .button-simular {
     padding: 5px 20px;
     margin: 20px;
     font-size: 19px;
-    background-color: rgb(20, 32, 211);
-    color: wheat;
+    background-color: #00acc1;
+    color: black;
+    font-weight: bold;
     border: none;
     border-radius: 4px;
     width: 160px;
