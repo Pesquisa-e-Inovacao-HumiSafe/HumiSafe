@@ -125,18 +125,18 @@
         pacientes_infectados = (qtdpacientes * risco_total / 100);
 
         var custo_irregular = precoporpaciente * 4;
+        
+        var pacientes_infectados_arredondado = Math.ceil(pacientes_infectados).toFixed(); 
 
-        var custo_total_irregular = pacientes_infectados * custo_irregular;
+        var prejuizo_paciente = precoporpaciente * 3;
 
-        var custo_total_ideal = pacientes_infectados * precoporpaciente;
+        var prejuizo_total = prejuizo_paciente * pacientes_infectados_arredondado;
 
-        var prejuizo = custo_total_irregular - custo_total_ideal;
-
-        var pacientes_infectador_arredondado = Math.ceil(pacientes_infectados) 
+        
 
         mensagem.innerHTML = `
             
-            <div class='containerMensagem'><div class = 'class_mensagem'><h3> Simulação para a região <b style="color:black">${região}</b></h3>
+            <div class='containerMensagem'><div class = 'class_mensagem'><h3> Simulação para a região ${região}</b></h3>
 
                 <p> Umidade média da região: <b>${umidade}%</b></p>
 
@@ -144,17 +144,19 @@
 
                 <p> Pacientes internados por mês: <b>${qtdpacientes}</b></p>
 
-                <p> Número estimado de pacientes com IRAS: <b>${pacientes_infectador_arredondado}</b></p>
+                <p> Número estimado de pacientes com IRAS: <b>${pacientes_infectados_arredondado}</b></p>
 
                 <p> Custo por paciente (sem infecção): <b>R$${precoporpaciente.toFixed(2)}</b></p>
 
-                <p> Custo por paciente com IRAS (internação prolongada): <b style="color:black">R$${custo_irregular.toFixed(2)}</b></p>
+                <p> Custo por paciente com IRAS (internação prolongada): <b>R$${custo_irregular.toFixed(2)}</b></p>
 
-                <p> Gasto total com IRAS: <b style="color:black">R$${custo_total_irregular.toFixed(2)}</b></p>
+                <p> Prejuizo gerado por paciente infectado com IRAS: <b>R$${prejuizo_paciente.toFixed(2)}</b></p>
 
-                <p> Gasto ideal com IRAS (se umidade fosse controlada): <b style="color:black" >R$${custo_total_ideal.toFixed(2)}</b></p>
+                
+
+         
                 <hr>
-                <p><b> Prejuízo causado pela umidade desregulada: <span style="color:black">R$${prejuizo.toFixed(2)}</span></b></p>
+                <p><b> Prejuízo causado por umidade desregulada: <b> R$${prejuizo_total.toFixed(2)}</b></p>
             </div>`;
     }
 </script>
