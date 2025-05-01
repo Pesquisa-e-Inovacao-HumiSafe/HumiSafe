@@ -5,14 +5,22 @@
 
 body {
     background-color: var(--azulEscuro);
+   
 }
 
 #graficos {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
     width: 100%;
+    
+}
+
+#graficos div{
+margin:0px;
+padding: 0px;
+
 }
 
 #graficoLinha {
@@ -29,18 +37,20 @@ body {
 
 #conteudo_dashboard {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: space-evenly;
+    /* flex-wrap: wrap;  */
+    /* gap: 10px; */
+    justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    /* padding: 20px; */
+    margin-top:13px;
+    
 }
 
 #conteudo_dashboard div {
     min-height: 330px;
     flex: 1;
-    max-width: 270px;
-    border: 3px solid var(--azulClaro);
+    max-width: 280px;
+    border: 2px solid var(--azulClaro);
     border-radius: 10px;
     padding: 15px;
     box-sizing: border-box;
@@ -55,7 +65,7 @@ body {
 }
 
 .titulo-dashboard {
-    margin-top: 150px;
+    margin-top: 100px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -110,4 +120,9 @@ h3 {
 
 #alertas_hospital p {
     text-align: center;
+}
+
+.content{
+    padding: 23px;
+    
 }

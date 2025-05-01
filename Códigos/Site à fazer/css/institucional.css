@@ -295,11 +295,11 @@ a:visited {
 .botao-simule {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #00aaff;
+    background-color: var(--azulClaro);
     color: white;
     border-radius: 5px;
     font-weight: bold;
-    transition: background-color 0.3s;
+    transition: 0.3s;
 }
 
 .botao-simule:hover {

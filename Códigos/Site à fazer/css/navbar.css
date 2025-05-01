@@ -71,6 +71,7 @@ body{
     color: white;
 }
 
+
 .navbar .button{
     width: 100px;
     height: 15px;
@@ -83,11 +84,7 @@ body{
     color: var(--azulEscuro);
     border: 2px solid var(--azulEscuro);
 }
-.navbar img{
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-}
+
 .header .navbar a{
     color: var(--azulEscuro);
     text-decoration: none;
@@ -123,6 +120,22 @@ a:visited {
 }
 
 
-.class_mensagemBefore span{
-    color: white;
+.button .id_img_login {
+    background-image: url('../imagens/imgLogin.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.button:hover .id_img_login {
+    background-image: url('../imagens/carinha.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.agora .id_img_login_agora {
+    background-image: url('../imagens/carinha.png');
+    background-repeat: no-repeat;
+    background-size: cover;
 }

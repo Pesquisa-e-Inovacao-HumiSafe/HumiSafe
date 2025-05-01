@@ -40,66 +40,69 @@
             </ul>
         </div>
     </div>
-
-    <h1 class="titulo-dashboard">Dashboard da empresa:</h1>
-
-    <div id="graficos">
-        <div style="width: 50%;">
-            <canvas id="graficoLinha"></canvas>
-        </div>
-
-
-        <div style="width: 50%;">
-            <canvas id="graficoBarra"></canvas>
-        </div>
-    </div>
-
-
-    <div id="conteudo_dashboard">
-        <div>
-            <div id="alertas_hospital">
-                <h3>Quantidade de alertas totais na semana:</h3>
-                <p><strong><span>9</span></strong></p>
+<div class="content">
+    
+    
+        <h1 class="titulo-dashboard">Dashboard da empresa:</h1>
+    
+        <div id="graficos">
+            <div style="width: 49.4%;">
+                <canvas id="graficoLinha"></canvas>
+            </div>
+    
+    
+            <div style="width: 49.4%;">
+                <canvas id="graficoBarra"></canvas>
             </div>
         </div>
-
-        <div>
-            <div id="alertas_setores">
-                <h3>Top 3 Setores com mais alertas durante a semana</h3>
-                <ul>
-                    <li><strong>Sala de Cirurgia:</strong> 4</li>
-                    <li><strong>Raio-X: </strong>3</li>
-                    <li><strong>Pediatria:</strong> 2</li>
-                </ul>
-            </div>
-        </div>
-
-        <div>
+    
+    
+        <div id="conteudo_dashboard">
             <div>
-                <h3>Média semanal de umidade por setor</h3>
-                <ul id="umidade_setores">
-                    <li>Raio-X - Média: 65% <br> Status: <span class="span_alerta"><strong>ALERTA</strong></b></span></li>
-                    <li>Pediatria - Média: 61% <br> Status: <span class="span_alerta"><strong>ALERTA</strong></b></span></li>
-                    <li>UTI - Média: 40% <br> Status: <span><strong>Normal</strong></span></li>
-                </ul>
+                <div id="alertas_hospital">
+                    <h3>Quantidade de alertas totais na semana:</h3>
+                    <p><strong><span>9</span></strong></p>
+                </div>
             </div>
-        </div>
-
-        <div>
-            <div id="regiao_umidade">
-                <h3>Região com maior umidade</h3>
-                <strong><span>Sala de Cirurgia</span></strong>
+    
+            <div>
+                <div id="alertas_setores">
+                    <h3>Top 3 Setores com mais alertas durante a semana</h3>
+                    <ul>
+                        <li><strong>Sala de Cirurgia:</strong> 4</li>
+                        <li><strong>Raio-X: </strong>3</li>
+                        <li><strong>Pediatria:</strong> 2</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-
-        <div>
-            <div id="desvios_criticos">
-                <h3>Percentual de medições que sairam da faixa adequada</h3>
-                <strong><span>5%</span></strong>
+    
+            <div>
+                <div>
+                    <h3>Média semanal de umidade por setor</h3>
+                    <ul id="umidade_setores">
+                        <li>Raio-X - Média: 65% <br> Status: <span class="span_alerta"><strong>ALERTA</strong></b></span></li>
+                        <li>Pediatria - Média: 61% <br> Status: <span class="span_alerta"><strong>ALERTA</strong></b></span></li>
+                        <li>UTI - Média: 40% <br> Status: <span><strong>Normal</strong></span></li>
+                    </ul>
+                </div>
             </div>
+    
+            <div>
+                <div id="regiao_umidade">
+                    <h3>Região com maior umidade</h3>
+                    <strong><span>Sala de Cirurgia</span></strong>
+                </div>
+            </div>
+    
+            <div>
+                <div id="desvios_criticos">
+                    <h3>Percentual de medições que sairam da faixa adequada</h3>
+                    <strong><span>5%</span></strong>
+                </div>
+            </div>
+    
         </div>
-
-    </div>
+</div>
 
 </body>
 
