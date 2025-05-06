@@ -47,16 +47,16 @@
       <h2>Cadastro da Empresa</h2>
       <div class="formulario">
         <div class="campo">
-          <span>Nome da Empresa:</span>
+          <span>Razão Social:</span>
+          <input id="empresa_input" type="text" placeholder="Digite o nome da empresa">
+        </div>
+        <div class="campo">
+          <span>Nome Fantasia:</span>
           <input id="empresa_input" type="text" placeholder="Digite o nome da empresa">
         </div>
         <div class="campo">
           <span>CNPJ:</span>
           <input id="cnpj_input" type="text" placeholder="Digite o CNPJ" maxlength="18" oninput="formatarCNPJ()">
-        </div>
-        <div class="campo">
-          <span>Responsável:</span>
-          <input id="responsavel_input" type="text" placeholder="Nome do responsável">
         </div>
         <div class="campo">
           <span>E-mail:</span>
@@ -83,19 +83,17 @@
   <div id="div_mensagem"></div>
 
 </body>
-
 </html>
 <script>
   function Cadastrar() {
     var empresa = empresa_input.value;
     var cnpj = Number(cnpj_input.value);
-    var responsavel = responsavel_input.value;
     var email = email_input.value;
     var telefone = Number(telefone_input.value);
     var senha = senha_input.value;
     var confirmarSenha = confirmar_senha_input.value;
 
-    if (empresa == '' || cnpj == '' || responsavel == '' || email == '' || telefone == '' || senha == '' || confirmarSenha == '') {
+    if (empresa == '' || cnpj == '' || email == '' || telefone == '' || senha == '' || confirmarSenha == '') {
       alert("Por favor, preencha todos os campos.");
     } else if (senha != confirmarSenha) {
       alert("As senhas não coincidem.");
@@ -109,7 +107,7 @@
     }
     else {
       alert("Cadastro da empresa realizado com sucesso!");
-      window.location.href = "login.html";
+      window.location.href = "cadastrarEndereco.html";
     }
   }
 
