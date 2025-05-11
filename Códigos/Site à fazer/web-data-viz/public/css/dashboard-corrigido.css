@@ -1,0 +1,114 @@
+body {
+    background-color: #012351;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.titulo-dashboard {
+    text-align: center;
+    color: white;
+}
+
+.kpis {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.kpis div {
+    background-color: white;
+}
+
+.kpis li {
+    list-style-type: none;
+}
+
+.kpis h3 {
+    text-align: center;
+}
+
+.kpis span {
+    display: flex;
+    justify-content: center;
+    font-weight: bolder;
+}
+
+.alertas_hospital,
+.alertas_setores,
+.umidade_setores,
+.regiao_umidade,
+.desvios_criticos {
+    border: 1px solid black;
+    border-radius: 20px;
+
+}
+
+
+.alertas_hospital {
+    border-left: 8px solid red;
+}
+
+.alertas_hospital span{
+    font-size: 30px;
+    color: red;
+}
+
+.alertas_hospital #close {
+    color: gray;
+    float: right;
+    font-size: 25px;
+    font-weight: bold;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.alertas_setores {
+    border-left: 8px solid yellow;
+}
+
+.alertas_setores span{
+    color: yellow;
+}
+
+.regiao_umidade {
+    border-left: 8px solid green;
+}
+
+.regiao_umidade span{
+    font-size: 20px;
+    color: green;
+}
+
+.desvios_criticos {
+    border-left: 8px solid blue;
+}
+
+.desvios_criticos span{
+    font-size: 30px;
+    color: blue;
+}
+
+.graficos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.graficos div {
+    width: 48%;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: white;
+}

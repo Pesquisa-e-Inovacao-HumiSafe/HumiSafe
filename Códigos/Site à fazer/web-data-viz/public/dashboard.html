@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/dashboard-corrigido.css">
     <link rel="icon" href="imagens/logo.png">
     <title>Dashboard do site</title>
 </head>
@@ -17,8 +17,8 @@
             <img src="imagens/logo.png" alt="">
             <h1>HUMISAFE</h1>
         </div>
-        <div class="container">
 
+        <div class="container">
             <ul class="navbar">
                 <li>
                     <a href="site_institucional.html#inicio">Início</a>
@@ -41,76 +41,71 @@
             </ul>
         </div>
     </div>
-<div class="content">
-    
-    
+
+    <div class="content">
         <h1 class="titulo-dashboard">Dashboard da empresa:</h1>
-    
-        <div id="graficos">
-            <div style="width: 49.4%;">
-                <canvas id="graficoLinha"></canvas>
+        
+        <div class="kpis">
+
+            <div class="alertas_hospital">
+                <b id="close">!</b>
+                <div class="alertas_hospital-container">
+                    <h3>Quantidade de alertas totais no dia:</h3>
+                    <span>9</span>
+                </div>
             </div>
     
+            <div class="alertas_setores">
+                <div class="alertas_setores-container">
+                    <h3>Top 3 Setores com mais alertas durante o dia</h3>
+                    <ul>
+                        <li>1º Sala de Cirurgia: 4</li>
+                        <li>2º Raio-X: 3</li>
+                        <li>3º Pediatria: 2</li>
+                    </ul>
+                </div>
+            </div>
     
-            <div style="width: 49.4%;">
+            <div class="umidade_setores">
+                <div class="umidade_setores-container">
+                    <h3>Média semanal de umidade por setor</h3>
+                    <ul id="umidade_setores">
+                        <!--<li>Raio-X - Média: 65% Status: <span class="span_alerta">ALERTA</b></span></li>
+                        <li>Pediatria - Média: 61% Status: <span class="span_alerta">ALERTA</b></span></li>
+                        <li>UTI - Média: 40% Status: <span>Normal</span></li>-->
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="regiao_umidade">
+                <div class="regiao_umidade-container">
+                    <h3>Região com maior umidade atual</h3>
+                    <span>Sala de Cirurgia</span>
+                </div>
+            </div>
+    
+            <div class="desvios_criticos">
+                <div class="desvios_criticos-container">
+                    <h3>Percentual de medições que sairam da faixa adequada no dia</h3>
+                    <span>5%</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="graficos">
+            <div>
+                <canvas id="graficoLinha"></canvas>
+            </div>
+            <div>
                 <canvas id="graficoBarra"></canvas>
             </div>
         </div>
-    
-    
-        <div id="conteudo_dashboard">
-            <div>
-                <div id="alertas_hospital">
-                    <h3>Quantidade de alertas totais na semana:</h3>
-                    <p><strong><span>9</span></strong></p>
-                </div>
-            </div>
-    
-            <div>
-                <div id="alertas_setores">
-                    <h3>Top 3 Setores com mais alertas durante a semana</h3>
-                    <ul>
-                        <li><strong>Sala de Cirurgia:</strong> 4</li>
-                        <li><strong>Raio-X: </strong>3</li>
-                        <li><strong>Pediatria:</strong> 2</li>
-                    </ul>
-                </div>
-            </div>
-    
-            <div>
-                <div>
-                    <h3>Média semanal de umidade por setor</h3>
-                    <ul id="umidade_setores">
-                        <li>Raio-X - Média: 65% <br> Status: <span class="span_alerta"><strong>ALERTA</strong></b></span></li>
-                        <li>Pediatria - Média: 61% <br> Status: <span class="span_alerta"><strong>ALERTA</strong></b></span></li>
-                        <li>UTI - Média: 40% <br> Status: <span><strong>Normal</strong></span></li>
-                    </ul>
-                </div>
-            </div>
-    
-            <div>
-                <div id="regiao_umidade">
-                    <h3>Região com maior umidade</h3>
-                    <strong><span>Sala de Cirurgia</span></strong>
-                </div>
-            </div>
-    
-            <div>
-                <div id="desvios_criticos">
-                    <h3>Percentual de medições que sairam da faixa adequada</h3>
-                    <strong><span>5%</span></strong>
-                </div>
-            </div>
-    
-        </div>
-</div>
-
+    </div>
 </body>
-
 </html>
 
 <script>
-
     var pediatria = [55, 67, 59, 61, 61, 62]
     var uti = [39, 40, 41, 42, 39, 40]
     var raioX = [55, 61, 64, 63, 69, 59]
@@ -223,4 +218,9 @@
             }
         }
     });
+
+
+    document.getElementById("close").addEventListener("click", () => {
+        alert('dahkd');
+    })
 </script>
