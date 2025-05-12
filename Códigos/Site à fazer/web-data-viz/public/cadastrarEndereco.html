@@ -20,22 +20,22 @@
       <div class="container">
         <ul class="navbar">
           <li>
-            <a href="site_institucional.html#inicio">Início</a>
+            <a onclick="inicio()">Início</a>
           </li>
           <li>
-            <a href="site_institucional.html#sobrenos">Sobre Nós</a>
+            <a onclick="sobre()">Sobre Nós</a>
           </li>
           <li>
-            <a href="site_institucional.html#sistema">Sistema</a>
+            <a onclick="sistema()">Sistema</a>
           </li>
           <li>
-            <a href="Simulador_financeiro.html">Simulador</a>
+            <a onclick="simulador()">Simulador</a>
           </li>
           <li>
-            <a class="agora" href="cadastro.html">Cadastrar</a>
+            <a class="agora" href="cadastroEndereco.html">Cadastrar</a>
           </li>
           <li>
-            <a class="button" href="login.html">Entrar <div class="id_img_login"></div></a>
+            <a class="button" onclick="entrar()">Entrar <div class="id_img_login"></div></a>
           </li>
         </ul>
       </div>
@@ -82,42 +82,67 @@
 
 </html>
 <script>
+  var endereco = false;
+  
+  
   function Cadastrar() {
     var Logradouro = Logradouro_input.value;
     var NumLogadrouro = NumLogadrouro_input.value;
     var Cidade = Cidade_input.value;
     var UF = UF_input.value;
     var CEP = Number(CEP_input.value);
-
+    
     if (Logradouro == '' || NumLogadrouro == '' || Cidade == '' || UF == '' || CEP == '') {
       alert("Por favor, preencha todos os campos.");}
-    else {
-      alert("Cadastro da empresa realizado com sucesso!");
-      window.location.href = "login.html";
+      else {
+        var endereco = true;
+        alert("Cadastro da empresa realizado com sucesso!");
+        window.location.href = "login.html";
+      }
     }
-  }
+    
+    function inicio(){
+      if (endereco == false){
+        alert ("Por favor, finalize o cadastro do seu endereço.")
+      }
+      else {
+       window.location.href = "site_institucional.html#inicio";
+      }
+    }
+    function sobre(){
+      if (endereco == false){
+        alert ("Por favor, finalize o cadastro do seu endereço.")
+      }
+      else {
+       window.location.href = "site_institucional.html#sobrenos";
+      }
+    }
+    function sistema(){
+      if (endereco == false){
+        alert ("Por favor, finalize o cadastro do seu endereço.")
+      }
+      else {
+       window.location.href = "site_institucional.html#sistema";
+      }
+    }
+    function simulador(){
+      if (endereco == false){
+        alert ("Por favor, finalize o cadastro do seu endereço.")
+      }
+      else {
+       window.location.href = "Simulador_financeiro.html";
+      }
+    }
+    function entrar(){
+       if (endereco == false){
+        alert ("Por favor, finalize o cadastro do seu endereço.")
+      }
+      else {
+       window.location.href = "login.html";
+      }
+    }
 
-  function formatarCEP() {
-
-  //   var cep = CEP_input.value;
-  //   var cepNumerico = "";
-  //   for (var i = 0; i < cep.length; i++) {
-  //     var caractere = cep[i];
-  //     if (caractere >= "0" && caractere <= "9") {
-  //       cepNumerico += caractere;
-  //     }
-  //   }
-
-  //   var formatado = "";
-  //   for (var i = 0; i < cepNumerico.length && i < 9; i++) {
-  //     if (i == 5) {
-  //       formatado += "-";
-  //     formatado += cepNumerico[i];
-  //   }
-
-  //   CEP_input.value = formatado;
-  // }
-  
+  function formatarCEP() {  
   var CEP = CEP_input.value;
 
 var CEPNumerico = "";
