@@ -13,10 +13,12 @@
 <body>
     <div class="fundo" id="inicio">
         <div class="header">
-            <div class="logo-titulo">
-                <img src="imagens/logo.png" alt="">
-                <h1>HUMISAFE</h1>
-            </div>
+            <a href="site_institucional.html#inicio">
+                <div class="logo-titulo">
+                    <img src="imagens/logo.png" alt="">
+                    <h1>HUMISAFE</h1>
+                </div>
+            </a>
             <div class="container">
                 <ul class="navbar">
                     <li>
@@ -42,15 +44,15 @@
 
         </div>
     </div>
-    
+
     <div class="content">
-        
+
         <div class="containerInput">
-            
-                <div class="título">
-                    <h1>SIMULADOR</h1>
-                    <h2>FAÇA JÁ SUA SIMULAÇÃO!</h2>
-                </div>
+
+            <div class="título">
+                <h1>SIMULADOR</h1>
+                <h2>FAÇA JÁ SUA SIMULAÇÃO!</h2>
+            </div>
             <div>
                 Quantos pacientes em média são internados por mês:
                 <br>
@@ -84,7 +86,7 @@
 
         <!-- mensagem (Resultado) -->
 
-            <div id="mensagem" class="class_mensagemBefore"></div>
+        <div id="mensagem" class="class_mensagemBefore"></div>
 
     </div>
 
@@ -126,14 +128,14 @@
         pacientes_infectados = (qtdpacientes * risco_total / 100);
 
         var custo_irregular = precoporpaciente * 4;
-        
-        var pacientes_infectados_arredondado = Math.ceil(pacientes_infectados).toFixed(); 
+
+        var pacientes_infectados_arredondado = Math.ceil(pacientes_infectados).toFixed();
 
         var prejuizo_paciente = precoporpaciente * 3;
 
         var prejuizo_total = prejuizo_paciente * pacientes_infectados_arredondado;
 
-        
+
 
         mensagem.innerHTML = `
             

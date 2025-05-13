@@ -13,23 +13,25 @@
 <body>
   <div class="fundo" id="inicio">
     <div class="header">
+      <a href="site_institucional.html#inicio">
       <div class="logo-titulo">
-        <img src="imagens/logo.png" alt="">
-        <h1>HUMISAFE</h1>
+          <img src="imagens/logo.png" alt="">
+          <h1>HUMISAFE</h1>
       </div>
+      </a>
       <div class="container">
         <ul class="navbar">
           <li>
             <a onclick="inicio()">Início</a>
           </li>
           <li>
-            <a onclick="sobre()">Sobre Nós</a>
+            <a onclick="inicio()">Sobre Nós</a>
           </li>
           <li>
-            <a onclick="sistema()">Sistema</a>
+            <a onclick="inicio()">Sistema</a>
           </li>
           <li>
-            <a onclick="simulador()">Simulador</a>
+            <a onclick="inicio()">Simulador</a>
           </li>
           <li>
             <a class="agora" href="cadastrarEndereco.html">Cadastrar</a>
@@ -104,41 +106,6 @@
     function inicio(){
       if (endereco == false){
         alert ("Por favor, finalize o cadastro do seu endereço.")
-      }
-      else {
-       window.location.href = "site_institucional.html#inicio";
-      }
-    }
-    function sobre(){
-      if (endereco == false){
-        alert ("Por favor, finalize o cadastro do seu endereço.")
-      }
-      else {
-       window.location.href = "site_institucional.html#sobrenos";
-      }
-    }
-    function sistema(){
-      if (endereco == false){
-        alert ("Por favor, finalize o cadastro do seu endereço.")
-      }
-      else {
-       window.location.href = "site_institucional.html#sistema";
-      }
-    }
-    function simulador(){
-      if (endereco == false){
-        alert ("Por favor, finalize o cadastro do seu endereço.")
-      }
-      else {
-       window.location.href = "Simulador_financeiro.html";
-      }
-    }
-    function entrar(){
-       if (endereco == false){
-        alert ("Por favor, finalize o cadastro do seu endereço.")
-      }
-      else {
-       window.location.href = "login.html";
       }
     }
 
