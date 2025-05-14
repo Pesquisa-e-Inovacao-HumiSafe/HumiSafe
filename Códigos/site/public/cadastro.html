@@ -10,7 +10,7 @@
   <link rel="icon" href="imagens/logo.png">
 </head>
 
-<body>
+<body onload="listar()">
   <div class="fundo" id="inicio">
     <div class="header">
       <a href="site_institucional.html#inicio">
@@ -55,7 +55,7 @@
         </div>
         <div class="campo">
           <span>Nome Fantasia:</span>
-          <input id="Nome_input" type="text" placeholder="Digite o nome da empresa">
+          <input id="nome_input" type="text" placeholder="Digite o nome da empresa">
         </div>
         <div class="campo">
           <span>CNPJ:</span>
@@ -92,6 +92,7 @@
   function formatarCNPJ() {
     
     var cnpj = cnpj_input.value;
+    var cnpj_fixo = cnpj_input.value;
     
     var cnpjNumerico = "";
     for (var i = 0; i < cnpj.length; i++) {
@@ -147,31 +148,7 @@
     
     telefone_input.value = formatado;
   }
-  // function Cadastrar() {
-  //   var empresa = empresa_input.value;
-  //   var cnpj = Number(cnpj_input.value);
-  //   var email = email_input.value;
-  //   var telefone = Number(telefone_input.value);
-  //   var senha = senha_input.value;
-  //   var confirmarSenha = confirmar_senha_input.value;
 
-  //   if (empresa == '' || cnpj == '' || email == '' || telefone == '' || senha == '' || confirmarSenha == '') {
-  //     alert("Por favor, preencha todos os campos.");
-  //   } else if (senha != confirmarSenha) {
-  //     alert("As senhas não coincidem.");
-  //   }
-  //   else if (senha.includes('!') == false && senha.includes("@") == false && senha.includes("#") == false && senha.includes("$") == false) {
-  //     alert("A senha precisa incluir algum caracter especial (!@#$)")
-  //   }
-
-  //   else if (email.includes("@") == false || email.includes(".") == false) {
-  //     alert('O email precisa incluir "@" e "."')
-  //   }
-  //   else {
-  //     alert("Cadastro da empresa realizado com sucesso!");
-  //     window.location.href = "cadastrarEndereco.html";
-  //   }
-  // }
   // Array para armazenar empresas cadastradas para validação de código de ativação 
   let listaEmpresasCadastradas = [];
   
@@ -190,12 +167,13 @@
 
     // Verificando se há algum campo em branco
     if (
+      razaoVar == "" ||
       nomeVar == "" ||
+      cnpjVar == "" ||
       emailVar == "" ||
+      telefoneVar == "" ||
       senhaVar == "" ||
-      cpfVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      codigoVar == ""
+      confirmarSenhaVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "(por favor preencha todos campos.)";
@@ -205,18 +183,18 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id
-        console.log("Código de ativação válido.");
-        break;
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-        finalizarAguardar();
-      }
-    }
+    // // Verificando se o código de ativação é de alguma empresa cadastrada
+    // for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+    //   if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
+    //     idEmpresaVincular = listaEmpresasCadastradas[i].id
+    //     console.log("Código de ativação válido.");
+    //     break;
+    //   } else {
+    //     cardErro.style.display = "block";
+    //     mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+    //     finalizarAguardar();
+    //   }
+    // }
     fetch("/usuarios/cadastrar", {
       method: "POST",
       headers: {
@@ -246,40 +224,42 @@
             window.location = "login.html";
           }, "2000");
 
-          limparFormulario();
-          finalizarAguardar();
+          // limparFormulario();
+          // finalizarAguardar();
         } else {
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
       })
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
+        // finalizarAguardar();
       });
 
     return false;
   }
 
-  // Listando empresas cadastradas 
-  function listar() {
-    fetch("/empresas/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-  }
+  // // Listando empresas cadastradas 
+  // function listar() {
+  //   fetch("/empresas/listar", {
+  //     method: "GET",
+  //   })
+  //     .then(function (resposta) {
+  //       resposta.json().then((empresas) => {
+  //         listaEmpresasCadastradas = empresas;
 
-  function sumirMensagem() {
-    cardErro.style.display = "none";
-  }
+  //         empresas.forEach((empresa) => {
+  //           listaEmpresasCadastradas.push(empresa);
+  //           console.log("listaEmpresasCadastradas")
+  //           console.log(listaEmpresasCadastradas[0].codigo_ativacao)
+  //         });
+  //       });
+  //     })
+  //     .catch(function (resposta) {
+  //       console.log(`#ERRO: ${resposta}`);
+  //     });
+  // }
+
+  // function sumirMensagem() {
+  //   cardErro.style.display = "none";
+  // }
 </script>
