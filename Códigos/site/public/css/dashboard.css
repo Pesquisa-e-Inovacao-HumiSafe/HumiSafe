@@ -1,128 +1,135 @@
-:root {
-    --azulEscuro: #012351;
-    --azulClaro: #41b8d5;
-}
-
 body {
-    background-color: var(--azulEscuro);
-   
+    background-color: #012351;
 }
 
-#graficos {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    width: 100%;
-    
-}
-
-#graficos div{
-margin:0px;
-padding: 0px;
-
-}
-
-#graficoLinha {
-    background-color: white;
-    border-radius: 8px;
-    border: 3px solid var(--azulClaro);
-}
-
-#graficoBarra {
-    background-color: white;
-    border-radius: 8px;
-    border: 3px solid var(--azulClaro);
-}
-
-#conteudo_dashboard {
-    display: flex;
-    /* flex-wrap: wrap;  */
-    /* gap: 10px; */
-    justify-content: space-between;
-    align-items: center;
-    /* padding: 20px; */
-    margin-top:13px;
-    
-}
-
-#conteudo_dashboard div {
-    min-height: 330px;
-    flex: 1;
-    max-width: 280px;
-    border: 2px solid var(--azulClaro);
-    border-radius: 10px;
-    padding: 15px;
-    box-sizing: border-box;
-    background-color: white;
-}
-
-#regiao_umidade, #desvios_criticos, #regiao_umidade, #alertas_hospital, #alertas_sensores {
+.content {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding-top: 80px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .titulo-dashboard {
-    margin-top: 100px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
     color: white;
 }
 
-
-#regiao_umidade span {
+.kpis {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.kpis div {
+    background-color: white;
+}
+
+.kpis li {
+    list-style-type: none;
+}
+
+.kpis h3 {
+    text-align: center;
+}
+
+.kpis span {
+    display: flex;
     justify-content: center;
-    padding-top: 20px;
-    color: green;
-    font-size: 25px;
+    font-weight: bolder;
 }
 
-#desvios_criticos span{
-    display: flex;
+.alertas_hospital,
+.alertas_setores,
+.umidade_setores,
+.regiao_umidade,
+.desvios_criticos {
+    border: 1px solid black;
+    border-radius: 20px;
+
+}
+
+
+.alertas_hospital {
+    border-left: 8px solid red;
+}
+
+.alertas_hospital span{
     font-size: 30px;
-    padding-top: 10px;
-    font-style: strong;
-    align-items: center;
-    justify-content: center;
-}
-
-#alertas_hospital span {
-    font-size: 30px;
-}
-
-#umidade_setores{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
-
-li {
-    padding: 8px;
-}
-
-.span_alerta {
     color: red;
 }
 
-h3 {
+.alertas_hospital #tooltip {
+    color: gray;
+    float: right;
+    font-size: 25px;
+    font-weight: bold;
+    padding-right: 5px;
+    cursor: pointer;
+    width: 10%;
+}
+
+.tooltip_alertas {
+    position: fixed;
+    display: none;
+    width: 200px;
+    height: 154px;
+    border: 1px solid black;
+    margin-left: 100px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.alertas_setores {
+    border-left: 8px solid yellow;
+}
+
+.alertas_setores span{
+    color: yellow;
+}
+
+.regiao_umidade {
+    border-left: 8px solid green;
+}
+
+
+.umidade_setores {
+    border-left: 8px solid orange;
+}
+
+.umidade_setores span{
+    color: yellow;
+}
+
+.regiao_umidade span{
+    font-size: 20px;
+    color: green;
+}
+
+.desvios_criticos {
+    border-left: 8px solid blue;
+}
+
+.desvios_criticos span{
+    font-size: 30px;
+    color: blue;
+}
+
+.graficos {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    text-align: center;
+    padding-top: 40px;
 }
 
-#alertas_hospital p {
-    text-align: center;
-}
-
-.content{
-    padding: 23px;
-    
+.graficos div {
+    width: 48%;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: white;
 }

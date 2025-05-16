@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/dashboard-corrigido.css">
+    <link rel="stylesheet" href="css/dashboard.css">
     <link rel="icon" href="imagens/logo.png">
-    <title>Dashboard do site</title>
+    <title>Métricas do sistema Humisafe</title>
 </head>
 
 <body>
     <div class="header">
         <a href="site_institucional.html#inicio">
-      <div class="logo-titulo">
-          <img src="imagens/logo.png" alt="">
-          <h1>HUMISAFE</h1>
-      </div>
-      </a>
+            <div class="logo-titulo">
+                <img src="imagens/logo.png" alt="">
+                <h1>HUMISAFE</h1>
+            </div>
+        </a>
 
         <div class="container">
             <ul class="navbar">
@@ -45,18 +45,25 @@
     </div>
 
     <div class="content">
-        <h1 class="titulo-dashboard">Dashboard da empresa:</h1>
-        
+        <h1 class="titulo-dashboard">Métricas do sistema Humisafe</h1>
+
         <div class="kpis">
 
             <div class="alertas_hospital">
-                <b id="close">!</b>
+                <b id="tooltip">!</b>
                 <div class="alertas_hospital-container">
                     <h3>Quantidade de alertas totais no dia:</h3>
                     <span>9</span>
                 </div>
             </div>
-    
+            <div class="tooltip_alertas" id="tooltip_alertas">
+                <ul>
+                    <li>Umidade acima de 60%: Situação de Alerta</li>
+                    <li>Umidade entre 40% e 60%: Normal</li>
+                    <li>Umidade abaixo de 40%: Situação de Alerta</li>
+                </ul>
+            </div>
+
             <div class="alertas_setores">
                 <div class="alertas_setores-container">
                     <h3>Top 3 Setores com mais alertas durante o dia</h3>
@@ -67,7 +74,7 @@
                     </ul>
                 </div>
             </div>
-    
+
             <div class="umidade_setores">
                 <div class="umidade_setores-container">
                     <h3>Média semanal de umidade por setor</h3>
@@ -78,14 +85,14 @@
                     </ul>
                 </div>
             </div>
-    
+
             <div class="regiao_umidade">
                 <div class="regiao_umidade-container">
                     <h3>Região com maior umidade atual</h3>
                     <span>Sala de Cirurgia</span>
                 </div>
             </div>
-    
+
             <div class="desvios_criticos">
                 <div class="desvios_criticos-container">
                     <h3>Percentual de medições que sairam da faixa adequada no dia</h3>
@@ -105,9 +112,19 @@
         </div>
     </div>
 </body>
+
 </html>
 
 <script>
+
+    document.getElementById("tooltip").addEventListener("mouseout", () => {
+        tooltip_alertas.style.display = 'none'
+    });
+
+    document.getElementById("tooltip").addEventListener("mouseover", () => {
+        tooltip_alertas.style.display = 'block'
+    });
+
     var pediatria = [55, 67, 59, 61, 61, 62]
     var uti = [39, 40, 41, 42, 39, 40]
     var raioX = [55, 61, 64, 63, 69, 59]
@@ -151,7 +168,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'Nível de Umidade nos ambientes do hospital',
+                    text: 'Nível de Umidade atual nos ambientes do hospital',
                 }
             },
             scales: {
@@ -198,7 +215,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'Comparação de Umidade em ambientes críticos',
+                    text: 'Comparação de Umidade por 6 dias em ambientes críticos',
                 }
             },
             scales: {
@@ -222,7 +239,4 @@
     });
 
 
-    document.getElementById("close").addEventListener("click", () => {
-        alert('dahkd');
-    })
 </script>
