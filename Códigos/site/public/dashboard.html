@@ -57,6 +57,7 @@
                 </div>
             </div>
             <div class="tooltip_alertas" id="tooltip_alertas">
+                <b>Valores de alerta</b>
                 <ul>
                     <li>Umidade acima de 60%: Situação de Alerta</li>
                     <li>Umidade entre 40% e 60%: Normal</li>
@@ -75,16 +76,16 @@
                 </div>
             </div>
 
-            <div class="umidade_setores">
+            <!-- <div class="umidade_setores">
                 <div class="umidade_setores-container">
                     <h3>Média semanal de umidade por setor</h3>
                     <ul id="umidade_setores">
-                        <!--<li>Raio-X - Média: 65% Status: <span class="span_alerta">ALERTA</b></span></li>
+                        <li>Raio-X - Média: 65% Status: <span class="span_alerta">ALERTA</b></span></li>
                         <li>Pediatria - Média: 61% Status: <span class="span_alerta">ALERTA</b></span></li>
-                        <li>UTI - Média: 40% Status: <span>Normal</span></li>-->
+                        <li>UTI - Média: 40% Status: <span>Normal</span></li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
 
             <div class="regiao_umidade">
                 <div class="regiao_umidade-container">
@@ -116,14 +117,14 @@
 </html>
 
 <script>
+    document.getElementById("tooltip").addEventListener("mouseover", () => {
+        tooltip_alertas.style.display = 'flex'
+    });
 
     document.getElementById("tooltip").addEventListener("mouseout", () => {
         tooltip_alertas.style.display = 'none'
-    });
+    }); 
 
-    document.getElementById("tooltip").addEventListener("mouseover", () => {
-        tooltip_alertas.style.display = 'block'
-    });
 
     var pediatria = [55, 67, 59, 61, 61, 62]
     var uti = [39, 40, 41, 42, 39, 40]

@@ -76,12 +76,24 @@ body {
 .tooltip_alertas {
     position: fixed;
     display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 200px;
-    height: 154px;
+    height: 160px;
     border: 1px solid black;
     margin-left: 100px;
     margin-top: 40px;
     text-align: center;
+    padding-top: 4px;
+}
+
+.tooltip_alertas b{
+    text-align: center;
+}
+
+.tooltip_alertas ul {
+    padding: 0;
 }
 
 .alertas_setores {
