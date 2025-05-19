@@ -10,7 +10,7 @@
   <link rel="icon" href="imagens/logo.png">
 </head>
 
-<body onload="listar()">
+<body>
   <div class="fundo" id="inicio">
     <div class="header">
       <a href="site_institucional.html#inicio">
@@ -51,32 +51,32 @@
       <div class="formulario">
         <div class="campo">
           <span>Razão Social:</span>
-          <input id="Razao_input" type="text" placeholder="Digite o nome da empresa">
+          <input id="Razao_input" type="text" placeholder="Digite o nome da empresa" value="HumiSafe LTDA">
         </div>
         <div class="campo">
           <span>Nome Fantasia:</span>
-          <input id="nome_input" type="text" placeholder="Digite o nome da empresa">
+          <input id="nome_input" type="text" placeholder="Digite o nome da empresa" value="HumiSafe">
         </div>
         <div class="campo">
           <span>CNPJ:</span>
-          <input id="cnpj_input" type="text" placeholder="Digite o CNPJ" maxlength="18" oninput="formatarCNPJ()">
+          <input id="cnpj_input" type="text" placeholder="Digite o CNPJ" value="19.829.184/0001-19" maxlength="18" oninput="formatarCNPJ()">
         </div>
         <div class="campo">
           <span>E-mail:</span>
-          <input id="email_input" type="email" placeholder="Ex: exemplo@email.com">
+          <input id="email_input" type="email" placeholder="Ex: exemplo@email.com" value="HumiSafe@email.com">
         </div>
         <div class="campo">
           <span>Telefone:</span>
           <input id="telefone_input" type="text" placeholder="Digite o telefone" maxlength="15"
-            oninput="formatarTelefone()">
+            oninput="formatarTelefone()" value="(11) 96937-2801">
         </div>
         <div class="campo">
           <span>Senha:</span>
-          <input id="senha_input" type="password" placeholder="Crie uma senha">
+          <input id="senha_input" type="password" placeholder="Crie uma senha" value="123">
         </div>
         <div class="campo">
           <span>Confirmar Senha:</span>
-          <input id="confirmar_senha_input" type="password" placeholder="Confirme a senha">
+          <input id="confirmar_senha_input" type="password" placeholder="Confirme a senha" value="123">
         </div>
         <br>
         <button onclick="Cadastrar()" class="botao">Cadastrar Empresa</button>
@@ -150,7 +150,7 @@
   }
 
   // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaEmpresasCadastradas = [];
+  // let listaEmpresasCadastradas = [];
   
   function Cadastrar() {
     // aguardar();
@@ -175,22 +175,21 @@
       senhaVar == "" ||
       confirmarSenhaVar == ""
     ) {
-      cardErro.style.display = "block";
       mensagem_erro.innerHTML = "(por favor preencha todos campos.)";
       finalizarAguardar();
       return false;
-    } else {
-      setInterval(sumirMensagem, 5000);
-    }
+    } 
+    // else {
+    //   setInterval(sumirMensagem, 5000);
+    // }
 
-    // // Verificando se o código de ativação é de alguma empresa cadastrada
+    // Verificando se o código de ativação é de alguma empresa cadastrada
     // for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
     //   if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
     //     idEmpresaVincular = listaEmpresasCadastradas[i].id
     //     console.log("Código de ativação válido.");
     //     break;
     //   } else {
-    //     cardErro.style.display = "block";
     //     mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
     //     finalizarAguardar();
     //   }
@@ -215,17 +214,16 @@
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
-          cardErro.style.display = "block";
-
+        
           mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+            "Cadastro realizado com sucesso! Redirecionando para tela de cadastro de endereço...";
 
           setTimeout(() => {
-            window.location = "login.html";
+            window.location = "cadastrarEndereco.html";
           }, "2000");
 
-          // limparFormulario();
-          // finalizarAguardar();
+          limparFormulario();
+          finalizarAguardar();
         } else {
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
@@ -238,7 +236,7 @@
     return false;
   }
 
-  // // Listando empresas cadastradas 
+  // Listando empresas cadastradas 
   // function listar() {
   //   fetch("/empresas/listar", {
   //     method: "GET",
