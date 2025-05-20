@@ -45,7 +45,7 @@
     </div>
   </div>
 
-  <div class="cadastro">
+  <div id="cadastro" class="cadastro_v">
     <div class="card card-cadastro">
       <h2>Cadastro da Empresa</h2>
       <div class="formulario">
@@ -85,6 +85,42 @@
   </div>
   <div id="div_mensagem"></div>
 <div id="mensagem_erro"></div>
+
+
+  <div id="endereco" class="cadastro_e">
+    <div class="card card-cadastro">
+      <h2>Cadastro do Endereço da Empresa</h2>
+      <div class="formulario">
+        <div class="campo">
+          <span>Logradouro:</span>
+          <input id="Logradouro_input" type="text" placeholder="Digite o nome do Logradouro">
+        </div>
+        <div class="campo">
+          <span>Numero do Logradouro:</span>
+          <input id="NumLogadrouro_input" type="text" placeholder="Digite o número do Logradouro">
+        </div>
+        <div class="campo">
+          <span>Bairro:</span>
+          <input id="Bairro_input" type="text" placeholder="Digite o nome do Bairro" >
+        </div>
+        <div class="campo">
+          <span>Cidade:</span>
+          <input id="Cidade_input" type="email" placeholder="Digite o nome da Cidade">
+        </div>
+        <div class="campo">
+          <span>UF:</span>
+          <input id="UF_input" type="text" placeholder="Digite a UF da Cidade" maxlength="2">
+        </div>
+        <div class="campo">
+          <span>CEP:</span>
+          <input id="CEP_input" type="text" placeholder="Digite o CNPJ" maxlength="9" oninput="formatarCEP()">
+        </div>
+        <br>
+        <button onclick="Cadastrar_endereco()" class="botao">Cadastrar Endereço</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
 <script>
@@ -151,21 +187,43 @@
 
   // Array para armazenar empresas cadastradas para validação de código de ativação 
   // let listaEmpresasCadastradas = [];
-  
-  function Cadastrar() {
-    // aguardar();
+  var razaoVar;
+  var nomeVar;
+  var cnpjVar;
+  var emailVar;
+  var telefoneVar;
+  var senhaVar;
+  var confirmarSenhaVar;
 
-    //Recupere o valor da nova input pelo nome do id
-    // Agora vá para o método fetch logo abaixo
-    var razaoVar = Razao_input.value;
-    var nomeVar = nome_input.value;
-    var cnpjVar = cnpj_input.value;
-    var emailVar = email_input.value;
-    var telefoneVar = telefone_input.value;
-    var senhaVar = senha_input.value;
-    var confirmarSenhaVar = confirmar_senha_input.value;
+  function formatarCEP() {  
+      var CEP = CEP_input.value;
 
-    // Verificando se há algum campo em branco
+      var CEPNumerico = "";
+      for (var i = 0; i < CEP.length; i++) {
+        var caractere = CEP[i];
+        if (caractere >= "0" && caractere <= "9") {
+          CEPNumerico += caractere;
+        }
+      }
+
+      var formatado = "";
+for (var i = 0; i < CEPNumerico.length && i < 9; i++) {
+  if (i == 5) {
+    formatado += "-";
+  }
+  formatado += CEPNumerico[i];
+}
+CEP_input.value = formatado;
+}
+
+  function Cadastrar (){
+    razaoVar = Razao_input.value;
+    nomeVar = nome_input.value;
+    cnpjVar = cnpj_input.value;
+    emailVar = email_input.value;
+    telefoneVar = telefone_input.value;
+    senhaVar = senha_input.value;
+    confirmarSenhaVar = confirmar_senha_input.value;
     if (
       razaoVar == "" ||
       nomeVar == "" ||
@@ -175,25 +233,38 @@
       senhaVar == "" ||
       confirmarSenhaVar == ""
     ) {
-      mensagem_erro.innerHTML = "(por favor preencha todos campos.)";
-      finalizarAguardar();
+      mensagem_erro.innerHTML = "por favor preencha todos campos.";
       return false;
     } 
-    // else {
-    //   setInterval(sumirMensagem, 5000);
-    // }
-
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    // for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-    //   if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-    //     idEmpresaVincular = listaEmpresasCadastradas[i].id
-    //     console.log("Código de ativação válido.");
-    //     break;
-    //   } else {
-    //     mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-    //     finalizarAguardar();
-    //   }
-    // }
+    else if (emailVar.includes('@') && emailVar.includes('.')){
+    mensagem_erro.innerHTML =
+        "Cadastro realizado com sucesso! Redirecionando para cadastro endereço...";
+        setTimeout(() => {
+          endereco.classList.remove(endereco.className);
+          endereco.classList.add("cadastro_v");
+          cadastro.classList.remove(cadastro.className);
+          cadastro.classList.add("cadastro_e");
+          mensagem_erro.innerHTML = "";
+          }, "2000");
+        
+    }
+    }
+  
+  function Cadastrar_endereco() {
+    
+    if (
+      razaoVar == ""    ||
+      nomeVar == ""     ||
+      cnpjVar == ""     ||
+      emailVar == ""    ||
+      telefoneVar == "" ||
+      senhaVar == ""    ||
+      confirmarSenhaVar == ""
+    ) {
+      mensagem_erro.innerHTML = "(por favor preencha todos campos.)";
+    
+      return false;
+    } 
     fetch("/usuarios/cadastrar", {
       method: "POST",
       headers: {
@@ -216,10 +287,9 @@
         if (resposta.ok) {
         
           mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de cadastro de endereço...";
-
+          "Cadastro realizado com sucesso! Redirecionando para tela de login...";
           setTimeout(() => {
-            window.location = "cadastrarEndereco.html";
+          window.location = "login.html";
           }, "2000");
 
           limparFormulario();
@@ -230,34 +300,8 @@
       })
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
-        // finalizarAguardar();
       });
 
     return false;
   }
-
-  // Listando empresas cadastradas 
-  // function listar() {
-  //   fetch("/empresas/listar", {
-  //     method: "GET",
-  //   })
-  //     .then(function (resposta) {
-  //       resposta.json().then((empresas) => {
-  //         listaEmpresasCadastradas = empresas;
-
-  //         empresas.forEach((empresa) => {
-  //           listaEmpresasCadastradas.push(empresa);
-  //           console.log("listaEmpresasCadastradas")
-  //           console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-  //         });
-  //       });
-  //     })
-  //     .catch(function (resposta) {
-  //       console.log(`#ERRO: ${resposta}`);
-  //     });
-  // }
-
-  // function sumirMensagem() {
-  //   cardErro.style.display = "none";
-  // }
 </script>
