@@ -1,23 +1,24 @@
-create database humisafe;
+CREATE DATABASE humisafe;
+USE humisafe;
 
-use humisafe;
-
-CREATE TABLE cliente(
-idCliente INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Hospital(
+idHospital INT PRIMARY KEY AUTO_INCREMENT,
 razaoSocial VARCHAR(45) NOT NULL,
 nomeFantasia VARCHAR(45) NOT NULL,
 cnpj CHAR(14) NOT NULL,
 dtCadastro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-email VARCHAR(45) NOT NULL, -- Confirmando se o email possui @, mas sem verificar o domínio pois cada empresa pode ter seu próprio domínio
+email VARCHAR(45) NOT NULL,
+-- Confirmando se o email possui @, mas sem verificar o domínio pois cada empresa pode ter seu próprio domínio
 CONSTRAINT checkEmail CHECK(email LIKE '%@%'),
-senha VARCHAR(45) NOT NULL,
-telefone VARCHAR(14) NOT NULL
+senha CHAR(8) NOT NULL,
+telefone CHAR(11) NOT NULL
 );
 
-CREATE TABLE endereco (
+CREATE TABLE Endereco (
 idEndereco INT PRIMARY KEY AUTO_INCREMENT,
-rua VARCHAR(45) NOT NULL,
-numEndereco INT NOT NULL,
+tipoLogradouro VARCHAR(45) NOT NULL,
+logradouro VARCHAR(45),
+numLogradouro INT NOT NULL,
 bairro VARCHAR(45) NOT NULL,
 cidade VARCHAR(45) NOT NULL,
 uf CHAR(2) NOT NULL,

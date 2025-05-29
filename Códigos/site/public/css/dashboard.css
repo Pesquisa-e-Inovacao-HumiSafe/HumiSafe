@@ -121,6 +121,9 @@
         gap: 25px;
     }
 
+.alertas_hospital-container h3 {
+    padding-top: 15px;
+}
 
     .graficos {
         display: flex;
@@ -136,11 +139,22 @@
         border-radius: 20px;
     }
 
+<<<<<<< HEAD
+.alertas_hospital #tooltip {
+    color: gray;
+    float: right;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 10%;
+}
+=======
     .graficos .graficoLinha,
     .grafico2 {
         width: 49%;
         height: 260px;
     }
+>>>>>>> eae7172fec8c21ef774699a34d62dd84f3fec824
 
     .graficoBarra {
         margin-top: 20px;
