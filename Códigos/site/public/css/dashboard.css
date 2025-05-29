@@ -1,147 +1,149 @@
-body {
-    background-color: #012351;
-}
+    body {
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        position: relative;
+    }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    padding-top: 80px;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-}
+    .navBarLateral {
+        /* background-image: linear-gradient(to right, #000b42, #142370); */
+        background-color: var(--azulEscuro);
+        height: 100vh;
+        width: 15%;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+        left: 0;
+    }
 
-.titulo-dashboard {
-    text-align: center;
-    color: white;
-}
+    .logo-titulo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        margin-left: 7px;
+        font-size: 13px;
+    }
 
-.kpis {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-}
+    .logo-titulo img {
+        width: 25px;
+        height: 25px;
+    }
 
-.kpis div {
-    background-color: white;
-}
+    .titulo {
+        color: #012351;
+        text-align: center;
+    }
 
-.kpis li {
-    list-style-type: none;
-}
+    .conteudo {
+        display: flex;
+        flex-direction: column;
+        width: 85%;
+        margin-left: 17%;
+        margin-right: 17px;
+    }
 
-.kpis h3 {
-    text-align: center;
-}
+    .kpis {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
 
-.kpis span {
-    display: flex;
-    justify-content: center;
-    font-weight: bolder;
-}
+    .kpis div {
+        background-image: linear-gradient(to right, var(--azulEscuro), var(--azulClaro));
+        color: white;
+    }
 
-.alertas_hospital,
-.alertas_setores,
-.umidade_setores,
-.regiao_umidade,
-.desvios_criticos {
-    border: 1px solid black;
-    border-radius: 20px;
+    .kpis li {
+        list-style-type: none;
+    }
 
-}
+    .kpis h3 {
+        text-align: center;
+    }
 
+    .kpis span {
+        display: flex;
+        justify-content: center;
+        font-weight: bolder;
+    }
 
-.alertas_hospital {
-    border-left: 8px solid red;
-}
+    .alertas_hospital,
+    .alertas_setores,
+    .umidade_setores,
+    .regiao_umidade,
+    .desvios_criticos {
+        border: 1px solid black;
+        border-radius: 20px;
+    }
 
-.alertas_hospital span{
-    font-size: 30px;
-    color: red;
-}
+    .alertas_hospital #tooltip {
+        color: gray;
+        float: right;
+        font-size: 25px;
+        font-weight: bold;
+        padding-right: 5px;
+        cursor: pointer;
+        width: 10%;
+    }
 
-.alertas_hospital #tooltip {
-    color: gray;
-    float: right;
-    font-size: 25px;
-    font-weight: bold;
-    padding-right: 5px;
-    cursor: pointer;
-    width: 10%;
-}
+    .tooltip_alertas {
+        position: fixed;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 230px;
+        height: 160px;
+        border: 1px solid black;
+        margin-left: 100px;
+        margin-top: 40px;
+        text-align: center;
+        padding-top: 4px;
+        border-radius: 20px;
+        
+    }
 
-.tooltip_alertas {
-    position: fixed;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 160px;
-    border: 1px solid black;
-    margin-left: 100px;
-    margin-top: 40px;
-    text-align: center;
-    padding-top: 4px;
-}
+    .tooltip_alertas b {
+        text-align: center;
+    }
 
-.tooltip_alertas b{
-    text-align: center;
-}
-
-.tooltip_alertas ul {
-    padding: 0;
-}
-
-.alertas_setores {
-    border-left: 8px solid yellow;
-}
-
-.alertas_setores span{
-    color: yellow;
-}
-
-.regiao_umidade {
-    border-left: 8px solid green;
-}
+    .tooltip_alertas ul {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+    }
 
 
-.umidade_setores {
-    border-left: 8px solid orange;
-}
+    .graficos {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
 
-.umidade_setores span{
-    color: yellow;
-}
+    .graficos div {
+        border: 1px solid black;
+        border-radius: 20px;
+    }
 
-.regiao_umidade span{
-    font-size: 20px;
-    color: green;
-}
+    .graficos .graficoLinha,
+    .grafico2 {
+        width: 49%;
+        height: 260px;
+    }
 
-.desvios_criticos {
-    border-left: 8px solid blue;
-}
-
-.desvios_criticos span{
-    font-size: 30px;
-    color: blue;
-}
-
-.graficos {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    padding-top: 40px;
-}
-
-.graficos div {
-    width: 48%;
-    border: 1px solid black;
-    border-radius: 20px;
-    background-color: white;
-}
+    .graficoBarra {
+        margin-top: 20px;
+        width: 99%;
+        height: 210px;
+    }
