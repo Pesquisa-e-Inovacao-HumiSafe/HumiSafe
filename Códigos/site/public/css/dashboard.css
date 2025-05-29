@@ -53,6 +53,9 @@ body {
 
 }
 
+.alertas_hospital-container h3 {
+    padding-top: 15px;
+}
 
 .alertas_hospital {
     border-left: 8px solid red;
@@ -68,7 +71,6 @@ body {
     float: right;
     font-size: 25px;
     font-weight: bold;
-    padding-right: 5px;
     cursor: pointer;
     width: 10%;
 }
