@@ -4,126 +4,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="icon" href="imagens/logo.png">
-    <title>Métricas do sistema Humisafe</title>
+    <title>Dashboard</title>
 </head>
 
 <body>
-    <div class="header">
-        <a href="index.html#inicio">
-            <div class="logo-titulo">
-                <img src="imagens/logo.png" alt="">
-                <h1>HUMISAFE</h1>
-            </div>
-        </a>
-
-        <div class="container">
-            <ul class="navbar">
-                <li>
-                    <a href="index.html#inicio">Início</a>
-                </li>
-                <li>
-                    <a href="index.html#sobrenos">Sobre Nós</a>
-                </li>
-                <li>
-                    <a href="index.html#sistema">Sistema</a>
-                </li>
-                <li>
-                    <a href="Simulador_financeiro.html">Simulador</a>
-                </li>
-                <li>
-                    <a href="cadastro.html">Cadastrar</a>
-                </li>
-                <li>
-                    <a class="button" href="login.html">Entrar <div class="id_img_login"></div></a>
-                </li>
-            </ul>
+    <div class="navBarLateral">
+        <div class="logo-titulo">
+            <img src="imagens/logo.png" alt="">
+            <h1>HUMISAFE</h1>
         </div>
+        <div>
+            <p>Seja bem vindo,</p>
+            <p class="nome_usuario"></p>
+        </div>
+        <!-- <div>
+            <div class="botao">
+                <img src="../imagens/dashboardIcone.png" alt="icone">
+                <p>Dashboard</p>
+            </div>
+            <div class="botao">
+                <img src="" alt="icone">
+                <p>Statistics</p>
+            </div>
+            <div class="botao">
+                <img src="" alt="icone">
+                <p>Reports</p>
+            </div>
+        </div>
+        <div>
+            <div class="botao">
+                <img src="../imagens/logoutIcone.svg" alt="icone">
+                <p>Sair</p>
+            </div>
+        </div> -->
     </div>
 
-    <div class="content">
-        <h1 class="titulo-dashboard">Métricas do sistema Humisafe</h1>
 
+    <div class="conteudo">
+        <h1 class="titulo">Métricas do sistema Humisafe</h1>
         <div class="kpis">
 
             <div class="alertas_hospital">
                 <b id="tooltip">!</b>
-                <div class="alertas_hospital-container">
-                    <h3>Quantidade de alertas totais no dia:</h3>
-                    <span>9</span>
-                </div>
+                <h3>Quantidade de alertas totais no dia:</h3>
+                <span>9</span>
+                <span>Setor com mais alertas: </span>
             </div>
             <div class="tooltip_alertas" id="tooltip_alertas">
                 <b>Valores de alerta</b>
                 <ul>
-                    <li>Umidade acima de 60%: Situação de Alerta</li>
+                    <li>Umidade acima de 60%: Alerta</li>
                     <li>Umidade entre 40% e 60%: Normal</li>
-                    <li>Umidade abaixo de 40%: Situação de Alerta</li>
+                    <li>Umidade abaixo de 40%: Alerta</li>
                 </ul>
             </div>
 
             <div class="alertas_setores">
-                <div class="alertas_setores-container">
-                    <h3>Top 3 Setores com mais alertas durante o dia</h3>
-                    <ul>
-                        <li>1º Sala de Cirurgia: 4</li>
-                        <li>2º Raio-X: 3</li>
-                        <li>3º Pediatria: 2</li>
-                    </ul>
-                </div>
+                <h3>Top 3 Setores com mais alertas durante o dia</h3>
+                <ul>
+                    <li>1º Sala de Cirurgia: 4 - 14:38:21</li>
+                    <li>2º Raio-X: 3 - 14:38:21</li>
+                    <li>3º Pediatria: 2 - 14:38:21</li>
+                </ul>
             </div>
-
-            <!-- <div class="umidade_setores">
-                <div class="umidade_setores-container">
-                    <h3>Média semanal de umidade por setor</h3>
-                    <ul id="umidade_setores">
-                        <li>Raio-X - Média: 65% Status: <span class="span_alerta">ALERTA</b></span></li>
-                        <li>Pediatria - Média: 61% Status: <span class="span_alerta">ALERTA</b></span></li>
-                        <li>UTI - Média: 40% Status: <span>Normal</span></li>
-                    </ul>
-                </div>
-            </div> -->
 
             <div class="regiao_umidade">
                 <div class="regiao_umidade-container">
-                    <h3>Região com maior umidade atual</h3>
-                    <span>Sala de Cirurgia</span>
+                    <h3>Região atual mais fora da faixa</h3>
+                    <span>Sala de Cirurgia: 70%</span>
                 </div>
             </div>
 
             <div class="desvios_criticos">
                 <div class="desvios_criticos-container">
                     <h3>Percentual de medições que sairam da faixa adequada no dia</h3>
-                    <span>5%</span>
+                    <span>Sala de Cirurgia - 5% fora - 120 medições</span>
                 </div>
             </div>
 
         </div>
-
         <div class="graficos">
-            <div>
+            <div class="graficoLinha">
                 <canvas id="graficoLinha"></canvas>
             </div>
-            <div>
+            <div class="grafico2">
+                <canvas id="grafico2"></canvas>
+            </div>
+            <div class="graficoBarra">
                 <canvas id="graficoBarra"></canvas>
             </div>
         </div>
+
     </div>
+
 </body>
 
 </html>
-
 <script>
+    //nome_usuario.innerText = sessionStorage.NOME_USUARIO
+
     document.getElementById("tooltip").addEventListener("mouseover", () => {
         tooltip_alertas.style.display = 'flex'
     });
 
     document.getElementById("tooltip").addEventListener("mouseout", () => {
         tooltip_alertas.style.display = 'none'
-    }); 
+    });
 
 
     var pediatria = [55, 67, 59, 61, 61, 62]
@@ -166,6 +155,8 @@
             ]
         },
         options: {
+            maintainAspectRatio: false, // Disable aspect ratio maintenance
+            responsive: true,
             plugins: {
                 title: {
                     display: true,
@@ -213,6 +204,8 @@
             }]
         },
         options: {
+            maintainAspectRatio: false, // Disable aspect ratio maintenance
+            responsive: true,
             plugins: {
                 title: {
                     display: true,
@@ -239,5 +232,54 @@
         }
     });
 
+    var dataUTI = [40, 41, 40, 41, 39, 40]
+    var dataRaioX = [65, 67, 69, 66, 61, 60]
+    var graficoBarra = new Chart(document.getElementById('grafico2').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['12/04/2025 - 00:23', '13/04/2025 - 01:45', '14/04/2025 - 02:19', '15/04/2025 - 03:57', '16/04/2025 - 04:48', '17/04/2025 - 05:14'],
+            datasets: [{
+                label: 'UTI',
+                data: dataUTI,
+                borderColor: 'red',
+                borderWidth: 2,
+                fill: false
+            },
+            {
+                label: 'Sala de Cirurgia',
+                data: dataRaioX,
+                borderColor: 'green',
+                borderWidth: 2,
+                fill: false,
+            }]
+        },
+        options: {
+            maintainAspectRatio: false, // Disable aspect ratio maintenance
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Comparação de Umidade por 6 dias em ambientes críticos',
+                }
+            },
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: '(%)'
+                    },
+                    beginAtZero: true
+                },
+
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Captura por Data e Hora'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 
 </script>
