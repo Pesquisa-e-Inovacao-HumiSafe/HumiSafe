@@ -103,31 +103,31 @@
       }
     }
     
-    function inicio(){
-      if (endereco == false){
-        alert ("Por favor, finalize o cadastro do seu endereço.")
+    function formatarCEP() {  
+      var CEP = CEP_input.value;
+
+      var CEPNumerico = "";
+      for (var i = 0; i < CEP.length; i++) {
+        var caractere = CEP[i];
+        if (caractere >= "0" && caractere <= "9") {
+          CEPNumerico += caractere;
+        }
       }
-    }
 
-  function formatarCEP() {  
-  var CEP = CEP_input.value;
-
-var CEPNumerico = "";
-for (var i = 0; i < CEP.length; i++) {
-  var caractere = CEP[i];
-  if (caractere >= "0" && caractere <= "9") {
-    CEPNumerico += caractere;
-  }
-}
-
-var formatado = "";
+      var formatado = "";
 for (var i = 0; i < CEPNumerico.length && i < 9; i++) {
   if (i == 5) {
     formatado += "-";
   }
   formatado += CEPNumerico[i];
+}
+CEP_input.value = formatado;
+}
+
+function inicio(){
+  if (endereco == false){
+    alert ("Por favor, finalize o cadastro do seu endereço.")
   }
-  CEP_input.value = formatado;
 }
 
 </script>

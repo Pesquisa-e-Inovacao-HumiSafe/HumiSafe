@@ -14,38 +14,29 @@
   <div class="fundo" id="inicio">
     <div class="header">
       <a href="index.html#inicio">
-      <div class="logo-titulo">
-          <img src="imagens/logo.png" alt="">
+        <div class="logo-titulo"><img src="imagens/logo.png" alt="">
           <h1>HUMISAFE</h1>
-      </div>
+        </div>
       </a>
       <div class="container">
         <ul class="navbar">
-          <li>
-            <a href="index.html#inicio">Início</a>
-          </li>
-          <li>
-            <a href="index.html#sobrenos">Sobre Nós</a>
-          </li>
-          <li>
-            <a href="index.html#sistema">Sistema</a>
-          </li>
-          <li>
-            <a href="Simulador_financeiro.html">Simulador</a>
-          </li>
-          <li>
-            <a class="agora" href="cadastro.html">Cadastrar</a>
-          </li>
-          <li>
-            <a class="button" href="login.html">Entrar <div class="id_img_login"></div></a>
-          </li>
+          <li><a href="index.html#inicio">Início</a></li>
+
+          <li><a href="index.html#sobrenos">Sobre Nós</a></li>
+
+          <li><a href="index.html#sistema">Sistema</a></li>
+
+          <li><a href="Simulador_financeiro.html">Simulador</a></li>
+
+          <li><a class="agora" href="cadastro.html">Cadastrar</a></li>
+
+          <li><a class="button" href="login.html">Entrar <div class="id_img_login"></div></a></li>
         </ul>
       </div>
-
     </div>
   </div>
 
-  <div id="cadastro" class="cadastro_v">
+  <div id="cadastro" class="cadastro">
     <div class="card card-cadastro">
       <h2>Cadastro da Empresa</h2>
       <div class="formulario">
@@ -59,7 +50,8 @@
         </div>
         <div class="campo">
           <span>CNPJ:</span>
-          <input id="cnpj_input" type="text" placeholder="Digite o CNPJ" value="19.829.184/0001-19" maxlength="18" oninput="formatarCNPJ()">
+          <input id="cnpj_input" type="text" placeholder="Digite o CNPJ" value="19.829.184/0001-19" maxlength="18"
+            oninput="formatarCNPJ()">
         </div>
         <div class="campo">
           <span>E-mail:</span>
@@ -84,10 +76,10 @@
     </div>
   </div>
   <div id="div_mensagem"></div>
-<div id="mensagem_erro"></div>
+  <div id="mensagem_erro"></div>
 
 
-  <div id="endereco" class="cadastro_e">
+  <div id="endereco" class="cadastro" style="display: none;">
     <div class="card card-cadastro">
       <h2>Cadastro do Endereço da Empresa</h2>
       <div class="formulario">
@@ -97,15 +89,15 @@
         </div>
         <div class="campo">
           <span>Numero do Logradouro:</span>
-          <input id="NumLogadrouro_input" type="text" placeholder="Digite o número do Logradouro">
+          <input id="NumLogadrouro_input" type="number" placeholder="Digite o número do Logradouro">
         </div>
         <div class="campo">
           <span>Bairro:</span>
-          <input id="Bairro_input" type="text" placeholder="Digite o nome do Bairro" >
+          <input id="Bairro_input" type="text" placeholder="Digite o nome do Bairro">
         </div>
         <div class="campo">
           <span>Cidade:</span>
-          <input id="Cidade_input" type="email" placeholder="Digite o nome da Cidade">
+          <input id="Cidade_input" type="text" placeholder="Digite o nome da Cidade">
         </div>
         <div class="campo">
           <span>UF:</span>
@@ -122,14 +114,14 @@
   </div>
 
 </body>
+
 </html>
 <script>
-  
+
   function formatarCNPJ() {
-    
+
     var cnpj = cnpj_input.value;
-    var cnpj_fixo = cnpj_input.value;
-    
+
     var cnpjNumerico = "";
     for (var i = 0; i < cnpj.length; i++) {
       var caractere = cnpj[i];
@@ -149,15 +141,15 @@
       }
       formatado += cnpjNumerico[i];
     }
-    
+
     cnpj_input.value = formatado;
   }
-  
+
   function formatarTelefone() {
-    
+
     var telefone = telefone_input.value;
-    
-    
+
+
     var numeros = "";
     for (var i = 0; i < telefone.length; i++) {
       var caractere = telefone[i];
@@ -165,11 +157,11 @@
         numeros += caractere;
       }
     }
-    
+
     if (numeros.length > 11) {
       numeros = numeros.slice(0, 11);
     }
-    
+
     var formatado = "";
     for (var i = 0; i < numeros.length; i++) {
       if (i == 0) {
@@ -181,12 +173,10 @@
       }
       formatado += numeros[i];
     }
-    
+
     telefone_input.value = formatado;
   }
 
-  // Array para armazenar empresas cadastradas para validação de código de ativação 
-  // let listaEmpresasCadastradas = [];
   var razaoVar;
   var nomeVar;
   var cnpjVar;
@@ -194,29 +184,77 @@
   var telefoneVar;
   var senhaVar;
   var confirmarSenhaVar;
+  var LogradouroVar;
+  var NumLogadrouroVar;
+  var BairroVar;
+  var CidadeVar;
+  var UFVar;
+  var CEPVar;
 
-  function formatarCEP() {  
-      var CEP = CEP_input.value;
+  function formatarCEP() {
+    var CEP = CEP_input.value;
 
-      var CEPNumerico = "";
-      for (var i = 0; i < CEP.length; i++) {
-        var caractere = CEP[i];
-        if (caractere >= "0" && caractere <= "9") {
-          CEPNumerico += caractere;
+    var CEPNumerico = "";
+    for (var i = 0; i < CEP.length; i++) {
+      var caractere = CEP[i];
+      if (caractere >= "0" && caractere <= "9") {
+        CEPNumerico += caractere;
+      }
+    }
+
+    var formatado = "";
+    for (var i = 0; i < CEPNumerico.length && i < 9; i++) {
+      if (i == 5) {
+        formatado += "-";
+      }
+      formatado += CEPNumerico[i];
+    }
+    CEP_input.value = formatado;
+  }
+
+  function Cadastrar() {
+    if (cnpj_input.value.length == 18) {
+      var cnpj = cnpj_input.value;
+      
+      var formatado = "";
+      for (var i = 0; i < cnpjNumerico.length && i < 18; i++) {
+        if (i == 2 || i == 5) {
+          formatado -= ".";
+        } else if (i == 8) {
+          formatado -= "/";
+        } else if (i == 12) {
+          formatado -= "-";
         }
+        formatado += cnpjNumerico[i];
       }
 
-      var formatado = "";
-for (var i = 0; i < CEPNumerico.length && i < 9; i++) {
-  if (i == 5) {
-    formatado += "-";
+      cnpj_input.value = formatado;
+    }
   }
-  formatado += CEPNumerico[i];
-}
-CEP_input.value = formatado;
-}
+  // (11) 96937-2801
+  if (telefone_input.value.length == 15) {
+    var tell = telefone_input.value
+    tell.replace("(","");
+    tell.replace(") ","");
+    tell.replace("-","");
+  }
 
-  function Cadastrar (){
+  if (
+    razaoVar == "" ||
+    nomeVar == "" ||
+    cnpjVar == "" ||
+    emailVar == "" ||
+    telefoneVar == "" ||
+    senhaVar == "" ||
+    confirmarSenhaVar == ""
+  ) {
+    mensagem_erro.innerHTML = "por favor preencha todos campos.";
+    return false;
+  }
+  else if (senhaVar != confirmarSenhaVar) {
+    mensagem_erro.innerHTML = `senhas não coincidem`;
+  }
+  else if (emailVar.includes('@') && emailVar.includes('.')) {
     razaoVar = Razao_input.value;
     nomeVar = nome_input.value;
     cnpjVar = cnpj_input.value;
@@ -224,6 +262,21 @@ CEP_input.value = formatado;
     telefoneVar = telefone_input.value;
     senhaVar = senha_input.value;
     confirmarSenhaVar = confirmar_senha_input.value;
+    mensagem_erro.innerHTML =
+      "Cadastro realizado com sucesso! Redirecionando para cadastro endereço.";
+    setTimeout(() => {
+      cadastro.style.display = 'none'
+      endereco.style.display = 'flex'
+      mensagem_erro.innerHTML = "";
+    }, "2000");
+  }
+  else {
+    mensagem_erro.innerHTML = `o email precisa ter "@" e "."`
+  }
+    
+
+  function Cadastrar_endereco() {
+
     if (
       razaoVar == "" ||
       nomeVar == "" ||
@@ -235,36 +288,15 @@ CEP_input.value = formatado;
     ) {
       mensagem_erro.innerHTML = "por favor preencha todos campos.";
       return false;
-    } 
-    else if (emailVar.includes('@') && emailVar.includes('.')){
-    mensagem_erro.innerHTML =
-        "Cadastro realizado com sucesso! Redirecionando para cadastro endereço...";
-        setTimeout(() => {
-          endereco.classList.remove(endereco.className);
-          endereco.classList.add("cadastro_v");
-          cadastro.classList.remove(cadastro.className);
-          cadastro.classList.add("cadastro_e");
-          mensagem_erro.innerHTML = "";
-          }, "2000");
-        
     }
+    else {
+      LogradouroVar = Logradouro_input;
+      NumLogadrouroVar = NumLogadrouro_input;
+      BairroVar = Bairro_input;
+      CidadeVar = Cidade_input;
+      UFVar = UF_input;
+      CEPVar = CEP_input;
     }
-  
-  function Cadastrar_endereco() {
-    
-    if (
-      razaoVar == ""    ||
-      nomeVar == ""     ||
-      cnpjVar == ""     ||
-      emailVar == ""    ||
-      telefoneVar == "" ||
-      senhaVar == ""    ||
-      confirmarSenhaVar == ""
-    ) {
-      mensagem_erro.innerHTML = "(por favor preencha todos campos.)";
-    
-      return false;
-    } 
     fetch("/usuarios/cadastrar", {
       method: "POST",
       headers: {
@@ -278,18 +310,24 @@ CEP_input.value = formatado;
         cnpjServer: cnpjVar,
         emailServer: emailVar,
         telefoneServer: telefoneVar,
-        senhaServer: senhaVar
+        senhaServer: senhaVar,
+        LogradouroServer: logradouroVar,
+        NumLogadrouroServer: NumLogadrouroVar,
+        BairroServer: BairroVar,
+        CidadeServer: CidadeVar,
+        UFServer: UFVar,
+        CEPServer: CEPVar,
       }),
     })
       .then(function (resposta) {
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
-        
+
           mensagem_erro.innerHTML =
-          "Cadastro realizado com sucesso! Redirecionando para tela de login...";
+            "Cadastro realizado com sucesso! Redirecionando para tela de login...";
           setTimeout(() => {
-          window.location = "login.html";
+            window.location = "login.html";
           }, "2000");
 
           limparFormulario();
