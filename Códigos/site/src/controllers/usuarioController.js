@@ -59,6 +59,13 @@ function cadastrar(req, res) {
     var email = req.body.emailServer;
     var telefone = req.body.telefoneServer;
     var senha = req.body.senhaServer;
+    var TipoLogradouro = req.body.TipoLogradouroServer;
+    var Logradouro = req.body.LogradouroServer;
+    var NumLogadrouro = req.body.NUmLogradouroServer;
+    var Bairro = req.body.BairroServer;
+    var Cidade = req.body.CidadeServer;
+    var UF = req.body.UFServer;
+    var CEP = req.body.CEPServer;
    
 
     // Faça as validações dos valores
@@ -74,6 +81,20 @@ function cadastrar(req, res) {
         res.status(400).send("Seu telefone está indefinido!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
+    } else if (TipoLogradouro == undefined) {
+        res.status(400).send("Seu Logradouro está undefined!");
+    } else if (Logradouro == undefined) {
+        res.status(400).send("Seu Logradouro está undefined!");
+    } else if (NumLogadrouro == undefined) {
+        res.status(400).send("Seu Numero do Logradouro está undefined!");
+    } else if (Bairro == undefined) {
+        res.status(400).send("Seu Bairro está undefined!");
+    } else if (Cidade == undefined) {
+        res.status(400).send("Sua Cidade está undefined!");
+    } else if (UF == undefined) {
+        res.status(400).send("Sua UF está undefined!");
+    } else if (CEP == undefined) {
+        res.status(400).send("Seu CEP está undefined!");
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js

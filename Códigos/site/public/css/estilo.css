@@ -19,16 +19,8 @@ body {
   padding: 40px 20px;
 }
 
-.cadastro_v {
+.cadastro {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 80px);
-  padding: 40px 20px;
-}
-
-.cadastro_e {
-  display: none;
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 80px);
