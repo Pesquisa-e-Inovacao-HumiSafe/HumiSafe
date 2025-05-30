@@ -139,7 +139,6 @@
         border-radius: 20px;
     }
 
-<<<<<<< HEAD
 .alertas_hospital #tooltip {
     color: gray;
     float: right;
@@ -148,13 +147,11 @@
     cursor: pointer;
     width: 10%;
 }
-=======
     .graficos .graficoLinha,
     .grafico2 {
         width: 49%;
         height: 260px;
     }
->>>>>>> eae7172fec8c21ef774699a34d62dd84f3fec824
 
     .graficoBarra {
         margin-top: 20px;
