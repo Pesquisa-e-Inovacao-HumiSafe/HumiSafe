@@ -3,12 +3,24 @@ var router = express.Router();
 
 var dashboardController = require("../controllers/dashboardController");
 
-router.post("/ultimas/:idSensor", function (req, res) {
-    dashboardController.buscarUltimasMedidas(req, res);
+router.get("/buscarUltimasMedidasUTI", function (req, res) {
+    dashboardController.buscarUltimasMedidasUTI(req, res);
 });
 
-router.post("/tempo-real/:idSensor", function (req, res) {
-    dashboardController.buscarMedidasEmTempoReal(req, res);
-})
+router.get("/buscarUltimasMedidasUnidadeDeQueimadas", function (req, res) {
+    dashboardController.buscarUltimasMedidasUnidadeDeQueimadas(req, res);
+});
+
+router.get("/buscarUltimasMedidasNeoNatal", function (req, res) {
+    dashboardController.buscarUltimasMedidasNeoNatal(req, res);
+});
+
+router.get("/buscarUltimasMedidasCentroCirurgico", function (req, res) {
+    dashboardController.buscarUltimasMedidasCentroCirurgico(req, res);
+});
+
+// router.get("/tempo-real/:idSensor", function (req, res) {
+//     dashboardController.buscarMedidasEmTempoReal(req, res);
+// })
 
 module.exports = router;

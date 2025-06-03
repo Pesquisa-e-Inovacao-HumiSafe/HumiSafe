@@ -1,27 +1,66 @@
 var database = require("../database/config")
 
-function buscarUltimasMedidas(idSensor) {
+function buscarUltimasMedidasUTI() {
 
-    var instrucaoSql = `SELECT umidade, DATE_FORMAT(dtRegistro,'%H:%i:%s') as 'data Formatada' FROM umidade
+    var instrucaoSql = `SELECT nomeSetor, umidade, DATE_FORMAT(dtRegistro,  '%d/%m/%Y %H:%i') as 'dataFormatada' FROM umidade
                             JOIN sensorDHT11
-                                ON umidade.fksensorDHT11_idumidade = sensorDHT11.${idSensor} 
-                                ORDER BY dtRegistro LIMIT 3`;
+                                ON umidade.fksensorDHT11_idumidade = sensorDHT11.idSensor
+							JOIN setor
+								ON sensorDHT11.fksetor_sensorDHT11 = setor.idSetor
+							WHERE dtRegistro >= CURDATE() - INTERVAL 100 DAY AND nomeSetor = 'UTI' AND statusSensor = 'Ativo'
+                            ORDER BY dtRegistro LIMIT 6;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function buscarMedidasEmTempoReal(fk_sensorDHT11_idumidade) {
+function buscarUltimasMedidasUnidadeDeQueimadas() {
 
-    var instrucaoSql = `SELECT umidade, dtRegistro, DATE_FORMAT(dtRegistro,'%H:%i:%s') as momento_grafico, fk_sensorDHT11_idumidade 
-                            FROM medida WHERE idSensor = ${idSensor} 
-                            ORDER BY idUmidade DESC LIMIT 1`;
+    var instrucaoSql = `SELECT nomeSetor, umidade, DATE_FORMAT(dtRegistro,  '%d/%m/%Y %H:%i') as 'dataFormatada' FROM umidade
+                            JOIN sensorDHT11
+                                ON umidade.fksensorDHT11_idumidade = sensorDHT11.idSensor
+							JOIN setor
+								ON sensorDHT11.fksetor_sensorDHT11 = setor.idSetor
+							WHERE dtRegistro >= CURDATE() - INTERVAL 100 DAY AND nomeSetor = 'Unidades de Queimados' AND statusSensor = 'Ativo'
+                            ORDER BY dtRegistro LIMIT 6;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+
+function buscarUltimasMedidasNeoNatal() {
+
+    var instrucaoSql = `SELECT nomeSetor, umidade, DATE_FORMAT(dtRegistro,  '%d/%m/%Y %H:%i') as 'dataFormatada' FROM umidade
+                            JOIN sensorDHT11
+                                ON umidade.fksensorDHT11_idumidade = sensorDHT11.idSensor
+							JOIN setor
+								ON sensorDHT11.fksetor_sensorDHT11 = setor.idSetor
+							WHERE dtRegistro >= CURDATE() - INTERVAL 100 DAY AND nomeSetor = 'NeoNatal' AND statusSensor = 'Ativo'
+                            ORDER BY dtRegistro LIMIT 6;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarUltimasMedidasCentroCirurgico() {
+
+    var instrucaoSql = `SELECT nomeSetor, umidade, DATE_FORMAT(dtRegistro,  '%d/%m/%Y %H:%i') as 'dataFormatada' FROM umidade
+                            JOIN sensorDHT11
+                                ON umidade.fksensorDHT11_idumidade = sensorDHT11.idSensor
+							JOIN setor
+								ON sensorDHT11.fksetor_sensorDHT11 = setor.idSetor
+							WHERE dtRegistro >= CURDATE() - INTERVAL 100 DAY AND nomeSetor = 'Centro Cirurgico' AND statusSensor = 'Ativo'
+                            ORDER BY dtRegistro LIMIT 6;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
 
 module.exports = {
-    buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
+    buscarUltimasMedidasUTI,
+    buscarUltimasMedidasUnidadeDeQueimadas,
+    buscarUltimasMedidasNeoNatal,
+    buscarUltimasMedidasCentroCirurgico
 }

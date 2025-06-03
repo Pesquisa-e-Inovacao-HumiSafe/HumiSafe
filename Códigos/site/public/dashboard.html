@@ -10,7 +10,7 @@
     <title>Dashboard</title>
 </head>
 
-<body>
+<body onload="colerDadosGraficoLinha()">
     <div class="navBarLateral">
         <div class="logo-titulo">
             <img src="imagens/logo.png" alt="">
@@ -96,72 +96,155 @@
     });
 
 
-    var pediatria = [55, 67, 59, 61, 61, 62]
-    var uti = [39, 40, 41, 42, 39, 40]
-    var raioX = [55, 61, 64, 63, 69, 59]
-    var sala_cirurgia = [70, 71, 70, 65, 70, 71]
+    // GraficoLinha
+    function colerDadosGraficoLinha() {
+        var nomeSetor = []
 
-    var graficoLinha = new Chart(document.getElementById('graficoLinha').getContext('2d'), {
-        type: 'line',
-        data: {
-            labels: ['10/04/2025 - 15:54', '10/04/2025 - 16:27', '10/04/2025 - 17:35', '10/04/2025 - 18:57', '10/04/2025 - 19:18', '10/04/2025 - 20:07'],
-            datasets: [{
-                label: 'UTI',
-                data: uti,
-                borderColor: 'red',
-                borderWidth: 3,
-                fill: false
-            },
-            {
-                label: 'Pediatria',
-                data: pediatria,
-                borderColor: 'blue',
-                borderWidth: 3,
-                fill: false
-            },
-            {
-                label: 'Raio-X',
-                data: raioX,
-                borderColor: 'orange',
-                borderWidth: 3,
-                fill: false
-            },
-            {
-                label: 'Sala de Cirurgia',
-                data: sala_cirurgia,
-                borderColor: 'green',
-                borderWidth: 3,
-                fill: false
+        var UTI = [];
+        var dataColeta = []
+
+        var unidadeDeQueimados = [];
+
+        var neoNatal = [];
+
+        var centroCirurgico = [];
+
+
+        fetch('/dashboard/buscarUltimasMedidasUTI', { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(resposta)
+                    // nomeSetor.push(resposta[0].nome)
+                    // for (var i = 0; i < resposta.length; i++) {
+                        // UTI.push(resposta[i][1])
+                        // console.log(resposta[i].umidade)
+                        // dataColeta.push(resposta[0].dataFormatada)
+                    // }
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
             }
-            ]
-        },
-        options: {
-            maintainAspectRatio: false, // Disable aspect ratio maintenance
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Nível de Umidade atual nos ambientes do hospital',
-                }
-            },
-            scales: {
-                y: {
-                    title: {
-                        display: true,
-                        text: '(%)'
-                    },
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+        // fetch('/dashboard/buscarUltimasMedidasUnidadeDeQueimadas', { cache: 'no-store' }).then(function (response) {
+        //     if (response.ok) {
+        //         response.json().then(function (resposta) {
+        //             nomeSetor.push(resposta[0].nome)
+        //             for (var i = 0; i < resposta.length; i++) {
+        //                 unidadeDeQueimados.push(resposta[i].umidade)
+        //             }
+        //         });
+        //     } else {
+        //         console.error('Nenhum dado encontrado ou erro na API');
+        //     }
+        // })
+        //     .catch(function (error) {
+        //         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        //     });
+
+        // fetch('/dashboard/buscarUltimasMedidasNeoNatal', { cache: 'no-store' }).then(function (response) {
+        //     if (response.ok) {
+        //         response.json().then(function (resposta) {
+        //             nomeSetor.push(resposta[0].nome)
+        //             for (var i = 0; i < resposta.length; i++) {
+        //                 neoNatal.push(resposta[i].umidade)
+        //             }
+        //         });
+        //     } else {
+        //         console.error('Nenhum dado encontrado ou erro na API');
+        //     }
+        // })
+        //     .catch(function (error) {
+        //         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        //     });
+        // fetch('/dashboard/buscarUltimasMedidasCentroCirurgico', { cache: 'no-store' }).then(function (response) {
+        //     if (response.ok) {
+        //         response.json().then(function (resposta) {
+        //             console.log('TESTE', resposta[0].nomeSetor)
+        //             nomeSetor.push(resposta[0].nomeSetor)
+        //             for (var i = 0; i < resposta.length; i++) {
+        //                 centroCirurgico.push(resposta[i].umidade)
+        //             }
+        //         });
+        //     } else {
+        //         console.error('Nenhum dado encontrado ou erro na API');
+        //     }
+        // })
+        //     .catch(function (error) {
+        //         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        //     });
+        //     console.log('Valores: ', nomeSetor, UTI, dataColeta, unidadeDeQueimados, neoNatal, centroCirurgico)
+        // plotarGraficoLinha(nomeSetor, UTI, dataColeta, unidadeDeQueimados, neoNatal, centroCirurgico)
+
+    }
+
+    function plotarGraficoLinha() {
+        var graficoLinha = new Chart(document.getElementById('graficoLinha').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: dataColeta,
+                datasets: [
+                {
+                    label: nomeSetor[0],
+                    data: UTI,
+                    borderColor: 'red',
+                    borderWidth: 3,
+                    fill: false
                 },
-
-                x: {
+                {
+                    label: nomeSetor[1],
+                    data: unidadeDeQueimados,
+                    borderColor: 'blue',
+                    borderWidth: 3,
+                    fill: false
+                },
+                {
+                    label: nomeSetor[2],
+                    data: neoNatal,
+                    borderColor: 'orange',
+                    borderWidth: 3,
+                    fill: false
+                },
+                {
+                    label: nomeSetor[3],
+                    data: centroCirurgico,
+                    borderColor: 'green',
+                    borderWidth: 3,
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false, // Disable aspect ratio maintenance
+                responsive: true,
+                plugins: {
                     title: {
                         display: true,
-                        text: 'Captura por Data e Hora'
+                        text: 'Nível de Umidade atual nos ambientes do hospital',
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: '(%)'
+                        },
                     },
-                    beginAtZero: true
+
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Captura por Data e Hora'
+                        },
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
+    }
+
 
     var dataUTI = [40, 41, 40, 41, 39, 40]
     var dataRaioX = [65, 67, 69, 66, 61, 60]
