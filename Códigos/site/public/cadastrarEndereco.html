@@ -11,13 +11,14 @@
 </head>
 
 <body>
+
   <div class="fundo" id="inicio">
     <div class="header">
       <a href="index.html#inicio">
-      <div class="logo-titulo">
+        <div class="logo-titulo">
           <img src="imagens/logo.png" alt="">
           <h1>HUMISAFE</h1>
-      </div>
+        </div>
       </a>
       <div class="container">
         <ul class="navbar">
@@ -49,85 +50,148 @@
     <div class="card card-cadastro">
       <h2>Cadastro do Endereço da Empresa</h2>
       <div class="formulario">
+        
+        <div class="campo">
+          <span>Tipo Logradouro:</span>
+          <select id="TipoLogradouro_input" type="text" placeholder="Digite o nome do Logradouro">
+            <option value="Avenida"> Avenida </option>
+            <option value="Rua"> Rua </option>
+            <option value="Praça"> Praça </option>
+            <option value="Alameda"> Alameda </option>
+
+          </select>
+        </div>
+
         <div class="campo">
           <span>Logradouro:</span>
           <input id="Logradouro_input" type="text" placeholder="Digite o nome do Logradouro">
         </div>
+
         <div class="campo">
           <span>Numero do Logradouro:</span>
-          <input id="NumLogadrouro_input" type="text" placeholder="Digite o número do Logradouro">
+          <input id="NumLogradouro_input" type="text" placeholder="Digite o número do Logradouro">
         </div>
+
         <div class="campo">
           <span>Bairro:</span>
-          <input id="Bairro_input" type="text" placeholder="Digite o nome do Bairro" >
+          <input id="Bairro_input" type="text" placeholder="Digite o nome do Bairro">
         </div>
+
         <div class="campo">
           <span>Cidade:</span>
           <input id="Cidade_input" type="email" placeholder="Digite o nome da Cidade">
         </div>
+
         <div class="campo">
           <span>UF:</span>
           <input id="UF_input" type="text" placeholder="Digite a UF da Cidade" maxlength="2">
         </div>
+
         <div class="campo">
           <span>CEP:</span>
-          <input id="CEP_input" type="text" placeholder="Digite o CNPJ" maxlength="9" oninput="formatarCEP()">
+          <input id="CEP_input" type="text" placeholder="Digite o CPF" maxlength="9" oninput="formatarCEP()">
         </div>
+
         <br>
-        <button onclick="Cadastrar()" class="botao">Cadastrar Endereço</button>
+        <button onclick="cadastrar()" class="botao">Cadastrar Endereço</button>
+
       </div>
     </div>
   </div>
+  
   <div id="div_mensagem"></div>
 
 </body>
 
 </html>
 <script>
-  
-  
-  var endereco = false;
-  function Cadastrar() {
-    var Logradouro = Logradouro_input.value;
-    var NumLogadrouro = NumLogadrouro_input.value;
-    var Cidade = Cidade_input.value;
-    var UF = UF_input.value;
-    var CEP = Number(CEP_input.value);
+
+
+  let endereco = false;
+
+
+
+  function formatarCEP() {
+    let CEP = CEP_input.value;
+
+    let CEPNumerico = "";
     
-    if (Logradouro == '' || NumLogadrouro == '' || Cidade == '' || UF == '' || CEP == '') {
-      alert("Por favor, preencha todos os campos.");}
-      else {
-        var endereco = true;
-        alert("Cadastro da empresa realizado com sucesso!");
-        window.location.href = "login.html";
+    for (let i = 0; i < CEP.length; i++) {
+      let caractere = CEP[i];
+      if (caractere >= "0" && caractere <= "9") {
+        CEPNumerico += caractere;
       }
     }
+
+    let formatado = "";
     
-    function formatarCEP() {  
-      var CEP = CEP_input.value;
-
-      var CEPNumerico = "";
-      for (var i = 0; i < CEP.length; i++) {
-        var caractere = CEP[i];
-        if (caractere >= "0" && caractere <= "9") {
-          CEPNumerico += caractere;
-        }
+    for (let i = 0; i < CEPNumerico.length && i < 9; i++) {
+      if (i == 5) {
+        formatado += "-";
       }
-
-      var formatado = "";
-for (var i = 0; i < CEPNumerico.length && i < 9; i++) {
-  if (i == 5) {
-    formatado += "-";
+      formatado += CEPNumerico[i];
+    }
+    CEP_input.value = formatado;
   }
-  formatado += CEPNumerico[i];
-}
-CEP_input.value = formatado;
-}
 
-function inicio(){
-  if (endereco == false){
-    alert ("Por favor, finalize o cadastro do seu endereço.")
+  
+
+  function cadastrar() {
+    const TipoLogradouro = TipoLogradouro_input.value;
+    const Logradouro = Logradouro_input.value;
+    const NumLogradouro = NumLogradouro_input.value;
+    const Bairro = Bairro_input.value;
+    const Cidade = Cidade_input.value;
+    const UF = UF_input.value;
+    let CEP = CEP_input.value;
+    
+    console.log(CEP);
+    
+
+    if (TipoLogradouro == '' || Logradouro == '' || NumLogradouro == '' || Bairro == '' || Cidade == '' || UF == '' || CEP == '') {
+      alert("Por favor, preencha todos os campos.");
+    }
+    else {
+        
+      
+      fetch("/usuarioendereco/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          TipoLogradouroServer: TipoLogradouro,
+          LogradouroServer: Logradouro,
+          NumLogradouroServer: NumLogradouro,
+          BairroServer: Bairro,
+          CidadeServer: Cidade,
+          UFServer: UF,
+          CEPServer: CEP
+        }),
+      })
+        .then(function (resposta) {
+          console.log("resposta: ", resposta);
+    
+        
+          if (resposta.ok) {
+
+            div_mensagem.innerHTML =
+              "Endereço cadastrado com sucesso! Redirecionando para tela de login...";
+
+            setTimeout(() => {
+              window.location = "login.html";
+            }, "2000");
+
+           
+          } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+          }
+        })
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+        });
+        return false;
+    }
   }
-}
-
+  
 </script>

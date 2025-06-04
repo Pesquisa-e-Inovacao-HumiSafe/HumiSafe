@@ -40,77 +40,53 @@
     <div class="card card-cadastro">
       <h2>Cadastro da Empresa</h2>
       <div class="formulario">
+        
         <div class="campo">
           <span>Razão Social:</span>
-          <input id="Razao_input" type="text" placeholder="Digite o nome da empresa" value="HumiSafe LTDA">
+          <input id="Razao_input" type="text" placeholder="Digite o nome da empresa">
         </div>
+
         <div class="campo">
           <span>Nome Fantasia:</span>
-          <input id="nome_input" type="text" placeholder="Digite o nome da empresa" value="HumiSafe">
+          <input id="nome_input" type="text" placeholder="Digite o nome da empresa">
         </div>
+
         <div class="campo">
           <span>CNPJ:</span>
-          <input id="cnpj_input" type="text" placeholder="Digite o CNPJ" value="19.829.184/0001-19" maxlength="18"
+          <input id="cnpj_input" type="text" placeholder="Digite o CNPJ" maxlength="18"
             oninput="formatarCNPJ()">
         </div>
+
         <div class="campo">
           <span>E-mail:</span>
-          <input id="email_input" type="email" placeholder="Ex: exemplo@email.com" value="HumiSafe@email.com">
+          <input id="email_input" type="email" placeholder="Ex: exemplo@email.com">
         </div>
+
         <div class="campo">
           <span>Telefone:</span>
           <input id="telefone_input" type="text" placeholder="Digite o telefone" maxlength="15"
-            oninput="formatarTelefone()" value="(11) 96937-2801">
+            oninput="formatarTelefone()" >
         </div>
+
         <div class="campo">
           <span>Senha:</span>
-          <input id="senha_input" type="password" placeholder="Crie uma senha" value="123">
+          <input id="senha_input" type="password" placeholder="Crie uma senha">
         </div>
+
         <div class="campo">
           <span>Confirmar Senha:</span>
-          <input id="confirmar_senha_input" type="password" placeholder="Confirme a senha" value="123">
+          <input id="confirmar_senha_input" type="password" placeholder="Confirme a senha"  >
         </div>
+
         <br>
-        <button onclick="Cadastrar()" class="botao">Cadastrar Empresa</button>
+        
+        <button onclick="cadastrar_emp()" class="botao">Cadastrar Empresa</button>
       </div>
     </div>
   </div>
   <div id="div_mensagem"></div>
   <div id="mensagem_erro"></div>
 
-
-  <div id="endereco" class="cadastro" style="display: none;">
-    <div class="card card-cadastro">
-      <h2>Cadastro do Endereço da Empresa</h2>
-      <div class="formulario">
-        <div class="campo">
-          <span>Logradouro:</span>
-          <input id="Logradouro_input" type="text" placeholder="Digite o nome do Logradouro">
-        </div>
-        <div class="campo">
-          <span>Numero do Logradouro:</span>
-          <input id="NumLogadrouro_input" type="number" placeholder="Digite o número do Logradouro">
-        </div>
-        <div class="campo">
-          <span>Bairro:</span>
-          <input id="Bairro_input" type="text" placeholder="Digite o nome do Bairro">
-        </div>
-        <div class="campo">
-          <span>Cidade:</span>
-          <input id="Cidade_input" type="text" placeholder="Digite o nome da Cidade">
-        </div>
-        <div class="campo">
-          <span>UF:</span>
-          <input id="UF_input" type="text" placeholder="Digite a UF da Cidade" maxlength="2">
-        </div>
-        <div class="campo">
-          <span>CEP:</span>
-          <input id="CEP_input" type="text" placeholder="Digite o CNPJ" maxlength="9" oninput="formatarCEP()">
-        </div>
-        <br>
-        <button onclick="Cadastrar_endereco()" class="botao">Cadastrar Endereço</button>
-      </div>
-    </div>
   </div>
 
 </body>
@@ -118,19 +94,22 @@
 </html>
 <script>
 
-  function formatarCNPJ() {
+  // var idUsuario = localStorage.ID_USUARIO;
 
-    var cnpj = cnpj_input.value;
+  function formatarCNPJ(input) {
 
-    var cnpjNumerico = "";
-    for (var i = 0; i < cnpj.length; i++) {
-      var caractere = cnpj[i];
+    let cnpj = cnpj_input.value;
+
+    let cnpjNumerico = "";
+    
+    for (let i = 0; i < cnpj.length; i++) {
+      let caractere = cnpj[i];
       if (caractere >= "0" && caractere <= "9") {
         cnpjNumerico += caractere;
       }
     }
 
-    var formatado = "";
+    let formatado = "";
     for (var i = 0; i < cnpjNumerico.length && i < 14; i++) {
       if (i == 2 || i == 5) {
         formatado += ".";
@@ -145,14 +124,14 @@
     cnpj_input.value = formatado;
   }
 
-  function formatarTelefone() {
+  function formatarTelefone(input) {
 
-    var telefone = telefone_input.value;
+    let telefone = telefone_input.value;
 
 
-    var numeros = "";
-    for (var i = 0; i < telefone.length; i++) {
-      var caractere = telefone[i];
+    let numeros = "";
+    for (let i = 0; i < telefone.length; i++) {
+      let caractere = telefone[i];
       if (caractere >= "0" && caractere <= "9") {
         numeros += caractere;
       }
@@ -162,8 +141,8 @@
       numeros = numeros.slice(0, 11);
     }
 
-    var formatado = "";
-    for (var i = 0; i < numeros.length; i++) {
+    let formatado = "";
+    for (let i = 0; i < numeros.length; i++) {
       if (i == 0) {
         formatado += "(";
       } else if (i == 2) {
@@ -177,126 +156,56 @@
     telefone_input.value = formatado;
   }
 
-  var razaoVar;
-  var nomeVar;
-  var cnpjVar;
-  var emailVar;
-  var telefoneVar;
-  var senhaVar;
-  var confirmarSenhaVar;
-  var LogradouroVar;
-  var NumLogadrouroVar;
-  var BairroVar;
-  var CidadeVar;
-  var UFVar;
-  var CEPVar;
+ 
+  function cadastrar_emp() {
 
-  function formatarCEP() {
-    var CEP = CEP_input.value;
+    const cnpjNumerico = "";
+    const razaoSocial = Razao_input.value;
+    const nomeFantasia = nome_input.value;
+    const cnpj = cnpj_input.value;
+    const email = email_input.value;
+    const telefone = telefone_input.value;
+    const senha = senha_input.value;
+    const confirmarSenha = confirmar_senha_input.value;
 
-    var CEPNumerico = "";
-    for (var i = 0; i < CEP.length; i++) {
-      var caractere = CEP[i];
-      if (caractere >= "0" && caractere <= "9") {
-        CEPNumerico += caractere;
-      }
-    }
 
-    var formatado = "";
-    for (var i = 0; i < CEPNumerico.length && i < 9; i++) {
-      if (i == 5) {
-        formatado += "-";
-      }
-      formatado += CEPNumerico[i];
-    }
-    CEP_input.value = formatado;
-  }
-
-  function Cadastrar() {
-    if (cnpj_input.value.length == 18) {
-      var cnpj = cnpj_input.value;
-      
-      var formatado = "";
-      for (var i = 0; i < cnpjNumerico.length && i < 18; i++) {
-        if (i == 2 || i == 5) {
-          formatado -= ".";
-        } else if (i == 8) {
-          formatado -= "/";
-        } else if (i == 12) {
-          formatado -= "-";
-        }
-        formatado += cnpjNumerico[i];
-      }
-
-      cnpj_input.value = formatado;
-    }
-  }
-  // (11) 96937-2801
-  if (telefone_input.value.length == 15) {
-    var tell = telefone_input.value
-    tell.replace("(","");
-    tell.replace(") ","");
-    tell.replace("-","");
-  }
 
   if (
-    razaoVar == "" ||
-    nomeVar == "" ||
-    cnpjVar == "" ||
-    emailVar == "" ||
-    telefoneVar == "" ||
-    senhaVar == "" ||
-    confirmarSenhaVar == ""
+    razaoSocial == "" ||
+    nomeFantasia == "" ||
+    cnpj == "" ||
+    email == "" ||
+    telefone == "" ||
+    senha == "" ||
+    confirmarSenha == ""
   ) {
-    mensagem_erro.innerHTML = "por favor preencha todos campos.";
-    return false;
+    div_mensagem.innerHTML = "por favor preencha todos campos.";
+
   }
-  else if (senhaVar != confirmarSenhaVar) {
-    mensagem_erro.innerHTML = `senhas não coincidem`;
+  else if (senha != confirmarSenha) {
+    div_mensagem.innerHTML = `senhas não coincidem`;
   }
-  else if (emailVar.includes('@') && emailVar.includes('.')) {
-    razaoVar = Razao_input.value;
-    nomeVar = nome_input.value;
-    cnpjVar = cnpj_input.value;
-    emailVar = email_input.value;
-    telefoneVar = telefone_input.value;
-    senhaVar = senha_input.value;
-    confirmarSenhaVar = confirmar_senha_input.value;
-    mensagem_erro.innerHTML =
-      "Cadastro realizado com sucesso! Redirecionando para cadastro endereço.";
+
+  else if (!email.includes("@")) {
+    div_mensagem.innerHTML = `Email inválido`;
+  }
+
+  else if (!email.includes(".")) {
+    div_mensagem.innerHTML = `Email inválido`;
+
+  }
+    
+else{
+
     setTimeout(() => {
       cadastro.style.display = 'none'
       endereco.style.display = 'flex'
-      mensagem_erro.innerHTML = "";
+      div_mensagem.innerHTML = "";
     }, "2000");
-  }
-  else {
-    mensagem_erro.innerHTML = `o email precisa ter "@" e "."`
-  }
-    
 
-  function Cadastrar_endereco() {
+    var idUsuario = 
 
-    if (
-      razaoVar == "" ||
-      nomeVar == "" ||
-      cnpjVar == "" ||
-      emailVar == "" ||
-      telefoneVar == "" ||
-      senhaVar == "" ||
-      confirmarSenhaVar == ""
-    ) {
-      mensagem_erro.innerHTML = "por favor preencha todos campos.";
-      return false;
-    }
-    else {
-      LogradouroVar = Logradouro_input;
-      NumLogadrouroVar = NumLogadrouro_input;
-      BairroVar = Bairro_input;
-      CidadeVar = Cidade_input;
-      UFVar = UF_input;
-      CEPVar = CEP_input;
-    }
+
     fetch("/usuarios/cadastrar", {
       method: "POST",
       headers: {
@@ -305,33 +214,27 @@
       body: JSON.stringify({
         // crie um atributo que recebe o valor recuperado aqui
         // Agora vá para o arquivo routes/usuario.js
-        razaoServer: razaoVar,
-        nomeServer: nomeVar,
-        cnpjServer: cnpjVar,
-        emailServer: emailVar,
-        telefoneServer: telefoneVar,
-        senhaServer: senhaVar,
-        LogradouroServer: logradouroVar,
-        NumLogadrouroServer: NumLogadrouroVar,
-        BairroServer: BairroVar,
-        CidadeServer: CidadeVar,
-        UFServer: UFVar,
-        CEPServer: CEPVar,
+        razaoSocialServer: razaoSocial,
+        nomeFantasiaServer: nomeFantasia,
+        cnpjServer: cnpj,
+        emailServer: email,
+        telefoneServer: telefone,
+        senhaServer: senha,
       }),
     })
       .then(function (resposta) {
         console.log("resposta: ", resposta);
+  
 
         if (resposta.ok) {
-
-          mensagem_erro.innerHTML =
+  
+          div_mensagem.innerHTML =
             "Cadastro realizado com sucesso! Redirecionando para tela de login...";
-          setTimeout(() => {
-            window.location = "login.html";
-          }, "2000");
 
-          limparFormulario();
-          finalizarAguardar();
+          setTimeout(() => {
+            window.location = "cadastrarEndereco.html";
+          }, "2000");
+  
         } else {
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
@@ -339,7 +242,36 @@
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
       });
-
-    return false;
+  
   }
-</script>
+
+
+fetch(`/usuarios/cadastrarsession/${email}/${senha}`, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+  
+
+        if (resposta.ok) {
+          const dados = resposta.json()
+
+          var email = dados.email
+        } 
+        
+      })
+
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  
+  
+
+
+    }
+  
+  </script>

@@ -23,7 +23,7 @@ bairro VARCHAR(45) NOT NULL,
 cidade VARCHAR(45) NOT NULL,
 uf CHAR(2) NOT NULL,
 cep CHAR(8) NOT NULL,
-fkhospital_endereco INT UNIQUE,
+fkhospital_endereco INT UNIQUE AUTO_INCREMENT,
 CONSTRAINT fkhospital_endereco FOREIGN KEY (fkhospital_endereco)
 REFERENCES Hospital (idHospital)
 );
