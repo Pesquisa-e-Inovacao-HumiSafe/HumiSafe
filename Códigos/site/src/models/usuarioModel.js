@@ -17,7 +17,8 @@ function cadastrar(razaoSocial, nomeFantasia, cnpj, email, telefone, senha) {
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
-        INSERT INTO Hospital (razaoSocial, nomeFantasia, cnpj, email, telefone, senha) VALUES ('${razaoSocial}' ,'${nomeFantasia}', '${cnpj}', '${email}', '${telefone}', '${senha}');`
+        INSERT INTO Hospital (razaoSocial, nomeFantasia, cnpj, email, telefone, senha) VALUES ('${razaoSocial}' ,'${nomeFantasia}', '${cnpj}', '${email}', '${telefone}', '${senha}');
+        `
 
 
 
@@ -25,26 +26,10 @@ function cadastrar(razaoSocial, nomeFantasia, cnpj, email, telefone, senha) {
     return database.executar(instrucaoSql);
 }
 
-
-
-function cadastrarsession(email,senha) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", email,senha);
-    
-
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
-    var instrucaoSql = `
-       select idHospital from Hospital where email = ${email} and senha = ${senha}`
-
-
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
 
 
 
 module.exports = {
     listar,
-    cadastrar,
-    cadastrarsession
+    cadastrar
 };

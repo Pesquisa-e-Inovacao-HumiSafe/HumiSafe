@@ -69,11 +69,14 @@ function cadastrar(req, res) {
     usuarioModel.cadastrar(razaoSocial, nomeFantasia, cnpj, email, telefone, senha)
         .then(
             function (resultado) {
-                console.log(resultado);
+                const idHospital = resultado.insertId;
+
+                console.log("ID retornado do insert:", idHospital)
+                res.status(201).json({ idHospital });
                 
-                res.json(resultado);
             }
-        ).catch(
+        )
+        .catch(
             function (erro) {
                 console.log(erro);
                 console.log(
@@ -86,24 +89,8 @@ function cadastrar(req, res) {
 }
 
 
-function cadastrarsession(req, res) {
-    
-    usuarioModel.cadastrarsession(email, senha)
-
-        .then(resultado => {
-            res.json(resultado);
-            console.log("resultado controller", resultado)
-        })
-
-        .catch(erro => {
-            console.error("Erro ao contar jogadas", erro);
-            res.status(500).json(erro.sqlMessage);
-        });
-}
-
 
 module.exports = {
     listar,
-    cadastrar,
-    cadastrarsession
+    cadastrar
 }

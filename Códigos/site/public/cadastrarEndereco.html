@@ -152,8 +152,9 @@
       alert("Por favor, preencha todos os campos.");
     }
     else {
-        
-      
+
+      const idHospital = localStorage.getItem('idHospital');
+
       fetch("/usuarioendereco/cadastrar", {
         method: "POST",
         headers: {
@@ -166,18 +167,22 @@
           BairroServer: Bairro,
           CidadeServer: Cidade,
           UFServer: UF,
-          CEPServer: CEP
+          CEPServer: CEP,
+          idHospital: idHospital
         }),
       })
-        .then(function (resposta) {
-          console.log("resposta: ", resposta);
-    
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
         
-          if (resposta.ok) {
-
-            div_mensagem.innerHTML =
-              "Endereço cadastrado com sucesso! Redirecionando para tela de login...";
-
+        
+        if (resposta.ok) {
+          
+          div_mensagem.innerHTML =
+          "Endereço cadastrado com sucesso! Redirecionando para tela de login...";
+          
+          
+        localStorage.setItem('idHospital', idHospital);
+ 
             setTimeout(() => {
               window.location = "login.html";
             }, "2000");

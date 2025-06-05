@@ -9,6 +9,7 @@ function cadastrar(req, res) {
     var cidade = req.body.CidadeServer;
     var uf = req.body.UFServer;
     var cep = req.body.CEPServer;
+    var idHospital = req.body.idHospital;
    
 
     
@@ -41,7 +42,7 @@ function cadastrar(req, res) {
     } 
 
      
-        usuarioenderecoModel.cadastrar(tipoLogradouro, logradouro, numLogradouro, bairro, cidade, uf, cep)
+        usuarioenderecoModel.cadastrar(tipoLogradouro, logradouro, numLogradouro, bairro, cidade, uf, cep, idHospital)
                    .then(
                        function (resultado) {
                            res.json(resultado);
