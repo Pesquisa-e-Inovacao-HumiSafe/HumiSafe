@@ -1,12 +1,5 @@
 CREATE DATABASE humisafe;
-<<<<<<< HEAD
-
 USE humisafe;
-
-DROP DATABASE humisafe;
-=======
-USE humisafe;
->>>>>>> baa297e1cd5a402c6c7209d2542275cf559a5df3
 
 CREATE TABLE Hospital(
 idHospital INT PRIMARY KEY AUTO_INCREMENT,
@@ -43,15 +36,7 @@ bairro VARCHAR(45) NOT NULL,
 cidade VARCHAR(45) NOT NULL,
 uf CHAR(2) NOT NULL,
 cep CHAR(8) NOT NULL,
-<<<<<<< HEAD
-fkhospital_endereco INT UNIQUE,
-=======
-<<<<<<< HEAD
-fkhospital_endereco INT UNIQUE,
-=======
 fkcliente_endereco INT UNIQUE AUTO_INCREMENT,
->>>>>>> 2c7149221dfaaa1db5080953ebb9a2dfbdb41e06
->>>>>>> baa297e1cd5a402c6c7209d2542275cf559a5df3
 CONSTRAINT fkhospital_endereco FOREIGN KEY (fkhospital_endereco)
 REFERENCES Hospital (idHospital)
 );
@@ -71,16 +56,9 @@ REFERENCES Hospital (idHospital)
 CREATE TABLE sensor(
 idSensor INT PRIMARY KEY AUTO_INCREMENT,
 numSerie VARCHAR(100) UNIQUE NOT NULL,
-<<<<<<< HEAD
-dtFabricacao  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-dtCompra DATETIME NOT NULL,
-statusSensor VARCHAR(10) NOT NULL DEFAULT "Inativo",
-CONSTRAINT checkSituacaoSensor CHECK(statusSensor IN("Ativo","Inativo","Manutencao")),
-=======
 statusSensor VARCHAR(10) NOT NULL DEFAULT "Inativo",
 CONSTRAINT checkStatusSensor CHECK(statusSensor IN("Ativo","Inativo","Manutencao")),
 dtInstalacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
->>>>>>> 2c7149221dfaaa1db5080953ebb9a2dfbdb41e06
 dtManutencao DATETIME,
 fksetor_sensorDHT11 INT,
 CONSTRAINT fksetor_sensorDHT11 FOREIGN KEY (fksetor_sensorDHT11)
