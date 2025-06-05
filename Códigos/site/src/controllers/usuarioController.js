@@ -73,7 +73,7 @@ function cadastrar(req, res) {
 
 
     // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-    usuarioModel.cadastrar(razaoSocial, nomeFantasia, cnpj, email, telefone, senha)
+    usuarioModel.cadastrar(razaoSocial, nomeFantasia, cnpj, email, senha, telefone)
         .then(
             function (resultado) {
                 const idHospital = resultado.insertId;

@@ -75,25 +75,24 @@
 </html>
 <script>
     function entrar() {
-      
         const email = email_input.value;
         const senha = senha_input.value;
 
         if (email == "" || senha == "") {
             div_mensagem.style.display = "block"
-            div_mensagem.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            div_mensagem.innerHTML = "Por favor preencha todos os campos";
+            setInterval(sumirMensagem, 3000);
             return false;
-            setInterval(sumirMensagem, 5000);
         }
 
-        else {
-          setInterval(sumirMensagem, 5000)
-        }
+        // else {
+        //   setInterval(sumirMensagem, 5000)
+        // }
 
         console.log("FORM LOGIN: ", email);
         console.log("FORM SENHA: ", senha);
 
-        fetch(" ", {
+        fetch("/usuarios/autenticar ", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
