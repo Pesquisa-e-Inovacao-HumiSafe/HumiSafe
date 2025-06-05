@@ -8,8 +8,8 @@ router.post("/cadastrar", function (req, res) {
     usuarioController.cadastrar(req, res);
 })
 
-router.get("/listar", function (req, res) {
-    usuarioController.listar(req, res);
+router.get("/autenticar", function (req, res) {
+    usuarioController.autenticar(req, res);
 });
 
 // router.get("/cadastrarsession/:email/:senha", function (req, res) {
