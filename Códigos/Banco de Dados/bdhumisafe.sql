@@ -1,5 +1,5 @@
--- CREATE DATABASE humisafe;
--- USE humisafe;
+CREATE DATABASE humisafe;
+USE humisafe;
 
 CREATE TABLE Hospital(
 idHospital INT PRIMARY KEY AUTO_INCREMENT,
@@ -110,7 +110,7 @@ INSERT INTO setor (nomeSetor, numSetor, qtdPacienteSetor, qtdFuncionarioSetor, d
 ('NeoNatal', '0009', 9, 14, '2024-02-27 10:45:00', 9),
 ('Pronto socorro', '0010', 18, 21, '2024-03-05 09:00:00', 10);
 
-INSERT INTO sensorDHT11 (numSerie, dtFabricacao, dtCompra, statusManutencao, dtManutencao, fksetor_sensorDHT11) VALUES
+INSERT INTO sensorDHT11 (numSerie, dtFabricacao, dtCompra, statusSensor, dtManutencao, fksetor_sensorDHT11) VALUES
 ('DHT11-SN-0001', '2023-01-10 10:00:00', '2023-03-15 09:00:00', 'Ativo', '2024-12-01 08:30:00', 1),
 ('DHT11-SN-0002', '2023-02-12 11:00:00', '2023-04-20 10:00:00', 'Inativo', '2025-01-05 10:00:00', 2),
 ('DHT11-SN-0003', '2022-12-01 08:00:00', '2023-01-25 14:00:00', 'Manutencao', '2025-02-20 09:30:00', 3),
@@ -134,7 +134,19 @@ INSERT INTO umidade (umidade, dtRegistro, fksensorDHT11_idumidade) VALUES
 (60.05, '2025-04-09 08:40:00', 9),  -- acima
 (42.60, '2025-04-09 08:45:00', 10); -- dentro da faixa ideal
 
-    
+
+SELECT nomeSetor, umidade, DATE_FORMAT(dtRegistro,  '%d/%m/%Y %H:%i') as 'Data Formatada' FROM umidade
+                            JOIN sensorDHT11
+                                ON umidade.fksensorDHT11_idumidade = sensorDHT11.idSensor
+							JOIN setor
+								ON sensorDHT11.fksetor_sensorDHT11 = setor.idSetor
+							WHERE dtRegistro >= CURDATE() - INTERVAL 100 DAY AND nomeSetor = 'UTI' AND statusSensor = 'Ativo'
+                            ORDER BY dtRegistro LIMIT 6;
+                            
+
+SELECT * FROM sensorDHT11;
+
+
 SELECT
 idHospital AS "Número de identificação da Empresa",
 razaoSocial AS "Nome da Empresa",
@@ -183,3 +195,95 @@ JOIN setor s ON h.idHospital = s.fkhospital_setor
 JOIN sensorDHT11 sd ON s.idSetor = sd.fksetor_sensorDHT11
 JOIN umidade u ON sd.idSensor = u.fksensorDHT11_idumidade
 WHERE u.umidade < 40 OR u.umidade > 60;
+
+-- KPI 1
+
+SELECT 
+    s.nomeSetor,
+    COUNT(u.idUmidade) AS qtd_alertas,
+    MAX(TIME(u.dtRegistro)) AS ultimo_horario
+FROM umidade u
+JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
+JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
+WHERE u.dtRegistro >= CURDATE() -- registros de hoje
+  AND (u.umidade < 40 OR u.umidade > 60)
+GROUP BY s.idSetor
+ORDER BY qtd_alertas DESC
+LIMIT 3;
+
+-- KPI 2
+
+SELECT 
+    s.nomeSetor,
+    u.umidade
+FROM umidade u
+JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
+JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
+WHERE u.dtRegistro = (
+    SELECT MAX(dtRegistro)
+    FROM umidade
+    WHERE umidade < 40 OR umidade > 60
+);
+
+-- KPI 3
+
+SELECT 
+    s.nomeSetor,
+    ROUND(
+        (SUM(CASE WHEN u.umidade < 40 OR u.umidade > 60 THEN 1 ELSE 0 END) * 100.0) / COUNT(*),
+        2
+    ) AS percentual_fora,
+    COUNT(*) AS total_medicoes
+FROM umidade u
+JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
+JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
+WHERE s.idSetor = (
+    SELECT sen.fksetor_sensorDHT11
+    FROM umidade u2
+    JOIN sensorDHT11 sen ON u2.fksensorDHT11_idumidade = sen.idSensor
+    WHERE u2.dtRegistro >= CURDATE()
+      AND (u2.umidade < 40 OR u2.umidade > 60)
+    GROUP BY sen.fksetor_sensorDHT11
+    ORDER BY COUNT(*) DESC
+    LIMIT 1
+)
+AND u.dtRegistro >= CURDATE()
+GROUP BY s.nomeSetor;
+
+-- GRÁFICO BARRAS
+
+SELECT 
+    s.nomeSetor,
+    DATE(u.dtRegistro) AS data,
+    ROUND(AVG(u.umidade), 2) AS media_umidade
+FROM umidade u
+JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
+JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
+WHERE s.nomeSetor IN ('Centro Cirurgico', 'UTI')
+  AND u.dtRegistro >= CURDATE() - INTERVAL 6 DAY
+GROUP BY s.nomeSetor, DATE(u.dtRegistro)
+ORDER BY data, nomeSetor;
+
+-- GRÁFICO PIZZA
+
+SELECT 
+    CASE 
+        WHEN umidade BETWEEN 40 AND 60 THEN 'Normal'
+        ELSE 'Alerta'
+    END AS status,
+    COUNT(*) AS total
+FROM umidade
+WHERE dtRegistro >= CURDATE()
+GROUP BY status;
+
+
+ 
+
+
+
+
+
+
+
+
+
