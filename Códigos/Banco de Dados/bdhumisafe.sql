@@ -1,5 +1,8 @@
--- CREATE DATABASE humisafe;
--- USE humisafe;
+CREATE DATABASE humisafe;
+
+USE humisafe;
+
+DROP DATABASE humisafe;
 
 CREATE TABLE Hospital(
 idHospital INT PRIMARY KEY AUTO_INCREMENT,
@@ -23,7 +26,7 @@ bairro VARCHAR(45) NOT NULL,
 cidade VARCHAR(45) NOT NULL,
 uf CHAR(2) NOT NULL,
 cep CHAR(8) NOT NULL,
-fkhospital_endereco INT UNIQUE AUTO_INCREMENT,
+fkhospital_endereco INT UNIQUE,
 CONSTRAINT fkhospital_endereco FOREIGN KEY (fkhospital_endereco)
 REFERENCES Hospital (idHospital)
 );
@@ -172,3 +175,95 @@ JOIN setor s ON h.idHospital = s.fkhospital_setor
 JOIN sensorDHT11 sd ON s.idSetor = sd.fksetor_sensorDHT11
 JOIN umidade u ON sd.idSensor = u.fksensorDHT11_idumidade
 WHERE u.umidade < 40 OR u.umidade > 60;
+
+-- KPI 1
+
+SELECT 
+    s.nomeSetor,
+    COUNT(u.idUmidade) AS qtd_alertas,
+    MAX(TIME(u.dtRegistro)) AS ultimo_horario
+FROM umidade u
+JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
+JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
+WHERE u.dtRegistro >= CURDATE() -- registros de hoje
+  AND (u.umidade < 40 OR u.umidade > 60)
+GROUP BY s.idSetor
+ORDER BY qtd_alertas DESC
+LIMIT 3;
+
+-- KPI 2
+
+SELECT 
+    s.nomeSetor,
+    u.umidade
+FROM umidade u
+JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
+JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
+WHERE u.dtRegistro = (
+    SELECT MAX(dtRegistro)
+    FROM umidade
+    WHERE umidade < 40 OR umidade > 60
+);
+
+-- KPI 3
+
+SELECT 
+    s.nomeSetor,
+    ROUND(
+        (SUM(CASE WHEN u.umidade < 40 OR u.umidade > 60 THEN 1 ELSE 0 END) * 100.0) / COUNT(*),
+        2
+    ) AS percentual_fora,
+    COUNT(*) AS total_medicoes
+FROM umidade u
+JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
+JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
+WHERE s.idSetor = (
+    SELECT sen.fksetor_sensorDHT11
+    FROM umidade u2
+    JOIN sensorDHT11 sen ON u2.fksensorDHT11_idumidade = sen.idSensor
+    WHERE u2.dtRegistro >= CURDATE()
+      AND (u2.umidade < 40 OR u2.umidade > 60)
+    GROUP BY sen.fksetor_sensorDHT11
+    ORDER BY COUNT(*) DESC
+    LIMIT 1
+)
+AND u.dtRegistro >= CURDATE()
+GROUP BY s.nomeSetor;
+
+-- GRÁFICO BARRAS
+
+SELECT 
+    s.nomeSetor,
+    DATE(u.dtRegistro) AS data,
+    ROUND(AVG(u.umidade), 2) AS media_umidade
+FROM umidade u
+JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
+JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
+WHERE s.nomeSetor IN ('Centro Cirurgico', 'UTI')
+  AND u.dtRegistro >= CURDATE() - INTERVAL 6 DAY
+GROUP BY s.nomeSetor, DATE(u.dtRegistro)
+ORDER BY data, nomeSetor;
+
+-- GRÁFICO PIZZA
+
+SELECT 
+    CASE 
+        WHEN umidade BETWEEN 40 AND 60 THEN 'Normal'
+        ELSE 'Alerta'
+    END AS status,
+    COUNT(*) AS total
+FROM umidade
+WHERE dtRegistro >= CURDATE()
+GROUP BY status;
+
+
+ 
+
+
+
+
+
+
+
+
+
