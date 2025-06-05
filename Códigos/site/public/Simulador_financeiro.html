@@ -96,12 +96,12 @@
 
 <script>
     function Simular() {
-        var mensagemBefore = document.getElementById('mensagemBefore')
-        var mensagem = document.getElementById('mensagem')
-        var precoporpaciente = Number(input_precoporpaciente.value);
-        var qtdpacientes = Number(input_qtdpacientes.value);
-        var região = localização.value;
-        var umidades = {
+        let mensagemBefore = document.getElementById('mensagemBefore')
+        let mensagem = document.getElementById('mensagem')
+        let precoporpaciente = Number(input_precoporpaciente.value);
+        let qtdpacientes = Number(input_qtdpacientes.value);
+        let região = localização.value;
+        let umidades = {
             "Norte": 85,
             "Nordeste": 80,
             "Sul": 75,
@@ -109,11 +109,11 @@
             "Centro-oeste": 78,
         }
 
-        var risco = 0.005
-        var risco_total = 0
-        var umidade = umidades[região];
-        var porcentagem_acima_60 = umidade - 60;
-        var pacientes_infectados = 0
+        let risco = 0.005
+        let risco_total = 0
+        let umidade = umidades[região];
+        let porcentagem_acima_60 = umidade - 60;
+        let pacientes_infectados = 0
 
         if (!precoporpaciente || !qtdpacientes || região === "") {
             mensagem.innerHTML = "<div class ='containerMensagem'><div class = 'class_mensagem '><p>⚠️ Preencha todos os campos corretamente.</p>";
@@ -127,13 +127,13 @@
         }
         pacientes_infectados = (qtdpacientes * risco_total / 100);
 
-        var custo_irregular = precoporpaciente * 4;
+        let custo_irregular = precoporpaciente * 4;
 
-        var pacientes_infectados_arredondado = Math.ceil(pacientes_infectados).toFixed();
+        let pacientes_infectados_arredondado = Math.ceil(pacientes_infectados).toFixed();
 
-        var prejuizo_paciente = precoporpaciente * 3;
+        let prejuizo_paciente = precoporpaciente * 3;
 
-        var prejuizo_total = prejuizo_paciente * pacientes_infectados_arredondado;
+        let prejuizo_total = prejuizo_paciente * pacientes_infectados_arredondado;
 
 
 
@@ -156,10 +156,9 @@
                 <p> Prejuizo gerado por paciente infectado com IRAS: <b>R$${prejuizo_paciente.toFixed(2)}</b></p>
 
                 
-
-         
                 <hr>
                 <p><b> Prejuízo causado por umidade desregulada: <b> R$${prejuizo_total.toFixed(2)}</b></p>
             </div>`;
+            
     }
 </script>
