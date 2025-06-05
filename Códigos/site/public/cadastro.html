@@ -81,10 +81,10 @@
         <br>
         
         <button onclick="cadastrar_emp()" class="botao">Cadastrar Empresa</button>
+        <div id="div_mensagem"></div>
       </div>
     </div>
   </div>
-  <div id="div_mensagem"></div>
   <div id="mensagem_erro"></div>
 
   </div>
@@ -159,18 +159,19 @@
  
   function cadastrar_emp() {
 
-    const cnpjNumerico = "";
+    let cnpjNumerico = "";
     const razaoSocial = Razao_input.value;
     const nomeFantasia = nome_input.value;
-    const cnpj = cnpj_input.value;
+    let cnpj = cnpj_input.value;
     const email = email_input.value;
-    const telefone = telefone_input.value;
+    let telefone = telefone_input.value;
     const senha = senha_input.value;
     const confirmarSenha = confirmar_senha_input.value;
-
-
-
-  if (
+    let mensagem = "";
+    let cnpjdesfor = cnpj.slice(0,2) + cnpj.slice(3,6) + cnpj.slice(7,10) + cnpj.slice(11, 15) + cnpj.slice(16, 18);
+    let telefonedesfor = telefone.slice(1,3) + telefone.slice(5,10) + telefone.slice(11);
+    
+if (
     razaoSocial == "" ||
     nomeFantasia == "" ||
     cnpj == "" ||
@@ -178,24 +179,89 @@
     telefone == "" ||
     senha == "" ||
     confirmarSenha == ""
+
   ) {
-    div_mensagem.innerHTML = "por favor preencha todos campos.";
 
-  }
-  else if (senha != confirmarSenha) {
-    div_mensagem.innerHTML = `senhas não coincidem`;
-  }
+      mensagem =
+        "Por favor preencha todos os campos."
+      }
 
-  else if (!email.includes("@")) {
-    div_mensagem.innerHTML = `Email inválido`;
-  }
+        
+             else if (cnpj.length <  14) {
+              mensagem = `<b> CNPJ Inválida.</b> `
+               
+            }
 
-  else if (!email.includes(".")) {
-    div_mensagem.innerHTML = `Email inválido`;
+      else if (email.includes("@") == false || email.includes(".") == false) {
+        mensagem = '<b> Email inválido!</b>'
+        
+    }
 
-  }
+    else if(telefone.length < 11){
+      mensagem = `<b> Telefone inválido.</b>`
+    }
+
+    else if (senha.length <  8) {
+      mensagem = '<b> Senha Inválida. </b> <br> Necessário ter no Mínimo 8 caracteres.'
+       
+    }
+
+    // else if ((senha.includes("!") == false) && (senha.includes("@") == false) && (senha.includes("#") == false) && (senha.includes("$") == false) && (senha.includes("%") == false) && (senha.includes("&") == false) && (senha.includes("*") == false) ) {
+
+    //   mensagem = `<b> Senha Inválida. </b> <br> Necessário no mínimo um caractere especial. `
+      
+    // }
+
+
+    else if ((senha == confirmarSenha) == false) {
+      mensagem = ' <b>Erro de confirmação de senha. </b>';
+
+    }
+
     
+    if (mensagem != '') {
+      div_mensagem.innerHTML = mensagem
+      return;
+      // interrompe e não segue pro fetch
+    }
+
+
+  // if (
+  //   razaoSocial == "" ||
+  //   nomeFantasia == "" ||
+  //   cnpj == "" ||
+  //   email == "" ||
+  //   telefone == "" ||
+  //   senha == "" ||
+  //   confirmarSenha == ""
+  // ) {
+    
+  //   div_mensagem.innerHTML = `por favor preencha todos campos.`;
+   
+  // }
+ 
+  
+  // else if(senha <= 8 ){
+  //   div_mensagem.innerHTML = `Senha inválida. Nescessário mais de 8 caracteres!`
+  // }
+
+
+  // else if(senhaVar.includes("!") == false && senhaVar.includes("@") == false && senhaVar.includes("#") == false && senhaVar.includes("$") == false && senhaVar.includes("%") == false && senhaVar.includes("&") == false && senhaVar.includes("*") == false ){
+  //   div_mensagem.innerHTML = `Senha inválida. Nescessário ao menos um caractere especial.`
+  // }
+
+  // else if (senha != confirmarSenha) {
+  //   div_mensagem.innerHTML = `senhas não coincidem.`;
+  
+  // }
+
+  // else if (!email.includes("@") && !email.incluedes(".")) {
+  //   div_mensagem.innerHTML = `email inválido.`
+  
+  // }
+
 else{
+  
 
     setTimeout(() => {
       cadastro.style.display = 'none'
@@ -203,7 +269,6 @@ else{
       div_mensagem.innerHTML = "";
     }, "2000");
 
-    var idUsuario = 
 
 
     fetch("/usuarios/cadastrar", {
@@ -216,62 +281,51 @@ else{
         // Agora vá para o arquivo routes/usuario.js
         razaoSocialServer: razaoSocial,
         nomeFantasiaServer: nomeFantasia,
-        cnpjServer: cnpj,
+        cnpjServer: cnpjdesfor,
         emailServer: email,
-        telefoneServer: telefone,
+        telefoneServer: telefonedesfor,
         senhaServer: senha,
       }),
     })
+
       .then(function (resposta) {
-        console.log("resposta: ", resposta);
-  
+        console.log("resposta: ", resposta)
 
         if (resposta.ok) {
+  return resposta.json();
+        }
   
+  else {
+   throw "Houve um erro ao tentar realizar o cadastro!";
+ }
+})
+
+ .then(data => {
+
+  const idHospital = data.idHospital;
+
+   localStorage.setItem('idHospital', idHospital);
+
           div_mensagem.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de login...";
+            "Cadastro realizado com sucesso! Redirecionando para cadastrar endereço...";
 
           setTimeout(() => {
             window.location = "cadastrarEndereco.html";
-          }, "2000");
+          }, 2000)
   
-        } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
+        })
+
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+        });
+
         }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
+
   
   }
 
-
-fetch(`/usuarios/cadastrarsession/${email}/${senha}`, {
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-  
-
-        if (resposta.ok) {
-          const dados = resposta.json()
-
-          var email = dados.email
-        } 
-        
-      })
-
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-  
-  
-
-
+  function sumirMensagem() {
+        div_mensagem.style.display = "none"
     }
   
   </script>

@@ -14,6 +14,19 @@ senha VARCHAR(30) NOT NULL,
 telefone CHAR(11) NOT NULL
 );
 
+CREATE TABLE Usuario(
+idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45) NOT NULL,
+senha VARCHAR(45) NOT NULL,
+email VARCHAR(45) NOT NULL,
+CONSTRAINT checkEmail CHECK(email LIKE '%@%'),
+telefone VARCHAR(14) NOT NULL,
+dtCadastro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+fkEmpresa INT,
+CONSTRAINT fkUsuario_Empresa FOREIGN KEY (fkEmpresa) REFERENCES Hospital(idHospital)
+CONSTRAINT pk_composta PRIMARY KEY (idUsuario, fkEmpresa)
+);
+
 CREATE TABLE Endereco (
 idEndereco INT PRIMARY KEY AUTO_INCREMENT,
 tipoLogradouro VARCHAR(45) NOT NULL,
@@ -23,15 +36,18 @@ bairro VARCHAR(45) NOT NULL,
 cidade VARCHAR(45) NOT NULL,
 uf CHAR(2) NOT NULL,
 cep CHAR(8) NOT NULL,
+<<<<<<< HEAD
 fkhospital_endereco INT UNIQUE,
+=======
+fkcliente_endereco INT UNIQUE AUTO_INCREMENT,
+>>>>>>> 2c7149221dfaaa1db5080953ebb9a2dfbdb41e06
 CONSTRAINT fkhospital_endereco FOREIGN KEY (fkhospital_endereco)
 REFERENCES Hospital (idHospital)
 );
 
-CREATE TABLE setor(
+CREATE TABLE Setor(
 idSetor INT PRIMARY KEY AUTO_INCREMENT,
 nomeSetor VARCHAR(45) NOT NULL,
-numSetor CHAR(4) NOT NULL,
 qtdPacienteSetor INT NOT NULL,
 qtdFuncionarioSetor INT NOT NULL,
 CONSTRAINT chkSetor CHECK(nomeSetor IN ('UTI', 'Centro Cirurgico', 'Pronto socorro', 'Unidades de Queimados', 'NeoNatal', 'Oncologia')),
@@ -41,22 +57,28 @@ CONSTRAINT fkhospital_setor FOREIGN KEY (fkhospital_setor)
 REFERENCES Hospital (idHospital)
 );
 
-CREATE TABLE sensorDHT11(
-idSensor INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+CREATE TABLE sensor(
+idSensor INT PRIMARY KEY AUTO_INCREMENT,
 numSerie VARCHAR(100) UNIQUE NOT NULL,
+<<<<<<< HEAD
 dtFabricacao  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 dtCompra DATETIME NOT NULL,
 statusSensor VARCHAR(10) NOT NULL DEFAULT "Inativo",
 CONSTRAINT checkSituacaoSensor CHECK(statusSensor IN("Ativo","Inativo","Manutencao")),
+=======
+statusSensor VARCHAR(10) NOT NULL DEFAULT "Inativo",
+CONSTRAINT checkStatusSensor CHECK(statusSensor IN("Ativo","Inativo","Manutencao")),
+dtInstalacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+>>>>>>> 2c7149221dfaaa1db5080953ebb9a2dfbdb41e06
 dtManutencao DATETIME,
 fksetor_sensorDHT11 INT,
 CONSTRAINT fksetor_sensorDHT11 FOREIGN KEY (fksetor_sensorDHT11)
-REFERENCES setor (idSetor)
+REFERENCES Setor (idSetor)
 );
 
-CREATE TABLE umidade(
-idUmidade INT PRIMARY KEY AUTO_INCREMENT,
-umidade FLOAT(4,2) NOT NULL,
+CREATE TABLE Registro(
+idRegistro INT PRIMARY KEY AUTO_INCREMENT,
+registroUmidade FLOAT(4,2) NOT NULL,
 dtRegistro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 fksensorDHT11_idumidade INT,
 CONSTRAINT fksensorDHT11_idumidade FOREIGN KEY (fksensorDHT11_idumidade)

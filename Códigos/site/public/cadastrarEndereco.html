@@ -22,24 +22,18 @@
       </a>
       <div class="container">
         <ul class="navbar">
-          <li>
-            <a onclick="inicio()">Início</a>
-          </li>
-          <li>
-            <a onclick="inicio()">Sobre Nós</a>
-          </li>
-          <li>
-            <a onclick="inicio()">Sistema</a>
-          </li>
-          <li>
-            <a onclick="inicio()">Simulador</a>
-          </li>
-          <li>
-            <a class="agora" href="cadastrarEndereco.html">Cadastrar</a>
-          </li>
-          <li>
-            <a class="button" onclick="entrar()">Entrar <div class="id_img_login"></div></a>
-          </li>
+          <li><a href="index.html#inicio">Início</a></li>
+
+          <li><a href="index.html#sobrenos">Sobre Nós</a></li>
+
+          <li><a href="index.html#sistema">Sistema</a></li>
+
+          <li><a href="Simulador_financeiro.html">Simulador</a></li>
+
+          <li><a class="agora" href="cadastro.html">Cadastrar</a></li>
+
+          <li><a class="button" href="login.html">Entrar <div class="id_img_login"></div></a></li>
+
         </ul>
       </div>
 
@@ -54,6 +48,7 @@
         <div class="campo">
           <span>Tipo Logradouro:</span>
           <select id="TipoLogradouro_input" type="text" placeholder="Digite o nome do Logradouro">
+            <option></option>
             <option value="Avenida"> Avenida </option>
             <option value="Rua"> Rua </option>
             <option value="Praça"> Praça </option>
@@ -69,7 +64,7 @@
 
         <div class="campo">
           <span>Numero do Logradouro:</span>
-          <input id="NumLogradouro_input" type="text" placeholder="Digite o número do Logradouro">
+          <input id="NumLogradouro_input" type="number" placeholder="Digite o número do Logradouro">
         </div>
 
         <div class="campo">
@@ -91,15 +86,15 @@
           <span>CEP:</span>
           <input id="CEP_input" type="text" placeholder="Digite o CPF" maxlength="9" oninput="formatarCEP()">
         </div>
-
+        
         <br>
         <button onclick="cadastrar()" class="botao">Cadastrar Endereço</button>
-
+        
+        <div id="div_mensagem"></div>
       </div>
     </div>
   </div>
   
-  <div id="div_mensagem"></div>
 
 </body>
 
@@ -139,21 +134,41 @@
   function cadastrar() {
     const TipoLogradouro = TipoLogradouro_input.value;
     const Logradouro = Logradouro_input.value;
-    const NumLogradouro = NumLogradouro_input.value;
+    const NumLogradouro = Number(NumLogradouro_input.value);
     const Bairro = Bairro_input.value;
     const Cidade = Cidade_input.value;
     const UF = UF_input.value;
     let CEP = CEP_input.value;
+    let mensagem = "";
+    let CEPdesfor = CEP.slice(0,5) + CEP.slice(6);
     
     console.log(CEP);
     
 
     if (TipoLogradouro == '' || Logradouro == '' || NumLogradouro == '' || Bairro == '' || Cidade == '' || UF == '' || CEP == '') {
-      alert("Por favor, preencha todos os campos.");
+      mensagem = `Por favor, preencha todos os campos.`;
     }
+
+    else if(CEP < 9){
+      mensagem = `CEP Inválida.`
+    }
+
+    else if(UF < 2){
+      mensagem = `UF inválido.`
+    }
+ 
+    if (mensagem != '') {
+      div_mensagem.innerHTML = mensagem
+      return;
+      // interrompe e não segue pro fetch
+    }
+    
+
     else {
-        
       
+
+      const idHospital = localStorage.getItem('idHospital');
+
       fetch("/usuarioendereco/cadastrar", {
         method: "POST",
         headers: {
@@ -166,18 +181,22 @@
           BairroServer: Bairro,
           CidadeServer: Cidade,
           UFServer: UF,
-          CEPServer: CEP
+          CEPServer: CEPdesfor,
+          idHospital: idHospital
         }),
       })
-        .then(function (resposta) {
-          console.log("resposta: ", resposta);
-    
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
         
-          if (resposta.ok) {
-
-            div_mensagem.innerHTML =
-              "Endereço cadastrado com sucesso! Redirecionando para tela de login...";
-
+        
+        if (resposta.ok) {
+          
+          div_mensagem.innerHTML =
+          "Endereço cadastrado com sucesso! Redirecionando para tela de login...";
+          
+          
+        localStorage.setItem('idHospital', idHospital);
+ 
             setTimeout(() => {
               window.location = "login.html";
             }, "2000");

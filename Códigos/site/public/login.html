@@ -63,6 +63,8 @@
           <a href="recSenha.html">Esqueci a senha</a>
           <br>
           <button onclick="entrar()" class="botao">Entrar</button>
+
+          <div id="div_mensagem"></div>
         </div>
 
       </div>
@@ -76,21 +78,22 @@
       
         const email = email_input.value;
         const senha = senha_input.value;
-        
+
         if (email == "" || senha == "") {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            div_mensagem.style.display = "block"
+            div_mensagem.innerHTML = "(Mensagem de erro para todos os campos em branco)";
             return false;
             setInterval(sumirMensagem, 5000);
         }
 
         else {
-            
+          setInterval(sumirMensagem, 5000)
+        }
 
         console.log("FORM LOGIN: ", email);
         console.log("FORM SENHA: ", senha);
 
-        fetch("/usuarios/autenticar", {
+        fetch(" ", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -108,13 +111,14 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.SENHA_USUARIO = json.senha;
 
                     setTimeout(function () {
                         window.location = "./dashboard/cards.html";
-                    }, 1000); // apenas para exibir o loading
+                    }, 1000);
 
                 });
 
@@ -133,10 +137,9 @@
 
         return false;
     }
-  }
   
     function sumirMensagem() {
-        cardErro.style.display = "none"
+        div_mensagem.style.display = "none"
     }
 
 </script>

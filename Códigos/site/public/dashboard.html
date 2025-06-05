@@ -10,7 +10,7 @@
     <title>Dashboard</title>
 </head>
 
-<body onload="colerDadosGraficoLinha()">
+<body onload="executarFuncoes()">
     <div class="navBarLateral">
         <div class="logo-titulo">
             <img src="imagens/logo.png" alt="">
@@ -29,10 +29,10 @@
 
             <div class="alertas_hospital">
                 <b id="tooltip">!</b>
-                <div class="alertas_hospital-container">
-                    <h3>Quantidade de alertas totais atualmente:</h3>
-                    <span>9</span>
-                </div>
+
+                <h3>Quantidade de alertas totais atualmente:</h3>
+                <span id="quant_alertas"></span>
+
             </div>
             <div class="tooltip_alertas" id="tooltip_alertas">
                 <b>Setores em alerta:</b>
@@ -45,25 +45,17 @@
 
             <div class="alertas_setores">
                 <h3>Top 3 Setores com mais alertas durante o dia</h3>
-                <ul>
-                    <li>1º Sala de Cirurgia: 4 - 14:38:21</li>
-                    <li>2º Raio-X: 3 - 14:38:21</li>
-                    <li>3º Pediatria: 2 - 14:38:21</li>
-                </ul>
+                <ul id="topSetores"></ul>
             </div>
 
             <div class="regiao_umidade">
-                <div class="regiao_umidade-container">
-                    <h3>Região atual mais fora da faixa</h3>
-                    <span>Sala de Cirurgia: 70%</span>
-                </div>
+                <h3>Região atual mais fora da faixa</h3>
+                <span id="regiao_fora_faixa"></span>
             </div>
 
             <div class="desvios_criticos">
-                <div class="desvios_criticos-container">
-                    <h3>Percentual de medições que sairam da faixa adequada no dia</h3>
-                    <span>Sala de Cirurgia - 5% fora - 120 medições</span>
-                </div>
+                <h3>Percentual de medições do setor mais crítico que sairam da faixa adequada no dia</h3>
+                <span id="percentual_critico"></span>
             </div>
 
         </div>
@@ -71,8 +63,8 @@
             <div class="graficoLinha">
                 <canvas id="graficoLinha"></canvas>
             </div>
-            <div class="grafico2">
-                <canvas id="grafico2"></canvas>
+            <div class="graficoPizza">
+                <canvas id="graficoPizza"></canvas>
             </div>
             <div class="graficoBarra">
                 <canvas id="graficoBarra"></canvas>
@@ -96,88 +88,96 @@
     });
 
 
+    async function buscarQuantAlertas() {
+        const resposta = await fetch('http://localhost:3333/dashboard/buscarQuantAlertas')
+
+        if (resposta.ok) {
+            console.log('buscarQuantAlertas funcionou!')
+            const dados = await resposta.json();
+            console.log(dados)
+
+            var quant_alertas = document.getElementById("quant_alertas");
+            quant_alertas.innerHTML = dados[0].Quantidade;
+        } else {
+            console.log('Erro ao realizar a busca dos dados!')
+        }
+
+    }
+
+    async function topSetoresMaisAlertas() {
+        const resposta = await fetch('http://localhost:3333/dashboard/topSetoresMaisAlertas')
+
+        if (resposta.ok) {
+            console.log('topSetoresMaisAlertas funcionou!')
+            const dados = await resposta.json();
+            console.log(dados)
+
+
+            for (var i = 0; i < dados.length; i++) {
+                var topSetores = document.getElementById("topSetores");
+
+                var linha = document.createElement('li');
+                linha.textContent = `${i + 1}º ${dados[i].nomeSetor}: ${dados[i].qtd_alertas} - ${dados[i].ultimo_horario}`
+                topSetores.appendChild(linha);
+            }
+        } else {
+            console.log('Erro ao realizar a busca dos dados!')
+        }
+    }
+
+    async function regiaoForaFaixa() {
+        const resposta = await fetch('http://localhost:3333/dashboard/regiaoForaFaixa')
+
+        if (resposta.ok) {
+            console.log('regiaoForaFaixa funcionou!')
+            const dados = await resposta.json();
+            console.log(dados)
+
+            var regiao_fora_faixa = document.getElementById('regiao_fora_faixa')
+            regiao_fora_faixa.innerText = `${dados[0].nomeSetor}: ${dados[0].umidade}%`
+        } else {
+            console.log('Erro ao realizar a busca dos dados!')
+        }
+    }
+
+    async function percentualMedicoesCriticas() {
+        const resposta = await fetch('http://localhost:3333/dashboard/percentualMedicoesCriticas')
+
+        if (resposta.ok) {
+            console.log('percentualMedicoesCriticas funcionou!')
+            const dados = await resposta.json();
+            console.log(dados)
+
+            var percentual_critico = document.getElementById('percentual_critico')
+            percentual_critico.innerText = `${dados[0].nomeSetor} - ${dados[0].percentual_fora}% fora - ${dados[0].total_medicoes} medições`
+        } else {
+            console.log('Erro ao realizar a busca dos dados!')
+        }
+    }
+
     // GraficoLinha
-    function colerDadosGraficoLinha() {
+    async function plotarGraficoLinha() {
         var nomeSetor = []
 
-        var UTI = [];
         var dataColeta = []
 
+        var UTI = [];
         var unidadeDeQueimados = [];
-
         var neoNatal = [];
-
         var centroCirurgico = [];
 
+        
+        const resposta = await fetch('http://localhost:3333/dashboard/buscarUltimasMedidasUTI')
 
-        fetch('/dashboard/buscarUltimasMedidasUTI', { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    console.log(resposta)
-                    // nomeSetor.push(resposta[0].nome)
-                    // for (var i = 0; i < resposta.length; i++) {
-                        // UTI.push(resposta[i][1])
-                        // console.log(resposta[i].umidade)
-                        // dataColeta.push(resposta[0].dataFormatada)
-                    // }
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-        // fetch('/dashboard/buscarUltimasMedidasUnidadeDeQueimadas', { cache: 'no-store' }).then(function (response) {
-        //     if (response.ok) {
-        //         response.json().then(function (resposta) {
-        //             nomeSetor.push(resposta[0].nome)
-        //             for (var i = 0; i < resposta.length; i++) {
-        //                 unidadeDeQueimados.push(resposta[i].umidade)
-        //             }
-        //         });
-        //     } else {
-        //         console.error('Nenhum dado encontrado ou erro na API');
-        //     }
-        // })
-        //     .catch(function (error) {
-        //         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        //     });
+        if (resposta.ok) {
+            console.log('buscarUltimasMedidasUTI funcionou!')
+            const dados = await resposta.json();
+            console.log(dados)
 
-        // fetch('/dashboard/buscarUltimasMedidasNeoNatal', { cache: 'no-store' }).then(function (response) {
-        //     if (response.ok) {
-        //         response.json().then(function (resposta) {
-        //             nomeSetor.push(resposta[0].nome)
-        //             for (var i = 0; i < resposta.length; i++) {
-        //                 neoNatal.push(resposta[i].umidade)
-        //             }
-        //         });
-        //     } else {
-        //         console.error('Nenhum dado encontrado ou erro na API');
-        //     }
-        // })
-        //     .catch(function (error) {
-        //         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        //     });
-        // fetch('/dashboard/buscarUltimasMedidasCentroCirurgico', { cache: 'no-store' }).then(function (response) {
-        //     if (response.ok) {
-        //         response.json().then(function (resposta) {
-        //             console.log('TESTE', resposta[0].nomeSetor)
-        //             nomeSetor.push(resposta[0].nomeSetor)
-        //             for (var i = 0; i < resposta.length; i++) {
-        //                 centroCirurgico.push(resposta[i].umidade)
-        //             }
-        //         });
-        //     } else {
-        //         console.error('Nenhum dado encontrado ou erro na API');
-        //     }
-        // })
-        //     .catch(function (error) {
-        //         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        //     });
-        //     console.log('Valores: ', nomeSetor, UTI, dataColeta, unidadeDeQueimados, neoNatal, centroCirurgico)
-        // plotarGraficoLinha(nomeSetor, UTI, dataColeta, unidadeDeQueimados, neoNatal, centroCirurgico)
-
+            for (var i = 0; i < dados.length; i++) {
+                UTI.push(dados)
+            }   
+        }
     }
 
     function plotarGraficoLinha() {
@@ -186,34 +186,34 @@
             data: {
                 labels: dataColeta,
                 datasets: [
-                {
-                    label: nomeSetor[0],
-                    data: UTI,
-                    borderColor: 'red',
-                    borderWidth: 3,
-                    fill: false
-                },
-                {
-                    label: nomeSetor[1],
-                    data: unidadeDeQueimados,
-                    borderColor: 'blue',
-                    borderWidth: 3,
-                    fill: false
-                },
-                {
-                    label: nomeSetor[2],
-                    data: neoNatal,
-                    borderColor: 'orange',
-                    borderWidth: 3,
-                    fill: false
-                },
-                {
-                    label: nomeSetor[3],
-                    data: centroCirurgico,
-                    borderColor: 'green',
-                    borderWidth: 3,
-                    fill: false
-                }
+                    {
+                        label: nomeSetor[0],
+                        data: UTI,
+                        borderColor: 'red',
+                        borderWidth: 3,
+                        fill: false
+                    },
+                    {
+                        label: nomeSetor[1],
+                        data: unidadeDeQueimados,
+                        borderColor: 'blue',
+                        borderWidth: 3,
+                        fill: false
+                    },
+                    {
+                        label: nomeSetor[2],
+                        data: neoNatal,
+                        borderColor: 'orange',
+                        borderWidth: 3,
+                        fill: false
+                    },
+                    {
+                        label: nomeSetor[3],
+                        data: centroCirurgico,
+                        borderColor: 'green',
+                        borderWidth: 3,
+                        fill: false
+                    }
                 ]
             },
             options: {
@@ -245,105 +245,152 @@
         });
     }
 
+    async function plotarGraficoBarra() {
+        const resposta = await fetch('http://localhost:3333/dashboard/comparacaoDados6Dias')
 
-    var dataUTI = [40, 41, 40, 41, 39, 40]
-    var dataRaioX = [65, 67, 69, 66, 61, 60]
-    var graficoBarra = new Chart(document.getElementById('graficoBarra').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: ['12/04/2025 - 00:23', '13/04/2025 - 01:45', '14/04/2025 - 02:19', '15/04/2025 - 03:57', '16/04/2025 - 04:48', '17/04/2025 - 05:14'],
-            datasets: [{
-                label: 'UTI',
-                data: dataUTI,
-                borderColor: 'red',
-                borderWidth: 2,
-                fill: false
-            },
-            {
-                label: 'Sala de Cirurgia',
-                data: dataRaioX,
-                borderColor: 'green',
-                borderWidth: 2,
-                fill: false,
-            }]
-        },
-        options: {
-            maintainAspectRatio: false, // Disable aspect ratio maintenance
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Comparação de Umidade por 6 dias em ambientes críticos',
-                }
-            },
-            scales: {
-                y: {
-                    title: {
-                        display: true,
-                        text: '(%)'
-                    },
-                    beginAtZero: true
-                },
+        if (resposta.ok) {
+            console.log('comparacaoDados6Dias funcionou!')
+            const dados = await resposta.json();
+            console.log(dados)
 
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Captura por Data e Hora'
-                    },
-                    beginAtZero: true
+            const umidadeUTI = []
+            const umidadeCentroCirurgico = []
+            //const dataUTI = []
+            //const dataCentroCirurgico = []
+            const data_umidade = []
+            for (var i = 0; i < dados.length; i++) {
+                if (dados[i].nomeSetor == 'Centro Cirurgico') {
+                    umidadeCentroCirurgico.push(dados[i].media_umidade)
+                    //dataCentroCirurgico.push(dados[i].data)
+                } else if (dados[i].nomeSetor == 'UTI') {
+                    umidadeUTI.push(dados[i].media_umidade)
+                    //dataUTI.push(dados[i].media_umidade)
                 }
+                const data = new Date(dados[i].data)
+
+                data_umidade.push(data.toLocaleDateString('pt-br'))
             }
-        }
-    });
 
-    var dataUTI = [40, 41, 40, 41, 39, 40]
-    var dataRaioX = [65, 67, 69, 66, 61, 60]
-    var graficoBarra = new Chart(document.getElementById('grafico2').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: ['12/04/2025 - 00:23', '13/04/2025 - 01:45', '14/04/2025 - 02:19', '15/04/2025 - 03:57', '16/04/2025 - 04:48', '17/04/2025 - 05:14'],
-            datasets: [{
-                label: 'UTI',
-                data: dataUTI,
-                borderColor: 'red',
-                borderWidth: 2,
-                fill: false
-            },
-            {
-                label: 'Sala de Cirurgia',
-                data: dataRaioX,
-                borderColor: 'green',
-                borderWidth: 2,
-                fill: false,
-            }]
-        },
-        options: {
-            maintainAspectRatio: false, // Disable aspect ratio maintenance
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Comparação de Umidade por 6 dias em ambientes críticos',
-                }
-            },
-            scales: {
-                y: {
-                    title: {
-                        display: true,
-                        text: '(%)'
+            var graficoBarra = new Chart(document.getElementById('graficoBarra').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: data_umidade,
+                    datasets: [{
+                        label: 'UTI',
+                        data: umidadeUTI,
+                        borderColor: 'red',
+                        borderWidth: 2,
+                        fill: false
                     },
-                    beginAtZero: true
+                    {
+                        label: 'Centro Cirurgico',
+                        data: umidadeCentroCirurgico,
+                        borderColor: 'green',
+                        borderWidth: 2,
+                        fill: false,
+                    }]
                 },
-
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Captura por Data e Hora'
+                options: {
+                    maintainAspectRatio: false, // Disable aspect ratio maintenance
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Comparação de Umidade por 6 dias em ambientes críticos',
+                        }
                     },
-                    beginAtZero: true
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: '(%)'
+                            },
+                            beginAtZero: true
+                        },
+
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Captura por Data e Hora'
+                            },
+                            beginAtZero: true
+                        }
+                    }
                 }
-            }
+            });
+
+        } else {
+            console.log('Erro ao realizar a busca dos dados!')
         }
-    });
+    }
+
+    async function plotarGraficoPizza() {
+        const resposta = await fetch('http://localhost:3333/dashboard/comparacaoUmidadeAlertas')
+
+        if (resposta.ok) {
+            console.log('plotarGraficoPizza funcionou!')
+            const dados = await resposta.json();
+            console.log(dados)
+
+
+            var status = []
+            var total = []
+
+            for (var i = 0; i < dados.length; i++) {
+                status.push(dados[i].status)
+                total.push(dados[i].total)
+            }
+
+            var graficoPizza = new Chart(document.getElementById('graficoPizza').getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: status,
+                    datasets: [{
+                        data: total,
+                        borderWidth: 2,
+                        fill: false
+                    },]
+                },
+                options: {
+                    maintainAspectRatio: false, // Disable aspect ratio maintenance
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Quantidade de medições em alerta vs medições normais durante o dia',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: '(%)'
+                            },
+                            beginAtZero: true
+                        },
+
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Captura por Data e Hora'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        } else {
+            console.log('Erro ao realizar a busca dos dados!')
+        }
+    }
+
+    function executarFuncoes() {
+        buscarQuantAlertas()
+        topSetoresMaisAlertas()
+        regiaoForaFaixa()
+        percentualMedicoesCriticas()
+        plotarGraficoBarra()
+        plotarGraficoPizza()
+    }
 
 </script>
