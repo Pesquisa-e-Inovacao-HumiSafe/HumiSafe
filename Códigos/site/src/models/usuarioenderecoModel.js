@@ -8,15 +8,11 @@ function cadastrar(tipoLogradouro, logradouro, numLogradouro, bairro, cidade, uf
     
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
-    let instrucaoSql = 
+    var instrucaoSql = 
     
-<<<<<<< HEAD
     // `INSERT INTO Hospital (razaoSocial, nomeFantasia, cnpj, email, senha, telefone) VALUES ('${razao}' ,'${nome}', '${cnpj}', '${email}', '${senha}', '${telefone}');`
 
     `INSERT INTO Endereco (tipoLogradouro, logradouro, numLogradouro, bairro, cidade, uf, cep, fkHospitalEndereco) VALUES ('${tipoLogradouro}', '${logradouro}', '${numLogradouro}', '${bairro}', '${cidade}', '${uf}', '${cep}', ${idHospital});`
-=======
-    `INSERT INTO endereco (tipoLogradouro, logradouro, numLogradouro, bairro, cidade, uf, cep, fkhospital_endereco) VALUES ('${tipoLogradouro}', '${logradouro}', '${numLogradouro}', '${bairro}', '${cidade}', '${uf}', '${cep}', ${idHospital});`
->>>>>>> 9796838ef7311f52b96eb060c60a8d8a6490cf3b
 
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
