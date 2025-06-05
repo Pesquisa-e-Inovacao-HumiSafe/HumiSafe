@@ -1,5 +1,5 @@
--- CREATE DATABASE humisafe;
--- USE humisafe;
+CREATE DATABASE humisafe;
+USE humisafe;
 
 CREATE TABLE Hospital(
 idHospital INT PRIMARY KEY AUTO_INCREMENT,
@@ -23,7 +23,7 @@ bairro VARCHAR(45) NOT NULL,
 cidade VARCHAR(45) NOT NULL,
 uf CHAR(2) NOT NULL,
 cep CHAR(8) NOT NULL,
-fkhospital_endereco INT UNIQUE AUTO_INCREMENT,
+fkhospital_endereco INT UNIQUE,
 CONSTRAINT fkhospital_endereco FOREIGN KEY (fkhospital_endereco)
 REFERENCES Hospital (idHospital)
 );
@@ -38,7 +38,7 @@ CONSTRAINT chkSetor CHECK(nomeSetor IN ('UTI', 'Centro Cirurgico', 'Pronto socor
 dtInstalacao  DATETIME NOT NULL,
 fkhospital_setor INT,
 CONSTRAINT fkhospital_setor FOREIGN KEY (fkhospital_setor)
-REFERENCES hospital (idHospital)
+REFERENCES Hospital (idHospital)
 );
 
 CREATE TABLE sensorDHT11(
@@ -46,8 +46,8 @@ idSensor INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 numSerie VARCHAR(100) UNIQUE NOT NULL,
 dtFabricacao  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 dtCompra DATETIME NOT NULL,
-statusManutencao VARCHAR(10) NOT NULL DEFAULT "Inativo",
-CONSTRAINT checkManutencao CHECK(statusManutencao IN("Ativo","Inativo","Manutencao")),
+statusSensor VARCHAR(10) NOT NULL DEFAULT "Inativo",
+CONSTRAINT checkSituacaoSensor CHECK(statusSensor IN("Ativo","Inativo","Manutencao")),
 dtManutencao DATETIME,
 fksetor_sensorDHT11 INT,
 CONSTRAINT fksetor_sensorDHT11 FOREIGN KEY (fksetor_sensorDHT11)
@@ -99,7 +99,7 @@ INSERT INTO setor (nomeSetor, numSetor, qtdPacienteSetor, qtdFuncionarioSetor, d
 ('NeoNatal', '0009', 9, 14, '2024-02-27 10:45:00', 9),
 ('Pronto socorro', '0010', 18, 21, '2024-03-05 09:00:00', 10);
 
-INSERT INTO sensorDHT11 (numSerie, dtFabricacao, dtCompra, statusManutencao, dtManutencao, fksetor_sensorDHT11) VALUES
+INSERT INTO sensorDHT11 (numSerie, dtFabricacao, dtCompra, statusSensor, dtManutencao, fksetor_sensorDHT11) VALUES
 ('DHT11-SN-0001', '2023-01-10 10:00:00', '2023-03-15 09:00:00', 'Ativo', '2024-12-01 08:30:00', 1),
 ('DHT11-SN-0002', '2023-02-12 11:00:00', '2023-04-20 10:00:00', 'Inativo', '2025-01-05 10:00:00', 2),
 ('DHT11-SN-0003', '2022-12-01 08:00:00', '2023-01-25 14:00:00', 'Manutencao', '2025-02-20 09:30:00', 3),
@@ -123,7 +123,19 @@ INSERT INTO umidade (umidade, dtRegistro, fksensorDHT11_idumidade) VALUES
 (60.05, '2025-04-09 08:40:00', 9),  -- acima
 (42.60, '2025-04-09 08:45:00', 10); -- dentro da faixa ideal
 
-    
+
+SELECT nomeSetor, umidade, DATE_FORMAT(dtRegistro,  '%d/%m/%Y %H:%i') as 'Data Formatada' FROM umidade
+                            JOIN sensorDHT11
+                                ON umidade.fksensorDHT11_idumidade = sensorDHT11.idSensor
+							JOIN setor
+								ON sensorDHT11.fksetor_sensorDHT11 = setor.idSetor
+							WHERE dtRegistro >= CURDATE() - INTERVAL 100 DAY AND nomeSetor = 'UTI' AND statusSensor = 'Ativo'
+                            ORDER BY dtRegistro LIMIT 6;
+                            
+
+SELECT * FROM sensorDHT11;
+
+
 SELECT
 idHospital AS "Número de identificação da Empresa",
 razaoSocial AS "Nome da Empresa",
