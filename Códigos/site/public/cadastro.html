@@ -203,7 +203,6 @@ else{
       div_mensagem.innerHTML = "";
     }, "2000");
 
-    var idUsuario = 
 
 
     fetch("/usuarios/cadastrar", {
@@ -222,56 +221,44 @@ else{
         senhaServer: senha,
       }),
     })
+
       .then(function (resposta) {
-        console.log("resposta: ", resposta);
-  
+        console.log("resposta: ", resposta)
 
         if (resposta.ok) {
+  return resposta.json();
+        }
   
+  else {
+   throw "Houve um erro ao tentar realizar o cadastro!";
+ }
+})
+
+ .then(data => {
+
+  const idHospital = data.idHospital;
+
+   localStorage.setItem('idHospital', idHospital);
+
           div_mensagem.innerHTML =
             "Cadastro realizado com sucesso! Redirecionando para tela de login...";
 
           setTimeout(() => {
             window.location = "cadastrarEndereco.html";
-          }, "2000");
+          }, 2000)
   
-        } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
+        })
+
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+        });
+
         }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
+
+
   
   }
 
-
-fetch(`/usuarios/cadastrarsession/${email}/${senha}`, {
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
   
-
-        if (resposta.ok) {
-          const dados = resposta.json()
-
-          var email = dados.email
-        } 
-        
-      })
-
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-  
-  
-
-
-    }
   
   </script>
