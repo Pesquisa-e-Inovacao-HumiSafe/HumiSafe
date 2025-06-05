@@ -2,14 +2,14 @@ var usuarioenderecoModel = require("../models/usuarioenderecoModel");
 
 
 function cadastrar(req, res) {
-    var tipoLogradouro = req.body.TipoLogradouroServer;
-    var logradouro = req.body.LogradouroServer;
-    var numLogradouro = req.body.NumLogradouroServer;
-    var bairro = req.body.BairroServer;
-    var cidade = req.body.CidadeServer;
-    var uf = req.body.UFServer;
-    var cep = req.body.CEPServer;
-    var idHospital = req.body.idHospital;
+    let tipoLogradouro = req.body.TipoLogradouroServer;
+    let logradouro = req.body.LogradouroServer;
+    let numLogradouro = req.body.NumLogradouroServer;
+    let bairro = req.body.BairroServer;
+    let cidade = req.body.CidadeServer;
+    let uf = req.body.UFServer;
+    let cep = req.body.CEPServer;
+    let idHospital = req.body.idHospital;
    
 
     
