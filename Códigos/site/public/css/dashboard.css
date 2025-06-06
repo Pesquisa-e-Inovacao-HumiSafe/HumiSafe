@@ -19,8 +19,18 @@
         left: 0;
     }
 
-    .navBarLateral .sair{
-        margin-top: 300px;
+    .navBarLateral .sair button{
+        height: 30px;
+        margin-top: 230px;
+        color: white;
+        background-color: transparent;
+    }
+
+     .navBarLateral .jira button{
+        height: 30px;
+        margin-top: 200px;
+        color: white;
+        background-color: transparent;
     }
 
     .logo-titulo {

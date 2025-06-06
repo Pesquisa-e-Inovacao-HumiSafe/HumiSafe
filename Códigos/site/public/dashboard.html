@@ -21,6 +21,9 @@
             <p>Seja bem vindo,</p>
             <p class="nome_usuario"></p>
         </div>
+        <div class="jira">
+            <a href="https://humisafe.atlassian.net/servicedesk/customer/portals" target="_blank"><button>Suporte</button></a>
+        </div>
         <div class="sair">
             <button  id="sair" onclick="limparSessao()">Sair</button>
         </div>
@@ -81,7 +84,6 @@
 
 </html>
 <script>
-
     var nome_usuario = document.querySelector('.nome_usuario')
     nome_usuario.innerText = sessionStorage.NOME_USUARIO
 
