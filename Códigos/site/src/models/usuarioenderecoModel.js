@@ -12,7 +12,7 @@ function cadastrar(tipoLogradouro, logradouro, numLogradouro, bairro, cidade, uf
     
     // `INSERT INTO Hospital (razaoSocial, nomeFantasia, cnpj, email, senha, telefone) VALUES ('${razao}' ,'${nome}', '${cnpj}', '${email}', '${senha}', '${telefone}');`
 
-    `INSERT INTO Endereco (tipoLogradouro, logradouro, numLogradouro, bairro, cidade, uf, cep, fkHospitalEndereco) VALUES ('${tipoLogradouro}', '${logradouro}', '${numLogradouro}', '${bairro}', '${cidade}', '${uf}', '${cep}', ${idHospital});`
+    `INSERT INTO Endereco (tipoLogradouro, logradouro, numLogradouro, bairro, cidade, uf, cep, fkHospital) VALUES ('${tipoLogradouro}', '${logradouro}', '${numLogradouro}', '${bairro}', '${cidade}', '${uf}', '${cep}', ${idHospital});`
 
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);

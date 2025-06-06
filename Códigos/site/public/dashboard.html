@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="./css/navbar.css">
     <link rel="stylesheet" href="./css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./js/sessao.js"></script>
     <title>Dashboard</title>
 </head>
 
-<body onload="executarFuncoes()">
+<body onload=" validarSessao(), executarFuncoes()">
     <div class="navBarLateral">
         <div class="logo-titulo">
             <img src="imagens/logo.png" alt="">
@@ -19,6 +20,9 @@
         <div>
             <p>Seja bem vindo,</p>
             <p class="nome_usuario"></p>
+        </div>
+        <div class="sair">
+            <button  id="sair" onclick="limparSessao()">Sair</button>
         </div>
     </div>
 
@@ -77,7 +81,9 @@
 
 </html>
 <script>
-    //nome_usuario.innerText = sessionStorage.NOME_USUARIO
+
+    var nome_usuario = document.querySelector('.nome_usuario')
+    nome_usuario.innerText = sessionStorage.NOME_USUARIO
 
     document.getElementById("tooltip").addEventListener("mouseover", () => {
         tooltip_alertas.style.display = 'flex'
@@ -87,6 +93,8 @@
         tooltip_alertas.style.display = 'none'
     });
 
+
+ 
 
     async function buscarQuantAlertas() {
         const resposta = await fetch('http://localhost:3333/dashboard/buscarQuantAlertas')
@@ -134,7 +142,7 @@
             console.log(dados)
 
             var regiao_fora_faixa = document.getElementById('regiao_fora_faixa')
-            regiao_fora_faixa.innerText = `${dados[0].nomeSetor}: ${dados[0].umidade}%`
+            regiao_fora_faixa.innerText = `${dados[0].nomeSetor}: ${dados[0].registroUmidade}%`
         } else {
             console.log('Erro ao realizar a busca dos dados!')
         }
@@ -288,9 +296,12 @@
                     umidadeUTI.push(dados[i].media_umidade)
                     //dataUTI.push(dados[i].media_umidade)
                 }
-                const data = new Date(dados[i].data)
 
-                data_umidade.push(data.toLocaleDateString('pt-br'))
+                if (i % 2 == 0) {
+                    const data = new Date(dados[i].data)
+    
+                    data_umidade.push(data.toLocaleDateString('pt-br'))
+                }
             }
 
             var graficoBarra = new Chart(document.getElementById('graficoBarra').getContext('2d'), {

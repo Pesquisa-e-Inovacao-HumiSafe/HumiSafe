@@ -19,6 +19,10 @@
         left: 0;
     }
 
+    .navBarLateral .sair{
+        margin-top: 300px;
+    }
+
     .logo-titulo {
         display: flex;
         justify-content: center;
