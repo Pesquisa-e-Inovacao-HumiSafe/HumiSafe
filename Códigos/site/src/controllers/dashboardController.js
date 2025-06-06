@@ -8,27 +8,6 @@ function buscarUltimasMedidasUTI(req, res) {
     });
 }
 
-function buscarUltimasMedidasUnidadeDeQueimadas(req, res) {
-    dashboardModel.buscarUltimasMedidasUnidadeDeQueimadas().then((resultado) => { 
-        res.status(200).json(resultado);
-        console.log(resultado[0].umidade)
-    });
-}
-
-function buscarUltimasMedidasNeoNatal(req, res) {
-    dashboardModel.buscarUltimasMedidasNeoNatal().then((resultado) => { 
-        res.status(200).json(resultado);
-        console.log(resultado[0].umidade)
-    });
-}
-
-function buscarUltimasMedidasCentroCirurgico(req, res) {
-    dashboardModel.buscarUltimasMedidasCentroCirurgico().then((resultado) => { 
-        res.status(200).json(resultado);
-        console.log(resultado[0].umidade)
-    });
-}
-
 function buscarQuantAlertas(req, res) {
     dashboardModel.buscarQuantAlertas().then((resultado) => {
         if (resultado.length > 0) {
@@ -135,9 +114,6 @@ function comparacaoUmidadeAlertas(req, res) {
 
 module.exports = {
     buscarUltimasMedidasUTI,
-    buscarUltimasMedidasUnidadeDeQueimadas,
-    buscarUltimasMedidasNeoNatal,
-    buscarUltimasMedidasCentroCirurgico,
     buscarQuantAlertas,
     topSetoresMaisAlertas,
     regiaoForaFaixa,

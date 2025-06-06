@@ -156,16 +156,10 @@
     }
 
     // GraficoLinha
-    async function plotarGraficoLinha() {
-        var nomeSetor = []
-
+    async function obterGraficoLinha() {
+        var nomeSetor = ""
         var dataColeta = []
-
         var UTI = [];
-        var unidadeDeQueimados = [];
-        var neoNatal = [];
-        var centroCirurgico = [];
-
         
         const resposta = await fetch('http://localhost:3333/dashboard/buscarUltimasMedidasUTI')
 
@@ -173,44 +167,27 @@
             console.log('buscarUltimasMedidasUTI funcionou!')
             const dados = await resposta.json();
             console.log(dados)
-
-            for (var i = 0; i < dados.length; i++) {
-                UTI.push(dados)
-            }   
+            nomeSetor = dados[0].nomeSetor
+            
+            for (var i = dados.length - 1; i >= 0; i--) {
+                UTI.push(dados[i].registroUmidade)
+                dataColeta.push(dados[i].dataFormatada)
+            }
+            plotarGraficoLinha(nomeSetor, dataColeta, UTI)
+        
         }
     }
 
-    function plotarGraficoLinha() {
+    function plotarGraficoLinha(nomeSetor, dataColeta, UTI) {
         var graficoLinha = new Chart(document.getElementById('graficoLinha').getContext('2d'), {
             type: 'line',
             data: {
                 labels: dataColeta,
                 datasets: [
                     {
-                        label: nomeSetor[0],
+                        label: nomeSetor,
                         data: UTI,
                         borderColor: 'red',
-                        borderWidth: 3,
-                        fill: false
-                    },
-                    {
-                        label: nomeSetor[1],
-                        data: unidadeDeQueimados,
-                        borderColor: 'blue',
-                        borderWidth: 3,
-                        fill: false
-                    },
-                    {
-                        label: nomeSetor[2],
-                        data: neoNatal,
-                        borderColor: 'orange',
-                        borderWidth: 3,
-                        fill: false
-                    },
-                    {
-                        label: nomeSetor[3],
-                        data: centroCirurgico,
-                        borderColor: 'green',
                         borderWidth: 3,
                         fill: false
                     }
@@ -385,6 +362,7 @@
     }
 
     function executarFuncoes() {
+        obterGraficoLinha()
         buscarQuantAlertas()
         topSetoresMaisAlertas()
         regiaoForaFaixa()

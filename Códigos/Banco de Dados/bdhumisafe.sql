@@ -14,18 +14,18 @@ senha VARCHAR(30) NOT NULL,
 telefone CHAR(11) NOT NULL
 );
 
-CREATE TABLE Usuario(
-idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-nome VARCHAR(45) NOT NULL,
-senha VARCHAR(45) NOT NULL,
-email VARCHAR(45) NOT NULL,
-CONSTRAINT checkEmail CHECK(email LIKE '%@%'),
-telefone VARCHAR(14) NOT NULL,
-dtCadastro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-fkEmpresa INT,
-CONSTRAINT fkUsuario_Empresa FOREIGN KEY (fkEmpresa) REFERENCES Hospital(idHospital)
-CONSTRAINT pk_composta PRIMARY KEY (idUsuario, fkEmpresa)
-);
+-- CREATE TABLE Usuario(
+-- idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+-- nome VARCHAR(45) NOT NULL,
+-- senha VARCHAR(45) NOT NULL,
+-- email VARCHAR(45) NOT NULL,
+-- CONSTRAINT checkEmail CHECK(email LIKE '%@%'),
+-- telefone VARCHAR(14) NOT NULL,
+-- dtCadastro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+-- fkEmpresa INT,
+-- CONSTRAINT fkUsuario_Empresa FOREIGN KEY (fkEmpresa) REFERENCES Hospital(idHospital),
+-- CONSTRAINT pk_composta PRIMARY KEY (idUsuario, fkEmpresa)
+-- );
 
 CREATE TABLE Endereco (
 idEndereco INT PRIMARY KEY AUTO_INCREMENT,
@@ -36,8 +36,8 @@ bairro VARCHAR(45) NOT NULL,
 cidade VARCHAR(45) NOT NULL,
 uf CHAR(2) NOT NULL,
 cep CHAR(8) NOT NULL,
-fkcliente_endereco INT UNIQUE AUTO_INCREMENT,
-CONSTRAINT fkhospital_endereco FOREIGN KEY (fkhospital_endereco)
+fkHospital INT UNIQUE,
+CONSTRAINT fkEnderecoHospital FOREIGN KEY (fkHospital)
 REFERENCES Hospital (idHospital)
 );
 
@@ -48,30 +48,30 @@ qtdPacienteSetor INT NOT NULL,
 qtdFuncionarioSetor INT NOT NULL,
 CONSTRAINT chkSetor CHECK(nomeSetor IN ('UTI', 'Centro Cirurgico', 'Pronto socorro', 'Unidades de Queimados', 'NeoNatal', 'Oncologia')),
 dtInstalacao  DATETIME NOT NULL,
-fkhospital_setor INT,
-CONSTRAINT fkhospital_setor FOREIGN KEY (fkhospital_setor)
+fkHospital INT,
+CONSTRAINT fkHospitalSetor FOREIGN KEY (fkHospital)
 REFERENCES Hospital (idHospital)
 );
 
-CREATE TABLE sensor(
+CREATE TABLE Sensor(
 idSensor INT PRIMARY KEY AUTO_INCREMENT,
 numSerie VARCHAR(100) UNIQUE NOT NULL,
 statusSensor VARCHAR(10) NOT NULL DEFAULT "Inativo",
 CONSTRAINT checkStatusSensor CHECK(statusSensor IN("Ativo","Inativo","Manutencao")),
 dtInstalacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 dtManutencao DATETIME,
-fksetor_sensorDHT11 INT,
-CONSTRAINT fksetor_sensorDHT11 FOREIGN KEY (fksetor_sensorDHT11)
+fkSetor INT,
+CONSTRAINT fkSetorSensor FOREIGN KEY (fkSetor)
 REFERENCES Setor (idSetor)
 );
 
 CREATE TABLE Registro(
 idRegistro INT PRIMARY KEY AUTO_INCREMENT,
-registroUmidade FLOAT(4,2) NOT NULL,
+registroUmidade DECIMAL(4,2) NOT NULL,
 dtRegistro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-fksensorDHT11_idumidade INT,
-CONSTRAINT fksensorDHT11_idumidade FOREIGN KEY (fksensorDHT11_idumidade)
-REFERENCES sensorDHT11 (idSensor)
+fkSensor INT,
+CONSTRAINT fkSensorRegistro FOREIGN KEY (fkSensor)
+REFERENCES Sensor (idSensor)
 );
 
 INSERT INTO Hospital (razaoSocial, nomeFantasia, cnpj, email, senha, telefone) VALUES
@@ -86,7 +86,7 @@ INSERT INTO Hospital (razaoSocial, nomeFantasia, cnpj, email, senha, telefone) V
 ('Instituto Novo Ser S.A.', 'Novo Ser', '90123456000178', 'faleconosco@novoser.org', 'novoser2025', '41911110000'),
 ('Clínica Renova ME', 'Renova', '01234567000189', 'renova@clinicarenova.com', 'renova@321', '51900009999');
 
-INSERT INTO endereco (tipoLogradouro, logradouro, numLogradouro, bairro, cidade, uf, cep, fkhospital_endereco) VALUES
+INSERT INTO Endereco (tipoLogradouro, logradouro, numLogradouro, bairro, cidade, uf, cep, fkHospital) VALUES
 ('Rua', 'das Palmeiras', 123, 'Centro', 'São Paulo', 'SP', '01001000', 1),
 ('Av.', 'Brasil', 456, 'Copacabana', 'Rio de Janeiro', 'RJ', '22041001', 2),
 ('Rua', 'da Saúde', 789, 'Savassi', 'Belo Horizonte', 'MG', '30140120', 3),
@@ -98,192 +98,45 @@ INSERT INTO endereco (tipoLogradouro, logradouro, numLogradouro, bairro, cidade,
 ('Rua', 'Nova Era', 258, 'Centro', 'Joinville', 'SC', '89201010', 9),
 ('Rua', 'Renascença', 147, 'Jardins', 'Aracaju', 'SE', '49010000', 10);
 
-INSERT INTO setor (nomeSetor, numSetor, qtdPacienteSetor, qtdFuncionarioSetor, dtInstalacao, fkhospital_setor) VALUES
-('UTI', '0001', 12, 25, '2024-01-15 08:00:00', 1),
-('Centro Cirurgico', '0002', 8, 20, '2023-12-10 09:30:00', 2),
-('Pronto socorro', '0003', 20, 18, '2024-02-01 07:45:00', 3),
-('Unidades de Queimados', '0004', 6, 12, '2024-03-12 10:00:00', 4),
-('NeoNatal', '0005', 10, 15, '2024-01-20 06:30:00', 5),
-('Oncologia', '0006', 14, 22, '2024-02-18 11:00:00', 6),
-('Centro Cirurgico', '0007', 7, 19, '2024-03-25 08:30:00', 7),
-('UTI', '0008', 11, 23, '2024-01-08 07:15:00', 8),
-('NeoNatal', '0009', 9, 14, '2024-02-27 10:45:00', 9),
-('Pronto socorro', '0010', 18, 21, '2024-03-05 09:00:00', 10);
-
-INSERT INTO sensorDHT11 (numSerie, dtFabricacao, dtCompra, statusSensor, dtManutencao, fksetor_sensorDHT11) VALUES
-('DHT11-SN-0001', '2023-01-10 10:00:00', '2023-03-15 09:00:00', 'Ativo', '2024-12-01 08:30:00', 1),
-('DHT11-SN-0002', '2023-02-12 11:00:00', '2023-04-20 10:00:00', 'Inativo', '2025-01-05 10:00:00', 2),
-('DHT11-SN-0003', '2022-12-01 08:00:00', '2023-01-25 14:00:00', 'Manutencao', '2025-02-20 09:30:00', 3),
-('DHT11-SN-0004', '2023-03-05 09:30:00', '2023-05-10 11:30:00', 'Ativo', '2024-11-15 07:45:00', 4),
-('DHT11-SN-0005', '2023-01-20 12:00:00', '2023-06-01 13:00:00', 'Ativo', '2025-03-01 08:00:00', 5),
-('DHT11-SN-0006', '2023-04-18 15:30:00', '2023-07-12 12:45:00', 'Inativo', '2025-01-20 09:15:00', 6),
-('DHT11-SN-0007', '2023-02-28 14:00:00', '2023-06-25 08:30:00', 'Ativo', '2025-02-01 10:30:00', 7),
-('DHT11-SN-0008', '2023-03-10 10:30:00', '2023-08-08 10:00:00', 'Manutencao', '2025-03-10 07:00:00', 8),
-('DHT11-SN-0009', '2023-05-01 09:00:00', '2023-09-01 09:45:00', 'Inativo', '2025-01-10 11:00:00', 9),
-('DHT11-SN-0010', '2023-06-15 11:45:00', '2023-10-10 13:15:00', 'Ativo', '2025-04-01 08:00:00', 10);
-
-INSERT INTO umidade (umidade, dtRegistro, fksensorDHT11_idumidade) VALUES
-(45.75, '2025-04-09 08:00:00', 1),  -- dentro da faixa ideal
-(37.40, '2025-04-09 08:05:00', 2),  -- abaixo
-(62.10, '2025-04-09 08:10:00', 3),  -- acima
-(55.00, '2025-04-09 08:15:00', 4),  -- dentro da faixa ideal
-(29.90, '2025-04-09 08:20:00', 5),  -- abaixo
-(66.80, '2025-04-09 08:25:00', 6),  -- acima
-(50.25, '2025-04-09 08:30:00', 7),  -- dentro da faixa ideal
-(39.95, '2025-04-09 08:35:00', 8),  -- abaixo
-(60.05, '2025-04-09 08:40:00', 9),  -- acima
-(42.60, '2025-04-09 08:45:00', 10); -- dentro da faixa ideal
+INSERT INTO Setor (nomeSetor, qtdPacienteSetor, qtdFuncionarioSetor, dtInstalacao, fkHospital) VALUES
+('UTI', 12, 25, '2024-01-15 08:00:00', 1),
+('Centro Cirurgico', 8, 20, '2023-12-10 09:30:00', 2),
+('Pronto socorro', 20, 18, '2024-02-01 07:45:00', 3),
+('Unidades de Queimados', 6, 12, '2024-03-12 10:00:00', 4),
+('NeoNatal', 10, 15, '2024-01-20 06:30:00', 5),
+('Oncologia', 14, 22, '2024-02-18 11:00:00', 6),
+('Centro Cirurgico', 7, 19, '2024-03-25 08:30:00', 7),
+('UTI', 11, 23, '2024-01-08 07:15:00', 8),
+('NeoNatal', 9, 14, '2024-02-27 10:45:00', 9),
+('Pronto socorro', 18, 21, '2024-03-05 09:00:00', 10);
 
 
-SELECT nomeSetor, umidade, DATE_FORMAT(dtRegistro,  '%d/%m/%Y %H:%i') as 'Data Formatada' FROM umidade
-                            JOIN sensorDHT11
-                                ON umidade.fksensorDHT11_idumidade = sensorDHT11.idSensor
-							JOIN setor
-								ON sensorDHT11.fksetor_sensorDHT11 = setor.idSetor
-							WHERE dtRegistro >= CURDATE() - INTERVAL 100 DAY AND nomeSetor = 'UTI' AND statusSensor = 'Ativo'
-                            ORDER BY dtRegistro LIMIT 6;
-                            
-
-SELECT * FROM sensorDHT11;
-
-
-SELECT
-idHospital AS "Número de identificação da Empresa",
-razaoSocial AS "Nome da Empresa",
-nomeFantasia AS "Nome Fantasia",
-cnpj AS "CNPJ",
-dtCadastro AS "Data de Cadastro",
-email AS "E-Mail",
-senha AS "Senha",
-CONCAT("+", telefone) AS "Telefone (XXYYZZZZZZZZZ)" FROM Hospital;
-
-SELECT * FROM umidade WHERE umidade > 40 AND umidade < 60;
-
-SELECT 
-idSensor AS 'Identificação do Sensor',
-numSerie AS 'Número de série',
-dtFabricacao AS 'Data de Fabricação do Sensor', 
-dtCompra AS 'Data de compra', 
-dtManutencao AS 'Data de manutenção do Sensor',
-statusManutencao AS "Status do Sensor" FROM sensorDHT11;
-
-SELECT
-idSetor AS 'Identificação do Setor',
-nomeSetor AS 'Nome do Setor',
-numSetor AS 'Número do Setor',
-qtdPacienteSetor AS 'Quantidade de Pacientes no Setor',
-qtdFuncionarioSetor AS 'Quantidade de Funcionários no Setor' FROM setor;
-
-SELECT 
-idUmidade as "Identificação",
-CONCAT(umidade,'%') AS 'Umidade',
-CASE WHEN umidade > 60 OR umidade < 40 
-THEN "ALERTA" 
-ELSE "Valor Ideal" END AS Controle,
-dtRegistro AS 'Data de Registro' FROM umidade;
-
-SELECT * FROM umidade WHERE umidade > 60 OR umidade < 40;
-
-UPDATE sensorDHT11 SET statusManutencao = "Ativo" WHERE idSensor = 9;
-
-SELECT h.nomeFantasia AS nomehospital, h.email,
-CONCAT(e.tipoLogradouro, logradouro), e.numLogradouro, e.bairro, e.cidade, e.uf,
-s.nomeSetor, s.numSetor,
-u.umidade, u.dtRegistro FROM Hospital h
-JOIN endereco e ON h.idHospital = e.fkhospital_endereco
-JOIN setor s ON h.idHospital = s.fkhospital_setor
-JOIN sensorDHT11 sd ON s.idSetor = sd.fksetor_sensorDHT11
-JOIN umidade u ON sd.idSensor = u.fksensorDHT11_idumidade
-WHERE u.umidade < 40 OR u.umidade > 60;
-
--- KPI 1
-
-SELECT 
-    s.nomeSetor,
-    COUNT(u.idUmidade) AS qtd_alertas,
-    MAX(TIME(u.dtRegistro)) AS ultimo_horario
-FROM umidade u
-JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
-JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
-WHERE u.dtRegistro >= CURDATE() -- registros de hoje
-  AND (u.umidade < 40 OR u.umidade > 60)
-GROUP BY s.idSetor
-ORDER BY qtd_alertas DESC
-LIMIT 3;
-
--- KPI 2
-
-SELECT 
-    s.nomeSetor,
-    u.umidade
-FROM umidade u
-JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
-JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
-WHERE u.dtRegistro = (
-    SELECT MAX(dtRegistro)
-    FROM umidade
-    WHERE umidade < 40 OR umidade > 60
-);
-
--- KPI 3
-
-SELECT 
-    s.nomeSetor,
-    ROUND(
-        (SUM(CASE WHEN u.umidade < 40 OR u.umidade > 60 THEN 1 ELSE 0 END) * 100.0) / COUNT(*),
-        2
-    ) AS percentual_fora,
-    COUNT(*) AS total_medicoes
-FROM umidade u
-JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
-JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
-WHERE s.idSetor = (
-    SELECT sen.fksetor_sensorDHT11
-    FROM umidade u2
-    JOIN sensorDHT11 sen ON u2.fksensorDHT11_idumidade = sen.idSensor
-    WHERE u2.dtRegistro >= CURDATE()
-      AND (u2.umidade < 40 OR u2.umidade > 60)
-    GROUP BY sen.fksetor_sensorDHT11
-    ORDER BY COUNT(*) DESC
-    LIMIT 1
-)
-AND u.dtRegistro >= CURDATE()
-GROUP BY s.nomeSetor;
-
--- GRÁFICO BARRAS
-
-SELECT 
-    s.nomeSetor,
-    DATE(u.dtRegistro) AS data,
-    ROUND(AVG(u.umidade), 2) AS media_umidade
-FROM umidade u
-JOIN sensorDHT11 sen ON u.fksensorDHT11_idumidade = sen.idSensor
-JOIN setor s ON sen.fksetor_sensorDHT11 = s.idSetor
-WHERE s.nomeSetor IN ('Centro Cirurgico', 'UTI')
-  AND u.dtRegistro >= CURDATE() - INTERVAL 6 DAY
-GROUP BY s.nomeSetor, DATE(u.dtRegistro)
-ORDER BY data, nomeSetor;
-
--- GRÁFICO PIZZA
-
-SELECT 
-    CASE 
-        WHEN umidade BETWEEN 40 AND 60 THEN 'Normal'
-        ELSE 'Alerta'
-    END AS status,
-    COUNT(*) AS total
-FROM umidade
-WHERE dtRegistro >= CURDATE()
-GROUP BY status;
+INSERT INTO Sensor (numSerie, dtInstalacao, statusSensor, dtManutencao, fkSetor) VALUES
+('DHT11-SN-0001', '2023-03-15 09:00:00', 'Ativo', '2024-12-01 08:30:00', 1),
+('DHT11-SN-0002', '2023-04-20 10:00:00', 'Inativo', '2025-01-05 10:00:00', 2),
+('DHT11-SN-0003', '2023-01-25 14:00:00', 'Manutencao', '2025-02-20 09:30:00', 3),
+('DHT11-SN-0004', '2023-05-10 11:30:00', 'Ativo', '2024-11-15 07:45:00', 4),
+('DHT11-SN-0005', '2023-06-01 13:00:00', 'Ativo', '2025-03-01 08:00:00', 5),
+('DHT11-SN-0006', '2023-07-12 12:45:00', 'Inativo', '2025-01-20 09:15:00', 6),
+('DHT11-SN-0007', '2023-06-25 08:30:00', 'Ativo', '2025-02-01 10:30:00', 7),
+('DHT11-SN-0008', '2023-08-08 10:00:00', 'Manutencao', '2025-03-10 07:00:00', 8),
+('DHT11-SN-0009', '2023-09-01 09:45:00', 'Inativo', '2025-01-10 11:00:00', 9),
+('DHT11-SN-0010', '2023-10-10 13:15:00', 'Ativo', '2025-04-01 08:00:00', 10);
 
 
- 
+INSERT INTO Registro (registroUmidade, dtRegistro, fkSensor) VALUES
+(45.75, '2025-06-04 08:00:00', 1),  -- dentro da faixa ideal
+(37.40, '2025-06-04 08:05:00', 2),  -- abaixo
+(62.10, '2025-06-04 08:10:00', 3),  -- acima
+(55.00, '2025-06-04 08:15:00', 4),  -- dentro da faixa ideal
+(29.90, '2025-06-04 08:20:00', 5),  -- abaixo
+(66.80, '2025-06-05 08:25:00', 6),  -- acima
+(50.25, '2025-06-05 08:30:00', 7),  -- dentro da faixa ideal
+(39.95, '2025-06-05 08:35:00', 8),  -- abaixo
+(60.05, '2025-06-05 08:40:00', 9),  -- acima
+(42.60, '2025-06-05 08:45:00', 10); -- dentro da faixa ideal
 
-
-
-
-
-
-
-
-
+INSERT INTO Registro (registroUmidade, dtRegistro, fkSensor) VALUES
+(39.95, '2025-06-06 08:35:00', 8),  -- abaixo
+(60.05, '2025-06-06 08:40:00', 9),  -- acima
+(42.60, '2025-06-06 08:45:00', 10); -- dentro da faixa ideal
