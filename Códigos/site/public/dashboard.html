@@ -99,7 +99,7 @@
  
 
     async function buscarQuantAlertas() {
-        const resposta = await fetch('http://localhost:3333/dashboard/buscarQuantAlertas')
+        const resposta = await fetch('/dashboard/buscarQuantAlertas')
 
         if (resposta.ok) {
             console.log('buscarQuantAlertas funcionou!')
@@ -115,7 +115,7 @@
     }
 
     async function topSetoresMaisAlertas() {
-        const resposta = await fetch('http://localhost:3333/dashboard/topSetoresMaisAlertas')
+        const resposta = await fetch('/dashboard/topSetoresMaisAlertas')
 
         if (resposta.ok) {
             console.log('topSetoresMaisAlertas funcionou!')
@@ -136,7 +136,7 @@
     }
 
     async function regiaoForaFaixa() {
-        const resposta = await fetch('http://localhost:3333/dashboard/regiaoForaFaixa')
+        const resposta = await fetch('/dashboard/regiaoForaFaixa')
 
         if (resposta.ok) {
             console.log('regiaoForaFaixa funcionou!')
@@ -151,7 +151,7 @@
     }
 
     async function percentualMedicoesCriticas() {
-        const resposta = await fetch('http://localhost:3333/dashboard/percentualMedicoesCriticas')
+        const resposta = await fetch('/dashboard/percentualMedicoesCriticas')
 
         if (resposta.ok) {
             console.log('percentualMedicoesCriticas funcionou!')
@@ -171,7 +171,7 @@
         var dataColeta = []
         var UTI = [];
         
-        const resposta = await fetch('http://localhost:3333/dashboard/buscarUltimasMedidasUTI')
+        const resposta = await fetch('/dashboard/buscarUltimasMedidasUTI')
 
         if (resposta.ok) {
             console.log('buscarUltimasMedidasUTI funcionou!')
@@ -278,7 +278,7 @@
     }
     
     async function plotarGraficoBarra() {
-        const resposta = await fetch('http://localhost:3333/dashboard/comparacaoDados6Dias')
+        const resposta = await fetch('/dashboard/comparacaoDados6Dias')
         
         if (resposta.ok) {
             console.log('comparacaoDados6Dias funcionou!')
@@ -360,7 +360,7 @@
     }
     
     async function plotarGraficoPizza() {
-        const resposta = await fetch('http://localhost:3333/dashboard/comparacaoUmidadeAlertas')
+        const resposta = await fetch('/dashboard/comparacaoUmidadeAlertas')
         
         if (resposta.ok) {
             console.log('plotarGraficoPizza funcionou!')
