@@ -14,6 +14,14 @@ function buscarUltimasMedidasUTI() {
     return database.executar(instrucaoSql);
 }
 
+function buscarMedidasEmTempoReal() {
+
+    var instrucaoSql = `SELECT registroUmidade as umidade, DATE_FORMAT(dtRegistro,'%H:%i:%s') as data FROM Registro WHERE fkSensor = 1 ORDER BY dtRegistro DESC LIMIT 1;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function buscarQuantAlertas() {
 
     var instrucaoSql = `SELECT COUNT(registroUmidade) AS 'Quantidade' FROM Registro
@@ -120,5 +128,6 @@ module.exports = {
     regiaoForaFaixa,
     percentualMedicoesCriticas,
     comparacaoDados6Dias,
-    comparacaoUmidadeAlertas
+    comparacaoUmidadeAlertas,
+    buscarMedidasEmTempoReal
 }

@@ -178,6 +178,50 @@
         }
     }
 
+    function atualizarGrafico(dataColeta, UTI, graficoLinha) {
+
+        fetch(`/dashboard/buscarMedidasEmTempoReal`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (novoRegistro) {
+
+                    console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                    console.log(`Dados atuais do gráfico:`);
+                    // console.log(dados);
+
+                    if (novoRegistro[0].data == dataColeta[dataColeta.length - 1]) {
+                        console.log("---------------------------------------------------------------")
+                        console.log("Como não há dados novos para captura, o gráfico não atualizará.")
+                        console.log("Horário do novo dado capturado:")
+                        console.log(novoRegistro[0].data)
+                        console.log("Horário do último dado capturado:")
+                        console.log(dataColeta[dataColeta.length - 1])
+                        console.log("---------------------------------------------------------------")
+                    } else {
+                        // tirando e colocando valores no gráfico
+                        dataColeta.shift(); // apagar o primeiro
+                        dataColeta.push(novoRegistro[0].data); // incluir um novo momento
+                        
+                        UTI.shift();  // apagar o primeiro de umidade
+                        UTI.push(novoRegistro[0].umidade); // incluir uma nova medida de umidade
+                        
+                        graficoLinha.update();
+                    }
+                    
+                    // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(dataColeta, UTI, graficoLinha), 1000);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+                // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(dataColeta, UTI, graficoLinha), 1000);
+            }
+        })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+        
+    }
+    
     function plotarGraficoLinha(nomeSetor, dataColeta, UTI) {
         var graficoLinha = new Chart(document.getElementById('graficoLinha').getContext('2d'), {
             type: 'line',
@@ -209,7 +253,7 @@
                             text: '(%)'
                         },
                     },
-
+                    
                     x: {
                         title: {
                             display: true,
@@ -220,16 +264,17 @@
                 }
             }
         });
+        setTimeout(() => atualizarGrafico(dataColeta, UTI, graficoLinha), 1000);
     }
-
+    
     async function plotarGraficoBarra() {
         const resposta = await fetch('http://localhost:3333/dashboard/comparacaoDados6Dias')
-
+        
         if (resposta.ok) {
             console.log('comparacaoDados6Dias funcionou!')
             const dados = await resposta.json();
             console.log(dados)
-
+            
             const umidadeUTI = []
             const umidadeCentroCirurgico = []
             //const dataUTI = []
@@ -300,24 +345,24 @@
             console.log('Erro ao realizar a busca dos dados!')
         }
     }
-
+    
     async function plotarGraficoPizza() {
         const resposta = await fetch('http://localhost:3333/dashboard/comparacaoUmidadeAlertas')
-
+        
         if (resposta.ok) {
             console.log('plotarGraficoPizza funcionou!')
             const dados = await resposta.json();
             console.log(dados)
-
-
+            
+            
             var status = []
             var total = []
-
+            
             for (var i = 0; i < dados.length; i++) {
                 status.push(dados[i].status)
                 total.push(dados[i].total)
             }
-
+            
             var graficoPizza = new Chart(document.getElementById('graficoPizza').getContext('2d'), {
                 type: 'pie',
                 data: {
@@ -345,7 +390,7 @@
                             },
                             beginAtZero: true
                         },
-
+                        
                         x: {
                             title: {
                                 display: true,
@@ -360,7 +405,7 @@
             console.log('Erro ao realizar a busca dos dados!')
         }
     }
-
+    
     function executarFuncoes() {
         obterGraficoLinha()
         buscarQuantAlertas()
@@ -370,5 +415,5 @@
         plotarGraficoBarra()
         plotarGraficoPizza()
     }
-
+    
 </script>

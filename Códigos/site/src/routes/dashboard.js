@@ -31,8 +31,8 @@ router.get("/comparacaoUmidadeAlertas", function (req, res) {
     dashboardController.comparacaoUmidadeAlertas(req, res);
 });
 
-// router.get("/tempo-real/:idSensor", function (req, res) {
-//     dashboardController.buscarMedidasEmTempoReal(req, res);
-// })
+router.get("/buscarMedidasEmTempoReal", function (req, res) {
+    dashboardController.buscarMedidasEmTempoReal(req, res);
+})
 
 module.exports = router;

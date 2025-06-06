@@ -105,12 +105,11 @@ function comparacaoUmidadeAlertas(req, res) {
 };
 
 
-// function buscarMedidasEmTempoReal(req, res) {
-//     dashboardModel.buscarMedidasEmTempoReal().then((resultado) => { 
-//         res.status(200).json(resultado);
-//         console.log(resultado[0].)
-//     });
-// }
+function buscarMedidasEmTempoReal(req, res) {
+    dashboardModel.buscarMedidasEmTempoReal().then((resultado) => { 
+        res.status(200).json(resultado);
+    });
+}
 
 module.exports = {
     buscarUltimasMedidasUTI,
@@ -119,6 +118,6 @@ module.exports = {
     regiaoForaFaixa,
     percentualMedicoesCriticas,
     comparacaoDados6Dias,
-    comparacaoUmidadeAlertas
-    // buscarMedidasEmTempoReal
+    comparacaoUmidadeAlertas,
+    buscarMedidasEmTempoReal
 }
